@@ -1,6 +1,6 @@
 import React from "react";
 
-function AlertPage() {
+function AlertDashBoard() {
   return (
     <>
       <h1>This is where the user will create alerts</h1>
@@ -8,4 +8,4 @@ function AlertPage() {
   );
 }
 
-export default AlertPage;
+export default AlertDashBoard;

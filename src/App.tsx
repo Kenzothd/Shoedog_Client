@@ -2,9 +2,10 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserLogin from "./pages/UserLogin";
-import AlertPage from "./pages/AlertPage";
+import AlertDashBoard from "./components/AlertDashBoard";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
+import Listings from "./pages/Listings";
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
           <Route path="/" element={<Navbar />}>
             <Route index element={<Home />} />
             <Route path="/login" element={<UserLogin />} />
-            <Route path="/alerts" element={<AlertPage />} />
+            <Route path="/listings" element={<Listings />} />
           </Route>
+          <Route path="/user" element={<AlertDashBoard />} />
         </Routes>
       </BrowserRouter>
     </>

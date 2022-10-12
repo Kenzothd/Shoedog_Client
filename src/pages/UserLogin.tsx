@@ -4,6 +4,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Login from "../components/Login";
+import { Container } from "@mui/material";
+import "../App.css";
 
 function UserLogin() {
   const [value, setValue] = useState("login");
@@ -14,24 +16,36 @@ function UserLogin() {
 
   return (
     <>
-      <Box sx={{ width: "100%" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          //   textColor="primary"
-          //   indicatorColor="primary"
-          TabIndicatorProps={{
-            style: {
-              background: "black",
-              color: "black",
-            },
+      <div className="bg-slate-50 px-10 pb-5 text-center center">
+        <Box
+          sx={{
+            mt: "7rem",
+            mb: "2rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "light-gray",
           }}
         >
-          <Tab value="signup" label="Sign Up" />
-          <Tab value="login" label="Login" />
-        </Tabs>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            //   textColor="primary"
+            //   indicatorColor="primary"
+            TabIndicatorProps={{
+              style: {
+                background: "black",
+                color: "black",
+              },
+            }}
+            sx={{ mx: "2rem" }}
+          >
+            <Tab value="signup" label="Sign Up" />
+            <Tab value="login" label="Login" />
+          </Tabs>
+        </Box>
         {value === "login" ? <Login /> : <SignUp />}
-      </Box>
+      </div>
     </>
   );
 }

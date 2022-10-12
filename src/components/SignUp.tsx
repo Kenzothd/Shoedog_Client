@@ -45,72 +45,86 @@ function SignUp() {
   });
   return (
     <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="first_name">First Name</label>
-      <input
-        id="first_name"
-        name="first_name"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.first_name}
-      />
-      {formik.touched.first_name && formik.errors.first_name ? (
-        <div>{formik.errors.first_name}</div>
-      ) : null}
+      <div className="flex flex-col text-center gap-5">
+        <div>
+          <input
+            id="first_name"
+            name="first_name"
+            type="text"
+            placeholder="First Name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.first_name}
+          />
+          {formik.touched.first_name && formik.errors.first_name ? (
+            <div>{formik.errors.first_name}</div>
+          ) : null}
+        </div>
 
-      <label htmlFor="last_name">Last Name</label>
-      <input
-        id="last_name"
-        name="last_name"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.last_name}
-      />
-      {formik.touched.last_name && formik.errors.last_name ? (
-        <div>{formik.errors.last_name}</div>
-      ) : null}
+        <div>
+          <input
+            id="last_name"
+            name="last_name"
+            type="text"
+            placeholder="Last Name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.last_name}
+          />
+          {formik.touched.last_name && formik.errors.last_name ? (
+            <div>{formik.errors.last_name}</div>
+          ) : null}
+        </div>
 
-      <label htmlFor="email">Email Address</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.email}
-      />
-      {formik.touched.email && formik.errors.email ? (
-        <div>{formik.errors.email}</div>
-      ) : null}
+        <div>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Email Address"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
+          />
+          {formik.touched.email && formik.errors.email ? (
+            <div>{formik.errors.email}</div>
+          ) : null}
+        </div>
 
-      <label htmlFor="password">Password</label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.password}
-      />
-      {formik.touched.password && formik.errors.password ? (
-        <div>{formik.errors.password}</div>
-      ) : null}
+        <div>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password}
+          />
+          {formik.touched.password && formik.errors.password ? (
+            <div>{formik.errors.password}</div>
+          ) : null}
+        </div>
 
-      <label htmlFor="country">Country</label>
-      <input
-        id="country"
-        name="country"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.country}
-      />
-      {formik.touched.country && formik.errors.country ? (
-        <div>{formik.errors.country}</div>
-      ) : null}
+        <div>
+          <input
+            id="country"
+            name="country"
+            type="text"
+            placeholder="Country"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.country}
+          />
+          {formik.touched.country && formik.errors.country ? (
+            <div>{formik.errors.country}</div>
+          ) : null}
+        </div>
 
-      <button type="submit">Submit</button>
+        <button className="hover:bg-slate-200" type="submit">
+          Submit
+        </button>
+      </div>
     </form>
   );
 }
