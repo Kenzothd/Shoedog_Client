@@ -29,8 +29,7 @@ function Login() {
         .post("http://localhost:5001/users/login", values, config)
         .then((res) => {
           if (res.data.id !== "") {
-            // navigate(`/user/${res.data.id}/`);
-            navigate("/user/id");
+            navigate(`/user/${res.data.id}/alerts`);
           }
         }) //navigate with user/id
         .catch((err) => console.log(err));

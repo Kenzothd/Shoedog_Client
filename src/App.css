@@ -35,8 +35,9 @@ main {
 .home {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin: 0px 20px;
+  justify-content: center;
+  gap: 10rem;
+  margin: 8rem 30px;
 }
 
 .content {
@@ -47,7 +48,7 @@ main {
   position: relative;
   color: #fff;
   width: 440px;
-  height: 650px;
+  height: 550px;
   transform-style: preserve-3d;
 }
 
@@ -314,7 +315,7 @@ main {
 
 .shoe-image-wrapper {
   position: absolute;
-  width: 100%;
+  width: 80%;
   height: 100%;
   top: 0;
   left: 0;
@@ -325,7 +326,7 @@ main {
 
 .shoe-img {
   position: absolute;
-  width: 130%;
+  width: 100%;
   top: 50%;
   left: 50%;
   transform: translate(-45%, -55%) translateZ(200px);
@@ -353,7 +354,7 @@ main {
 }
 
 .content:hover .shoe-img {
-  width: 115%;
+  width: 80%;
   top: 67%;
 }
 

@@ -1,9 +1,10 @@
-import { Outlet, useNavigate, Link } from "react-router-dom";
 import React from "react";
 import { useEffect, useState, useRef } from "react";
+import { Outlet, useNavigate, Link } from "react-router-dom";
 import logo from "../imgs/logo.png";
+import profilepic from "../imgs/unemployable.png";
 
-function Navbar() {
+function PersonalNavBar() {
   const navigate = useNavigate();
 
   const handlerLogin = () => {
@@ -31,19 +32,64 @@ function Navbar() {
               ShoeDog
             </span>
           </p>
-          <div className="flex md:order-2">
+          <div className="flex items-center md:order-2">
             <button
               type="button"
-              className="text-gray bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
-              onClick={handlerLogin}
+              className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              id="user-menu-button"
+              aria-expanded="false"
+              data-dropdown-toggle="user-dropdown"
+              data-dropdown-placement="bottom"
             >
-              Log in
+              <span className="sr-only">Open user menu</span>
+              <img
+                className="w-8 h-8 rounded-full"
+                src={profilepic}
+                alt="profile-pic"
+              />
             </button>
+            {/* <!-- Dropdown menu --> */}
+
+            <div
+              className="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+              id="user-dropdown"
+            >
+              <div className="py-3 px-4">
+                <span className="block text-sm text-gray-900 dark:text-white">
+                  Bonnie Green
+                </span>
+                <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">
+                  name@flowbite.com
+                </span>
+              </div>
+              <ul className="py-1" aria-labelledby="user-menu-button">
+                <li>
+                  <a className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                    Dashboard
+                  </a>
+                </li>
+                <li>
+                  <a className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                    Settings
+                  </a>
+                </li>
+                <li>
+                  <a className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                    Earnings
+                  </a>
+                </li>
+                <li>
+                  <a className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                    Sign out
+                  </a>
+                </li>
+              </ul>
+            </div>
             <button
-              data-collapse-toggle="navbar-sticky"
+              data-collapse-toggle="mobile-menu-2"
               type="button"
-              className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              aria-controls="navbar-sticky"
+              className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              aria-controls="mobile-menu-2"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
@@ -82,7 +128,7 @@ function Navbar() {
               </li>
               <li>
                 <span className="block py-2 pr-4 pl-3 text-gray-300 text-md md:p-0 md:hover:text-white hover:cursor-pointer">
-                  About
+                  Alerts
                 </span>
               </li>
               <li>
@@ -99,4 +145,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default PersonalNavBar;

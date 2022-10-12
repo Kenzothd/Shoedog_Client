@@ -6,6 +6,9 @@ import AlertDashBoard from "./components/AlertDashBoard";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Listings from "./pages/Listings";
+import SingleListing from "./pages/SingleListing";
+import PersonalNavBar from "./components/PersonalNavBar";
+import UserDashboard from "./pages/UserDashboard";
 
 function App() {
   return (
@@ -16,8 +19,11 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/login" element={<UserLogin />} />
             <Route path="/listings" element={<Listings />} />
+            <Route path="/listings/:id" element={<SingleListing />} />
           </Route>
-          <Route path="/user" element={<AlertDashBoard />} />
+          <Route path="/" element={<PersonalNavBar />}>
+            <Route path="/user/:id/alerts" element={<UserDashboard />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
