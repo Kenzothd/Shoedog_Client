@@ -3,14 +3,25 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Ishoes } from "../pages/Interface";
+import { IAllAlerts, Ishoes } from "../pages/Interface";
 
 type Props = {
+  // alertsHistory: IAllAlerts[];
+  // setAlertsHistory: any;
   alertBtn: boolean;
   toggleAlertBtn: any;
+  allAlerts: string;
+  setAllAlerts: any;
 };
 
-function CreateAlert({ alertBtn, toggleAlertBtn }: Props) {
+function CreateAlert({
+  alertBtn,
+  toggleAlertBtn,
+  // alertsHistory,
+  // setAlertsHistory,
+  setAllAlerts,
+  allAlerts,
+}: Props) {
   const [shoes, setShoes] = useState<Ishoes[]>([
     {
       shoe_brand: "",
@@ -59,6 +70,7 @@ function CreateAlert({ alertBtn, toggleAlertBtn }: Props) {
         .post(`http://localhost:5001/alerts/${id}`, values, config)
         .then((res) => {
           toggleAlertBtn(!alertBtn);
+          setAllAlerts(!allAlerts);
         })
         .catch((err) => console.log(err));
     },

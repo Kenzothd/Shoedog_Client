@@ -36,7 +36,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10rem;
+  gap: 3rem;
   margin: 8rem 30px;
 }
 

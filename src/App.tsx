@@ -2,7 +2,6 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserLogin from "./pages/UserLogin";
-import AlertDashBoard from "./components/AlertDashBoard";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Listings from "./pages/Listings";
@@ -22,7 +21,7 @@ function App() {
             <Route path="/listings/:id" element={<SingleListing />} />
           </Route>
           <Route path="/" element={<PersonalNavBar />}>
-            <Route path="/user/:id/alerts" element={<UserDashboard />} />
+            <Route path="/user/:id/dashboard" element={<UserDashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>

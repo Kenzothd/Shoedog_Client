@@ -13,7 +13,7 @@ export interface Ilistings {
   shoe_model: string;
   shoe_size: string;
   sold: boolean;
-  user_id: number;
+  user_listing_id: number;
   verified: string;
 }
 
@@ -31,8 +31,24 @@ export interface IAlerts {
   shoe_img: string;
   shoe_model: string;
   shoe_size: string;
-  user_id: number;
+  user_alert_id: number;
   verified: string;
+}
+
+export interface IAllAlerts {
+  alert_id: number;
+  alert_price: number;
+  listing_id: number;
+  listing_price: number;
+  shoe_brand: string;
+  shoe_description: string;
+  shoe_id: number;
+  shoe_img: string;
+  shoe_model: string;
+  shoe_size: string;
+  sold: boolean;
+  user_alert_id: number;
+  user_listing_id: number;
 }
 
 export interface Ishoes {

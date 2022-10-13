@@ -1,10 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 import logo from "../imgs/logo.png";
 import nike from "../imgs/nike.png";
 import rightArrow from "../imgs/right-arrow.png";
 
 function ProductCard() {
+  const navigate = useNavigate();
+
+  const handlerListing = () => {
+    navigate("/listings");
+  };
+
   return (
     <div className="content">
       <div className="card-container">
@@ -53,10 +60,11 @@ function ProductCard() {
             </div>
           </div>
 
-          <div className="buy-wrap">
-            <a href="#" className="buy hide">
-              Start Browsing <i className="fas fa-shopping-cart"></i>
-            </a>
+          <div onClick={handlerListing} className="buy-wrap cursor-pointer">
+            <span className="buy hide pointer-events-none">
+              Start Browsing{" "}
+              <i className="fas fa-shopping-cart pointer-events-none"></i>
+            </span>
           </div>
         </div>
 

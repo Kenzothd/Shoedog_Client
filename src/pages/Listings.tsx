@@ -20,7 +20,7 @@ function Listings() {
       shoe_model: "",
       shoe_size: "",
       sold: false,
-      user_id: 0,
+      user_listing_id: 0,
       verified: "",
     },
   ]);

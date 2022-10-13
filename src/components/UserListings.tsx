@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { IAlerts, IAllAlerts } from "../pages/Interface";
-import CreateAlert from "./CreateAlert";
+import { useNavigate, useParams } from "react-router-dom";
+import { IAllAlerts, Ilistings } from "../pages/Interface";
+import CreateListing from "./CreateListing";
 
 type Props = {
   // alertsHistory: IAllAlerts[];
@@ -11,20 +11,20 @@ type Props = {
   setAllAlerts: any;
 };
 
-function UserAlerts({
+function UserListings({
   allAlerts,
   setAllAlerts,
 }: // alertsHistory,
 // setAlertsHistory,
 Props) {
-  const [alerts, setAlerts] = useState<IAlerts[]>([
+  const [listings, setListings] = useState<Ilistings[]>([
     {
-      alert_id: 0,
-      alert_price: 0,
       country: "",
       email: "",
       first_name: "",
       last_name: "",
+      listing_id: 0,
+      listing_price: 0,
       password: "",
       shoe_brand: "",
       shoe_description: "",
@@ -32,37 +32,38 @@ Props) {
       shoe_img: "",
       shoe_model: "",
       shoe_size: "",
-      user_alert_id: 0,
+      sold: false,
+      user_listing_id: 0,
       verified: "",
     },
   ]);
-  const [alertBtn, toggleAlertBtn] = useState(false);
+  const [listingBtn, toggleListingBtn] = useState(false);
 
   const { id } = useParams();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5001/alerts/${id}`)
-      .then((res) => setAlerts(res.data))
+      .get(`http://localhost:5001/listings/user/${id}`)
+      .then((res) => setListings(res.data))
       .catch((err) => console.log(err));
-  }, [id, alertBtn]);
+  }, [id, listingBtn]);
 
-  const handlerCreateAlert = () => {
-    toggleAlertBtn(!alertBtn);
+  const handlerCreateListing = () => {
+    toggleListingBtn(!listingBtn);
   };
 
   return (
     <>
       <div className="text-center mx-30 relative">
         <button
-          onClick={handlerCreateAlert}
+          onClick={handlerCreateListing}
           className="p-1 bg-white rounded border-2 border-solid border-black hover:bg-slate-300 mb-10"
         >
-          +Create Alert
+          +Create Listing
         </button>
-        {alerts.map((e) => (
+        {listings.map((e) => (
           <div
-            key={e.alert_id}
+            key={e.listing_id}
             className="flex justify-center items-center gap-10 mb-10"
           >
             <img
@@ -73,20 +74,20 @@ Props) {
             <p>{e.shoe_brand}</p>
             <p>{e.shoe_model}</p>
             <p>size {e.shoe_size}</p>
-            <p>Alert Price: ${e.alert_price}</p>
+            <p>Listing Price: ${e.listing_price}</p>
             <button className="p-1 bg-white rounded border-2 border-solid border-black hover:bg-slate-300">
               Delete
             </button>
           </div>
         ))}
-        {alertBtn ? (
-          <CreateAlert
+        {listingBtn ? (
+          <CreateListing
             // alertsHistory={alertsHistory}
             // setAlertsHistory={setAlertsHistory}
             allAlerts={allAlerts}
             setAllAlerts={setAllAlerts}
-            alertBtn={alertBtn}
-            toggleAlertBtn={toggleAlertBtn}
+            listingBtn={listingBtn}
+            toggleListingBtn={toggleListingBtn}
           />
         ) : null}
       </div>
@@ -94,4 +95,4 @@ Props) {
   );
 }
 
-export default UserAlerts;
+export default UserListings;

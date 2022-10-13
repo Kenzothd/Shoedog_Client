@@ -19,11 +19,13 @@ function SingleListing() {
     shoe_model: "",
     shoe_size: "",
     sold: false,
-    user_id: 0,
+    user_listing_id: 0,
     verified: "",
   });
 
   const { id } = useParams();
+
+  console.log(listing);
 
   useEffect(() => {
     axios
@@ -44,6 +46,7 @@ function SingleListing() {
         </div>
         <h1>{listing.shoe_model}</h1>
         <h1>Owner: {listing.first_name}</h1>
+        <p>{listing.shoe_description}</p>
         <button className="p-1 bg-white rounded border-2 border-solid border-black hover:bg-slate-300">
           Add to cart
         </button>

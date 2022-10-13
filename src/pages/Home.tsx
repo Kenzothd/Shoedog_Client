@@ -6,7 +6,9 @@ function Home() {
     <>
       <div className="home">
         <ProductCard />
-        <h1>Track the price of your favorite shoe</h1>
+        <h1 className="font-bold text-3xl">
+          Track the price of your favorite shoe
+        </h1>
       </div>
     </>
   );
