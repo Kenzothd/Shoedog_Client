@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import UserAlerts from "../components/UserAlerts";
 import UserAlertsHistory from "../components/UserAlertsHistory";
 import UserListings from "../components/UserListings";
-import { IAllAlerts } from "./Interface";
 
 function UserDashboard() {
   const [value, setValue] = useState("alerts");
