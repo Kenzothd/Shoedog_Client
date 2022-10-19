@@ -3,11 +3,11 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserLogin from "./pages/UserLogin";
 import Home from "./pages/Home";
-import Navbar from "./components/Navbar";
 import Listings from "./pages/Listings";
 import SingleListing from "./pages/SingleListing";
 import PersonalNavBar from "./components/PersonalNavBar";
 import UserDashboard from "./pages/UserDashboard";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
