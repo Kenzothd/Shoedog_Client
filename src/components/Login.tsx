@@ -26,7 +26,11 @@ function Login() {
       };
 
       axios
-        .post("http://localhost:5001/users/login", values, config)
+        .post(
+          `${process.env.REACT_APP_API_BASE_UR}/users/login`,
+          values,
+          config
+        )
         .then((res) => {
           if (res.data.id !== "") {
             navigate(`/user/${res.data.id}/dashboard`);

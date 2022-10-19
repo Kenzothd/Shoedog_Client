@@ -43,7 +43,7 @@ Props) {
   useEffect(() => {
     const interval = setInterval(() => {
       axios
-        .get(`http://localhost:5001/alerts/history`)
+        .get(`${process.env.REACT_APP_API_BASE_UR}/alerts/history`)
         .then((res) => {
           const allUserAlerts = res.data.filter(
             (e: IAllAlerts) => e.user_alert_id === Number(id)

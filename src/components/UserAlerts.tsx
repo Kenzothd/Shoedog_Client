@@ -42,7 +42,7 @@ Props) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5001/alerts/${id}`)
+      .get(`${process.env.REACT_APP_API_BASE_UR}/alerts/${id}`)
       .then((res) => setAlerts(res.data))
       .catch((err) => console.log(err));
   }, [id, alertBtn]);

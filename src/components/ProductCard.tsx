@@ -41,9 +41,9 @@ function ProductCard() {
           <div className="top-part">
             <div className="header">
               <h3 className="heading hide">Epic shoes</h3>
-              <a href="#" className="wish hide">
+              <span className="wish hide">
                 <i className="far fa-heart"></i>
-              </a>
+              </span>
             </div>
             <ul className="features hide">
               <li>Smooth & Fast.</li>

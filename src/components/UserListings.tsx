@@ -43,7 +43,7 @@ Props) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5001/listings/user/${id}`)
+      .get(`${process.env.REACT_APP_API_BASE_UR}/listings/user/${id}`)
       .then((res) => setListings(res.data))
       .catch((err) => console.log(err));
   }, [id, listingBtn]);

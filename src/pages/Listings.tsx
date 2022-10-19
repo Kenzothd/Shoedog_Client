@@ -29,7 +29,7 @@ function Listings() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/listings/")
+      .get(`${process.env.REACT_APP_API_BASE_UR}/listings/`)
       .then((res) => setListings(res.data))
       .catch((err) => console.log(err));
   }, []);

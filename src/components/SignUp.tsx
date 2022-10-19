@@ -38,7 +38,11 @@ function SignUp() {
       };
 
       axios
-        .post("http://localhost:5001/users/", JSON.stringify(values), config)
+        .post(
+          `${process.env.REACT_APP_API_BASE_UR}/users/`,
+          JSON.stringify(values),
+          config
+        )
         .then((res) => console.log(res.data))
         .catch((err) => console.log(err));
     },

@@ -37,7 +37,7 @@ function CreateAlert({
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/shoes")
+      .get(`${process.env.REACT_APP_API_BASE_UR}/shoes`)
       .then((res) => setShoes(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -67,7 +67,11 @@ function CreateAlert({
       };
 
       axios
-        .post(`http://localhost:5001/alerts/${id}`, values, config)
+        .post(
+          `${process.env.REACT_APP_API_BASE_UR}/alerts/${id}`,
+          values,
+          config
+        )
         .then((res) => {
           toggleAlertBtn(!alertBtn);
           setAllAlerts(!allAlerts);

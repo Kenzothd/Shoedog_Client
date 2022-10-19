@@ -36,7 +36,7 @@ function CreateListing({
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/shoes")
+      .get(`${process.env.REACT_APP_API_BASE_UR}/shoes`)
       .then((res) => setShoes(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -66,7 +66,11 @@ function CreateListing({
       };
 
       axios
-        .post(`http://localhost:5001/listings/${id}`, values, config)
+        .post(
+          `${process.env.REACT_APP_API_BASE_UR}/listings/${id}`,
+          values,
+          config
+        )
         .then((res) => {
           toggleListingBtn(!listingBtn);
           setAllAlerts(!allAlerts);
