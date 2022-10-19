@@ -42,7 +42,7 @@ Props) {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_BASE_UR}/alerts/${id}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/alerts/${id}`)
       .then((res) => setAlerts(res.data))
       .catch((err) => console.log(err));
   }, [id, alertBtn]);
@@ -60,7 +60,7 @@ Props) {
         >
           +Create Alert
         </button>
-        {alerts.map((e) => (
+        {alerts?.map((e) => (
           <div
             key={e.alert_id}
             className="flex justify-center items-center gap-10 mb-10"

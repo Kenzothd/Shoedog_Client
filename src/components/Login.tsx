@@ -27,7 +27,7 @@ function Login() {
 
       axios
         .post(
-          `${process.env.REACT_APP_API_BASE_UR}/users/login`,
+          `${process.env.REACT_APP_API_BASE_URL}/users/login`,
           values,
           config
         )

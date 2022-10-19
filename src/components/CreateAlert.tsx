@@ -37,7 +37,7 @@ function CreateAlert({
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_BASE_UR}/shoes`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/shoes`)
       .then((res) => setShoes(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -68,7 +68,7 @@ function CreateAlert({
 
       axios
         .post(
-          `${process.env.REACT_APP_API_BASE_UR}/alerts/${id}`,
+          `${process.env.REACT_APP_API_BASE_URL}/alerts/${id}`,
           values,
           config
         )

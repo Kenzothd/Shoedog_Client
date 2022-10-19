@@ -29,7 +29,7 @@ function Listings() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_BASE_UR}/listings/`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/`)
       .then((res) => setListings(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -37,6 +37,8 @@ function Listings() {
   const handlerSingleListing = (e: any) => {
     navigate(`/listings/${e.target.id}`);
   };
+
+  console.log(`${process.env.REACT_APP_API_BASE_URL}`);
 
   return (
     <>

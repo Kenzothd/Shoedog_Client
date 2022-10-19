@@ -35,8 +35,11 @@ function CreateListing({
   const shoeSize = shoes.map((e) => e.shoe_size);
 
   useEffect(() => {
+    console.log(`alert fetch`);
+    console.log(`${process.env.REACT_APP_API_BASE_URL}`);
+
     axios
-      .get(`${process.env.REACT_APP_API_BASE_UR}/shoes`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/shoes`)
       .then((res) => setShoes(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -67,7 +70,7 @@ function CreateListing({
 
       axios
         .post(
-          `${process.env.REACT_APP_API_BASE_UR}/listings/${id}`,
+          `${process.env.REACT_APP_API_BASE_URL}/listings/${id}`,
           values,
           config
         )

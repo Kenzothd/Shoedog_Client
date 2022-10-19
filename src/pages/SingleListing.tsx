@@ -29,7 +29,7 @@ function SingleListing() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_BASE_UR}/listings/${id}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/${id}`)
       .then((res) => setListing(res.data))
       .catch((err) => console.log(err));
   }, [id]);
