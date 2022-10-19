@@ -1,6 +1,5 @@
-import { Outlet, useNavigate, Link } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import React from "react";
-import { useEffect, useState, useRef } from "react";
 import logo from "../imgs/logo.png";
 
 function Navbar() {
