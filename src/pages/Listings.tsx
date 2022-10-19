@@ -29,7 +29,7 @@ function Listings() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/`)
+      .get(`https://shoedog-server.onrender.com/listings/`)
       .then((res) => setListings(res.data))
       .catch((err) => console.log(err));
   }, []);
