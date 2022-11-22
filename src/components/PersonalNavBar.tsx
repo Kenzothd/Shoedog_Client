@@ -7,9 +7,9 @@ import profilepic from "../imgs/unemployable.png";
 function PersonalNavBar() {
   const navigate = useNavigate();
 
-  const handlerLogin = () => {
-    navigate("/login");
-  };
+  // const handlerLogin = () => {
+  //   navigate("/login");
+  // };
 
   const handlerHome = () => {
     navigate("/");

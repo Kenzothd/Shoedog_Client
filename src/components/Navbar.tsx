@@ -1,9 +1,17 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import logo from "../imgs/logo.png";
 
 function Navbar() {
   const navigate = useNavigate();
+  const [currencyDropDown, setCurrencyDropDown] = useState("SGD");
+  const [toggle, setToggle] = useState(true);
+
+  const currency = ["SGD", "USD", "MYR", "TKY"];
+
+  const handlerCurrency = () => {
+    setToggle(!toggle);
+  };
 
   const handlerLogin = () => {
     navigate("/login");
@@ -19,78 +27,74 @@ function Navbar() {
 
   return (
     <>
-      <nav className="px-2 sm:px-4 py-2.5 bg-black fixed w-full z-20 top-0 left-0 border-b border-gray-200">
-        <div className="container flex flex-wrap justify-between items-center mx-auto">
-          <p
-            onClick={handlerHome}
-            className="ml-2 flex items-center hover:cursor-pointer"
-          >
-            <img src={logo} className="mr-1 h-6 sm:h-3" alt="nike Logo" />
-            <span className="self-center text-xl font-semibold whitespace-nowrap text-white">
-              ShoeDog
-            </span>
-          </p>
-          <div className="flex md:order-2">
-            <button
-              type="button"
-              className="text-gray bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
-              onClick={handlerLogin}
-            >
-              Log in
-            </button>
-            <button
-              data-collapse-toggle="navbar-sticky"
-              type="button"
-              className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              aria-controls="navbar-sticky"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
+      <nav className="px-5 py-5 bg-black fixed w-full z-20 top-0 left-0 border-b border-gray-200 flex justify-between items-center">
+        <div>
+          <p className="text-white text-lg font-semibold">ShoeDog</p>
+        </div>
+        <div>
+          <ul className="flex justify-between gap-6 text-base items-center  ">
+            <li className="text-white">Browse</li>
+            <li className="text-white">About</li>
+            <li className="text-white">News</li>
+            <li className="text-white flex gap-1 items-center">
               <svg
-                className="w-6 h-6"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
               >
                 <path
-                  fillRule="evenodd"
-                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                  clipRule="evenodd"
-                ></path>
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+                />
               </svg>
-            </button>
-          </div>
-          <div
-            className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
-            id="navbar-sticky"
-          >
-            <ul className="flex flex-col p-4 mt-4 bg-black rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 ">
-              <li onClick={handlerHome}>
-                <span className="block py-2 pr-4 pl-3 text-gray-300  md:p-0 md:hover:text-white hover:cursor-pointer">
-                  Home
-                </span>
-              </li>
-              <li>
-                <span
-                  onClick={handlerListings}
-                  className="block py-2 pr-4 pl-3 text-gray-300  md:p-0 md:hover:text-white hover:cursor-pointer"
+              Sign Up/Login
+            </li>
+
+            <div
+              onClick={handlerCurrency}
+              className="text-white font-semibold py-0.5 pl-2 pr-1 border rounded flex items-center hover:border-bg-black cursor-pointer"
+            >
+              {<p>{currencyDropDown}</p>}
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-4 h-4"
                 >
-                  Browse
-                </span>
-              </li>
-              <li>
-                <span className="block py-2 pr-4 pl-3 text-gray-300 text-md md:p-0 md:hover:text-white hover:cursor-pointer">
-                  About
-                </span>
-              </li>
-              <li>
-                <span className="block py-2 pr-4 pl-3 text-gray-300  md:p-0 md:hover:text-white hover:cursor-pointer">
-                  Help
-                </span>
-              </li>
-            </ul>
-          </div>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              </span>
+              {!toggle ? (
+                <div className="absolute top-12 right-5">
+                  <ul className="bg-black border-2 rounded ">
+                    {currency.map((e) => (
+                      <li
+                        onClick={(e: any) => {
+                          setCurrencyDropDown(e.target.innerText);
+                          handlerCurrency();
+                        }}
+                        className="py-0.5 px-3 border-b border-b-white hover:bg-slate-600"
+                        value={e}
+                      >
+                        {e}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </div>
+          </ul>
         </div>
       </nav>
       <Outlet />
