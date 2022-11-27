@@ -5,7 +5,7 @@ import ProductCard from "../components/ProductCard";
 function Home() {
   return (
     <>
-      {/* <Carousel /> */}
+      <Carousel />
       <div className="home">
         {/* <ProductCard />
         <h1 className="font-bold text-3xl">

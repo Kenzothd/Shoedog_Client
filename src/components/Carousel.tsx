@@ -1,68 +1,77 @@
 import React, { useEffect, useState } from "react";
-import nike from "../imgs/nike.png";
-import logo from "../imgs/logo.png";
-import unemployable from "../imgs/unemployable.png";
+import coverOne from "../imgs/cover-one.png";
+import coverTwo from "../imgs/cover-two.png";
+import coverThree from "../imgs/cover-three.png";
+import coverFour from "../imgs/cover-four.png";
 
 function Carousel() {
-  const imgs = [logo, unemployable];
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const [img, setImgs] = useState(`${logo}`);
-  console.log(img);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentIndex(currentIndex + 1);
+      if (currentIndex >= carouselItems.length - 1) {
+        setCurrentIndex(0);
+      }
+    }, 7000);
 
-  const handlerNext = () => {
-    setImgs(`${unemployable}`);
+    return () => clearInterval(intervalId);
+  }, [currentIndex]);
+
+  const carouselItems = [
+    `${coverOne}`,
+    `${coverTwo}`,
+    `${coverThree}`,
+    `${coverFour}`,
+  ];
+
+  const nextBtn = () => {
+    setCurrentIndex(currentIndex + 1);
+    if (currentIndex >= carouselItems.length - 1) {
+      setCurrentIndex(0);
+    }
+  };
+
+  const prevBtn = () => {
+    setCurrentIndex(currentIndex - 1);
+    if (currentIndex <= 0) {
+      setCurrentIndex(carouselItems.length - 1);
+    }
   };
 
   return (
     <>
-      <div id="animation-carousel" className="relative" data-carousel="static">
-        {/* <!-- Carousel wrapper --> */}
-        <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
-          {/* <!-- Item 1 --> */}
-          <div
-            className="duration-200 ease-linear absolute transition-all transform"
-            data-carousel-item=""
+      <div className="mt-16 pt-1 border-top-2 border-solid border-black justify-center">
+        <div className="flex items-center overflow-hidden ">
+          <button
+            id="prev-button"
+            onClick={prevBtn}
+            className="absolute left-0 h-fit py-20 px-2.5 opacity-0 hover: bg-slate-300 hover:opacity-40 "
           >
-            <img
-              src={logo}
-              className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-              alt="..."
-            />
-          </div>
-        </div>
-        {/* <!-- Slider controls --> */}
-        <button
-          type="button"
-          className="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer bg-slate-300  group focus:outline-none"
-          data-carousel-prev=""
-        >
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
             <svg
-              className="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-7 h-7 "
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 19l-7-7 7-7"
-              ></path>
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
             </svg>
-            <span className="sr-only">Previous</span>
-          </span>
-        </button>
-        <button
-          onClick={() => handlerNext}
-          type="button"
-          className="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group bg-slate-300  focus:outline-none"
-          data-carousel-next=""
-        >
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+          </button>
+
+          <button
+            onClick={nextBtn}
+            id="next-button"
+            className="absolute right-0 h-fit py-20 px-4 opacity-0 hover:bg-slate-300 hover:opacity-40"
+          >
             <svg
-              className="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
+              aria-hidden="true"
+              className="w-7 h-7  "
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -75,9 +84,37 @@ function Carousel() {
                 d="M9 5l7 7-7 7"
               ></path>
             </svg>
-            <span className="sr-only">Next</span>
-          </span>
-        </button>
+          </button>
+
+          {carouselItems.map((e, i) => (
+            <img
+              className={
+                i === currentIndex
+                  ? " w-screen h-72 object-fill animate-fadein"
+                  : "hidden"
+              }
+              src={e}
+              alt="carousel"
+            />
+          ))}
+        </div>
+        <div className="mt-5 w-full flex justify-center">
+          {carouselItems.map((element, index) => {
+            return (
+              <div
+                className={
+                  index === currentIndex
+                    ? "h-2 w-2 bg-slate-600 rounded-full mx-2 mb-2 cursor-pointer"
+                    : "h-2 w-2 bg-slate-300 rounded-full mx-2 mb-2 cursor-pointer"
+                }
+                key={index}
+                onClick={() => {
+                  setCurrentIndex(index);
+                }}
+              ></div>
+            );
+          })}
+        </div>
       </div>
     </>
   );
