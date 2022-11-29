@@ -33,11 +33,8 @@ main {
 }
 
 .home {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 3rem;
-  margin: 8rem 30px;
+  margin: 3rem 9rem;
 }
 
 .content {
