@@ -1,4 +1,5 @@
 import React from "react";
+import BrandsSection from "../components/BrandsSection";
 import Carousel from "../components/Carousel";
 import ProductCard from "../components/ProductCard";
 import Trending from "../components/Trending";
@@ -7,9 +8,9 @@ function Home() {
   return (
     <>
       <Carousel />
-      <div className="home">
+      <div className="home flex flex-col gap-20">
         <Trending />
-
+        <BrandsSection />
         {/* <ProductCard />
         <h1 className="font-bold text-3xl">
           Track the price of your favorite shoe
