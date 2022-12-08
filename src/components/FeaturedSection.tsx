@@ -101,21 +101,21 @@ function FeaturedSection() {
           {featured.map((e, i) => (
             <div
               className={
-                "relative group w-60 h-72 cursor-pointer ml-[6rem] shrink-0 snap-center"
+                "relative group w-56 h-[17rem] cursor-pointer ml-[5.5rem] shrink-0 snap-center"
               }
               key={i}
             >
-              <div className="absolute bottom--16 left-[-6rem] text-[16rem] font-bold text-gray-400/40 whitespace-nowrap z-10 ">
+              <div className="absolute bottom--16 left-[-6rem] text-[14rem] font-bold text-gray-400/40 whitespace-nowrap z-10 ">
                 {i + 1}
               </div>
               <div className="relative h-full w-full bg-white rounded-tr-3xl rounded-bl-3xl border-4 transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] ">
                 <div className="absolute inset-0 whitespace-nowrap flex flex-col gap-3 justify-around px-2 pt-3 ">
                   <img
-                    className="w-full h-[40%] object-fill bg-white"
+                    className="w-full h-[35%] object-fill bg-white"
                     src={e.img}
                     alt="shoe"
                   />
-                  <p className="text-xl font-bold whitespace-normal group-hover:text-white duration-700 ">
+                  <p className="text-lg font-bold whitespace-normal group-hover:text-white duration-700 ">
                     {e.featuredBrand}
                   </p>
 
