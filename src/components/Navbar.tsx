@@ -1,13 +1,15 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import logo from "../imgs/logo.png";
+
+export const NavbarContext = createContext("SGD");
 
 function Navbar() {
   const navigate = useNavigate();
-  const [currencyDropDown, setCurrencyDropDown] = useState("SGD");
+  const [currency, setCurrency] = useState("SGD");
   const [toggle, setToggle] = useState(true);
 
-  const currency = ["SGD", "USD", "MYR", "TKY"];
+  const currencyType = ["SGD", "USD", "MYR", "TKY"];
 
   const handlerCurrency = () => {
     setToggle(!toggle);
@@ -58,7 +60,7 @@ function Navbar() {
               onClick={handlerCurrency}
               className="text-white font-semibold py-0.5 pl-2 pr-1 border rounded flex items-center hover:border-bg-black cursor-pointer"
             >
-              {<p>{currencyDropDown}</p>}
+              {<p>{currency}</p>}
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -78,10 +80,10 @@ function Navbar() {
               {!toggle ? (
                 <div className="absolute top-12 right-5">
                   <ul className="bg-black border-2 rounded ">
-                    {currency.map((e) => (
+                    {currencyType.map((e) => (
                       <li
                         onClick={(e: any) => {
-                          setCurrencyDropDown(e.target.innerText);
+                          setCurrency(e.target.innerText);
                           handlerCurrency();
                         }}
                         className="py-0.5 px-3 border-b border-b-white hover:bg-slate-600"
@@ -97,7 +99,9 @@ function Navbar() {
           </ul>
         </div>
       </nav>
-      <Outlet />
+      <NavbarContext.Provider value={currency}>
+        <Outlet />
+      </NavbarContext.Provider>
     </>
   );
 }

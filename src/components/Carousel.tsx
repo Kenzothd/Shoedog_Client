@@ -46,7 +46,7 @@ function Carousel() {
           <button
             id="prev-button"
             onClick={prevBtn}
-            className="absolute left-0 py-20 px-2.5 opacity-0 rounded hover:bg-slate-300 hover:opacity-40 "
+            className="absolute left-0 py-20 px-2.5 opacity-0 rounded hover:bg-slate-300 hover:opacity-40"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +89,7 @@ function Carousel() {
           {carouselItems.map((e, i) => (
             <img
               className={
-                i === currentIndex ? " w-screen animate-fadein" : "hidden"
+                i === currentIndex ? "w-screen animate-fadein" : "hidden"
               }
               src={e}
               alt="carousel"

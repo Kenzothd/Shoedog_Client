@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { NavbarContext } from "./Navbar";
 
 function TopTenTable() {
+  const currency = useContext(NavbarContext);
+
   const mockTopTenData = [
     {
       img: "https://images.novelship.com/product/1664391359054_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
@@ -141,7 +144,10 @@ function TopTenTable() {
               </div>
             </div>
             {mockTopTenData.slice(0, 5).map((e, i) => (
-              <div className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50">
+              <div
+                className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50"
+                key={i}
+              >
                 <div className="grid grid-cols-5 gap-2 items-center font-semibold ">
                   <div>{i + 1}</div>
                   <div className="col-start-2 col-end-6">
@@ -157,7 +163,7 @@ function TopTenTable() {
                 </div>
                 <div className="place-self-center font-semibold ">
                   <p className="">
-                    SGD <span>{e.lowest_list}</span>
+                    {currency} <span>{e.lowest_list}</span>
                   </p>
                 </div>
                 <div className="place-self-center font-semibold">
@@ -182,7 +188,10 @@ function TopTenTable() {
               </div>
             </div>
             {mockTopTenData.slice(5, 10).map((e, i) => (
-              <div className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50">
+              <div
+                className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50"
+                key={i}
+              >
                 <div className="grid grid-cols-5 gap-2 items-center font-semibold">
                   <div>{i + 6}</div>
                   <div className="col-start-2 col-end-6">
@@ -198,7 +207,7 @@ function TopTenTable() {
                 </div>
                 <div className="place-self-center font-semibold ">
                   <p className="">
-                    SGD <span>{e.lowest_list}</span>
+                    {currency} <span>{e.lowest_list}</span>
                   </p>
                 </div>
                 <div className="place-self-center font-semibold">

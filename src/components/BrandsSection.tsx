@@ -22,6 +22,26 @@ function BrandsSection() {
       brand: "Supreme",
       img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Supreme_Logo.svg/2560px-Supreme_Logo.svg.png",
     },
+    {
+      brand: "Vans",
+      img: "https://www.thesun.co.uk/wp-content/uploads/2022/10/c103a01e-15d5-43b5-9ae6-dce6527bf45f.jpg",
+    },
+    {
+      brand: "Converse",
+      img: "https://1000logos.net/wp-content/uploads/2016/12/Converse-Logo-2007.png",
+    },
+    {
+      brand: "Reebok",
+      img: "https://cached.imagescaler.hbpl.co.uk/resize/scaleWidth/815/cached.offlinehbpl.hbpl.co.uk/news/OMC/Reebokdelta-20140303113357992.jpg",
+    },
+    {
+      brand: "Asics",
+      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Asics_Logo.svg/2560px-Asics_Logo.svg.png",
+    },
+    {
+      brand: "Onitsuka Tiger",
+      img: "https://upload.wikimedia.org/wikipedia/en/b/bd/Onitsuka_Tiger_logo.png",
+    },
   ];
 
   return (
@@ -35,13 +55,16 @@ function BrandsSection() {
         </div>
         <div className="grid grid-cols-5 mt-10 gap-5">
           {brands.map((e) => (
-            <div className="border-2 rounded transition ease-in-out hover:scale-105 cursor-pointer">
+            <div
+              className="border-2 rounded transition ease-in-out hover:scale-105 cursor-pointer drop-shadow-lg "
+              key={e.brand}
+            >
               <img
-                className="w-full h-28 rounded bg-white"
+                className="w-full h-28 rounded-t bg-white"
                 src={e.img}
                 alt="shoe"
               />
-              <div className="text-xl font-semibold text-center border-t">
+              <div className="text-xl font-semibold text-center border-t bg-white">
                 {e.brand}
               </div>
             </div>
