@@ -31,7 +31,12 @@ function Navbar() {
     <>
       <nav className="px-5 py-5 bg-black fixed w-full z-20 top-0 left-0  flex justify-between items-center">
         <div>
-          <p className="text-white text-lg font-semibold">ShoeDog</p>
+          <p className="text-white text-xl font-semibold">
+            ShoeDog{" "}
+            <span className="bg-gray-500 rounded text-sm whitespace-nowrap p-0.5">
+              - In Progress
+            </span>
+          </p>
         </div>
         <div>
           <ul className="flex justify-between gap-6 text-base items-center  ">

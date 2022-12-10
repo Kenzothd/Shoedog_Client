@@ -53,7 +53,7 @@ function BrandsSection() {
             View More
           </button>
         </div>
-        <div className="grid grid-cols-5 mt-10 gap-5">
+        <div className="grid grid-cols-5 mt-10 gap-6">
           {brands.map((e) => (
             <div
               className="border-2 rounded transition ease-in-out hover:scale-105 cursor-pointer drop-shadow-lg "
