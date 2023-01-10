@@ -16,7 +16,7 @@ function BrandsSection() {
     },
     {
       brand: "New Balance",
-      img: "https://logos-world.net/wp-content/uploads/2020/09/New-Balance-Logo-1972-2006.png",
+      img: "https://www.nicepng.com/png/detail/251-2510586_new-balance-png-logo-ideas-new-balance-logo.png",
     },
     {
       brand: "Supreme",
