@@ -30,7 +30,7 @@ function Navbar() {
   return (
     <>
       <nav className="px-5 py-5 bg-black fixed w-full z-20 top-0 left-0  flex justify-between items-center">
-        <div>
+        <div className="cursor-pointer" onClick={handlerHome}>
           <p className="text-white text-xl font-semibold">
             ShoeDog{" "}
             <span className="bg-gray-500 rounded text-sm whitespace-nowrap p-0.5">

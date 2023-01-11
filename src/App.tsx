@@ -9,6 +9,7 @@ import PersonalNavBar from "./components/PersonalNavBar";
 import UserDashboard from "./pages/UserDashboard";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import SingleProfile from "./pages/SingleProfile";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/login" element={<UserLogin />} />
               <Route path="/listings" element={<Listings />} />
               <Route path="/listings/:id" element={<SingleListing />} />
+              <Route path="/profile/:id" element={<SingleProfile />} />
             </Route>
             <Route path="/" element={<PersonalNavBar />}>
               <Route path="/user/:id/dashboard" element={<UserDashboard />} />
