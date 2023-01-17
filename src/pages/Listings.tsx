@@ -181,7 +181,7 @@ function Listings() {
           </div>
           <div>
             <h2 className="text-lg font-semibold">RELEASE YEAR</h2>
-            <div className="mt-2 border-2 border-black p-1 flex justify-between">
+            <div className="mt-2 border-2 border-black p-1 flex justify-between items-center">
               Select Year
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +189,7 @@ function Listings() {
                 viewBox="0 0 24 24"
                 strokeWidth="2"
                 stroke="black"
-                className="w-4 h-4"
+                className="w-4 h-4 pointers-event-none"
               >
                 <path
                   strokeLinecap="round"

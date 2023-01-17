@@ -9,7 +9,7 @@ function Home() {
   return (
     <>
       <Carousel />
-      <div className="home flex flex-col gap-20">
+      <div className="home flex flex-col gap-20 pb-20">
         <FeaturedSection />
         <Trending />
         <BrandsSection />
