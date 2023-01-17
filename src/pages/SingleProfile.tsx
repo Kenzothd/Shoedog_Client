@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function SingleProfile() {
+  const navigate = useNavigate();
   const [tab, setTab] = useState("Listed");
   const tabs = ["Listed", "Reviews", "Favourited"];
 
@@ -80,6 +82,10 @@ function SingleProfile() {
       quantity: 1,
     },
   ];
+
+  const navigateSingleListing = () => {
+    navigate("/listings/0");
+  };
 
   return (
     <div className="my-[10rem] mx-[16rem] flex flex-col gap-8">
@@ -165,7 +171,10 @@ function SingleProfile() {
 
       <div className="grid grid-cols-4 gap-8 px-10 mt-4">
         {mockShoesData.map((e) => (
-          <div className="border-2 rounded font-medium cursor-pointer transition ease-in-out hover:scale-105 h-72">
+          <div
+            className="border-2 rounded font-medium cursor-pointer transition ease-in-out hover:scale-105 h-72"
+            onClick={navigateSingleListing}
+          >
             <div className="h-1/2 p-2">
               <img className="object-contain h-full" src={e.img} alt="shoe" />
             </div>

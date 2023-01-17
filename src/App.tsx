@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SingleProfile from "./pages/SingleProfile";
 import UserProfile from "./pages/UserProfile";
+import AboutPage from "./pages/About";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/listings" element={<Listings />} />
               <Route path="/profile/:id" element={<SingleProfile />} />
               <Route path="/listings/:id" element={<SingleListing />} />
+              <Route path="/about" element={<AboutPage />} />
             </Route>
             <Route path="/" element={<PersonalNavBar />}>
               <Route path="/:username/dashboard" element={<UserDashboard />} />

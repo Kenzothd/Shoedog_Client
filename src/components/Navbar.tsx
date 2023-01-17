@@ -15,11 +15,7 @@ function Navbar() {
     setToggle(!toggle);
   };
 
-  const handlerLogin = () => {
-    navigate("/login");
-  };
-
-  const handlerHome = () => {
+  const navigateHome = () => {
     navigate("/");
   };
 
@@ -27,10 +23,18 @@ function Navbar() {
     navigate("/listings");
   };
 
+  const navigateAbout = () => {
+    navigate("/about");
+  };
+
+  const navigateLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <>
       <nav className="px-5 py-5 bg-black fixed w-full z-20 top-0 left-0  flex justify-between items-center">
-        <div className="cursor-pointer" onClick={handlerHome}>
+        <div className="cursor-pointer" onClick={navigateHome}>
           <p className="text-white text-xl font-semibold">
             ShoeDog{" "}
             <span className="bg-gray-500 rounded text-sm whitespace-nowrap p-0.5">
@@ -40,10 +44,22 @@ function Navbar() {
         </div>
         <div>
           <ul className="flex justify-between gap-6 text-base items-center  ">
-            <li className="text-white cursor-pointer" onClick={navigateListings}>Browse</li>
-            <li className="text-white">About</li>
-            <li className="text-white">News</li>
-            <li className="text-white flex gap-1 items-center">
+            <li className="text-white cursor-pointer" onClick={navigateHome}>
+              Home
+            </li>
+            <li
+              className="text-white cursor-pointer"
+              onClick={navigateListings}
+            >
+              Browse
+            </li>
+            <li className="text-white cursor-pointer" onClick={navigateAbout}>
+              About
+            </li>
+            <li
+              className="text-white flex gap-1 items-center cursor-pointer"
+              onClick={navigateLogin}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
