@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-function SingleProfile() {
+function UserProfile() {
   const [tab, setTab] = useState("Listed");
-  const tabs = ["Listed", "Reviews", "Favourited"];
+  const tabs = ["Listed", "Reviews", "Favourited", "Alerts", "Alert History"];
 
   const toggleTabHandler = (e: any) => {
     setTab(e.target.innerText);
@@ -83,8 +83,8 @@ function SingleProfile() {
 
   return (
     <div className="my-[10rem] mx-[16rem] flex flex-col gap-8">
-      <div className="flex flex-start gap-12 items-center">
-        <div className="py-12 border-2 rounded-[5rem] w-1/6 overflow-hidden">
+      <div className="flex flex-start gap-12 items-center ">
+        <div className="py-12 border-2 rounded-[5rem] w-[18%] overflow-hidden">
           <img
             src="https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200"
             alt="shoe"
@@ -109,24 +109,13 @@ function SingleProfile() {
           <p className="font-semibold ">@big_mingus777</p>
         </div>
       </div>
-      <div className="flex items-center justify-between font-medium">
+      <div className="flex items-center justify-between font-medium ">
         <div className="flex items-center gap-5 text-gray-400">
           <button>Followers (212)</button>
           <button>Following (430)</button>
           <p>Joined April 2022</p>
         </div>
         <div className="flex gap-2 items-center">
-          <button className="font-semibold flex items-center border border-black pr-1 py-1 transition ease-in-out hover:scale-105">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-5 h-5 pointer-events-none"
-            >
-              <path d="M10.75 6.75a.75.75 0 00-1.5 0v2.5h-2.5a.75.75 0 000 1.5h2.5v2.5a.75.75 0 001.5 0v-2.5h2.5a.75.75 0 000-1.5h-2.5v-2.5z" />
-            </svg>
-            Follow
-          </button>
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -186,4 +175,4 @@ function SingleProfile() {
   );
 }
 
-export default SingleProfile;
+export default UserProfile;
