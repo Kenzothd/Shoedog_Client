@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Ilistings } from "./Interface";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function SingleListing() {
   const [listing, setListing] = useState<Ilistings>({
@@ -25,6 +25,7 @@ function SingleListing() {
   const [toggleVolume, setToggleVolume] = useState("All");
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const data = [
     {
@@ -89,6 +90,10 @@ function SingleListing() {
 
   const handleToggleVol = (e: any) => {
     setToggleVolume(e.target.innerText);
+  };
+
+  const navigateProfile = () => {
+    navigate("/profile/0");
   };
 
   return (
@@ -198,7 +203,10 @@ function SingleListing() {
                       <div className="font-semibold pl-2">SGD {e.price}</div>
                       <div>{e.size}</div>
                       <div className="text-sm">{e.expirations}</div>
-                      <div className="text-blue-500 font-semibold text-sm flex items-center justify-center">
+                      <div
+                        className="text-blue-500 font-semibold text-sm flex items-center justify-center cursor-pointer hover:text-blue-700"
+                        onClick={navigateProfile}
+                      >
                         {e.seller}
                         {e.verified ? (
                           <svg
@@ -315,8 +323,11 @@ function SingleListing() {
               </svg>
             </button>
           </div>
+          <div className=" mt-4 border border-black text-center py-28">
+            Input Chart Here
+          </div>
         </div>
-        <div className="px-5 border-b-2 pb-10">
+        <div className="px-5 pb-10">
           <h2 className="font-semibold text-xl">12-Month Historical</h2>
           <div className="grid grid-cols-3 gap-4 mt-5">
             <div className="bg-gray-100 rounded py-4 px-6">

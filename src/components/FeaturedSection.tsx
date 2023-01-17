@@ -1,7 +1,9 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavbarContext } from "./Navbar";
 
 function FeaturedSection() {
+  const navigate = useNavigate();
   const [number, setNumber] = useState(1);
   const currency = useContext(NavbarContext);
 
@@ -76,12 +78,23 @@ function FeaturedSection() {
     setNumber(number + 1);
   };
 
+  const navigateSingleListing = () => {
+    navigate("/listings/0");
+  };
+
+  const navigateListings = () => {
+    navigate("/listings");
+  };
+
   return (
     <>
       <div className="">
         <div className="flex justify-between font-semibold pb-2 border-b">
           <div className=" text-3xl">Featured</div>
-          <button className="border border-black rounded px-2 py-1 text-lg text-black transition ease-in-out hover:scale-105">
+          <button
+            className="border border-black rounded px-2 py-1 text-lg text-black transition ease-in-out hover:scale-105"
+            onClick={navigateListings}
+          >
             View More
           </button>
         </div>
@@ -97,7 +110,10 @@ function FeaturedSection() {
         >
           right
         </button> */}
-        <div className="flex gap-5 mt-10 w-auto overflow-y-hidden overflow-x-scroll touch-auto snap-x snap-mandatory scroll-smooth will-change-scroll hover:">
+        <div
+          className="flex gap-5 mt-10 w-auto overflow-y-hidden overflow-x-scroll touch-auto snap-x snap-mandatory scroll-smooth will-change-scroll hover:"
+          onClick={navigateSingleListing}
+        >
           {featured.map((e, i) => (
             <div
               className={

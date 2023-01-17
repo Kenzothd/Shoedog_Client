@@ -22,8 +22,8 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/login" element={<UserLogin />} />
               <Route path="/listings" element={<Listings />} />
-              <Route path="/listings/:id" element={<SingleListing />} />
               <Route path="/profile/:id" element={<SingleProfile />} />
+              <Route path="/listings/:id" element={<SingleListing />} />
             </Route>
             <Route path="/" element={<PersonalNavBar />}>
               <Route path="/:username/dashboard" element={<UserDashboard />} />

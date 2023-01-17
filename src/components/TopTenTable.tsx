@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavbarContext } from "./Navbar";
 
 function TopTenTable() {
   const currency = useContext(NavbarContext);
-
+  const navigate = useNavigate();
   const mockTopTenData = [
     {
       img: "https://images.novelship.com/product/1664391359054_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
@@ -66,6 +67,10 @@ function TopTenTable() {
       volume: "343K",
     },
   ];
+
+  const navigateSingleListing = () => {
+    navigate("/listings/0");
+  };
 
   return (
     <>
@@ -147,6 +152,7 @@ function TopTenTable() {
               <div
                 className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50"
                 key={i}
+                onClick={navigateSingleListing}
               >
                 <div className="grid grid-cols-5 gap-2 items-center font-semibold ">
                   <div>{i + 1}</div>
@@ -191,6 +197,7 @@ function TopTenTable() {
               <div
                 className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50"
                 key={i}
+                onClick={navigateSingleListing}
               >
                 <div className="grid grid-cols-5 gap-2 items-center font-semibold">
                   <div>{i + 6}</div>

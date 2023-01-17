@@ -46,9 +46,7 @@ function Listings() {
     10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5,
   ]);
   const [date, setDate] = useState(new Date().toDateString());
-
   const currency = useContext(NavbarContext);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,6 +62,10 @@ function Listings() {
 
   const handleDateChange = (e: any) => {
     setDate(e.target.value);
+  };
+
+  const navigateSingleListing = () => {
+    navigate("/listings/0");
   };
 
   const mockShoesData = [
@@ -233,7 +235,10 @@ function Listings() {
           </div>
           <div className="grid grid-cols-4 gap-4 ">
             {mockShoesData.map((e) => (
-              <div className="border-2 rounded font-medium cursor-pointer transition ease-in-out hover:scale-105 h-72">
+              <div
+                className="border-2 rounded font-medium cursor-pointer transition ease-in-out hover:scale-105 h-72"
+                onClick={navigateSingleListing}
+              >
                 <div className="h-1/2 p-2">
                   <img
                     className="object-contain h-full"

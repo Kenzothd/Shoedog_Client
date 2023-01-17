@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function BrandsSection() {
+  const navigate = useNavigate();
   const brands = [
     {
       brand: "Nike",
@@ -44,12 +46,19 @@ function BrandsSection() {
     },
   ];
 
+  const navigateListings = () => {
+    navigate("/listings");
+  };
+
   return (
     <>
       <div>
         <div className="flex justify-between font-semibold pb-2 border-b">
           <div className=" text-3xl">All Brands</div>
-          <button className="border border-black rounded px-2 py-1 text-lg text-black transition ease-in-out hover:scale-105">
+          <button
+            className="border border-black rounded px-2 py-1 text-lg text-black transition ease-in-out hover:scale-105"
+            onClick={navigateListings}
+          >
             View More
           </button>
         </div>
@@ -58,6 +67,7 @@ function BrandsSection() {
             <div
               className="border-2 rounded transition ease-in-out hover:scale-105 cursor-pointer drop-shadow-lg "
               key={e.brand}
+              onClick={navigateListings}
             >
               <img
                 className="w-full h-28 rounded-t bg-white"

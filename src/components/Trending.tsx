@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import TopTenTable from "./TopTenTable";
 
 function Trending() {
+  const navigate = useNavigate();
   const [toggleTrending, setToggleTrending] = useState("Top");
   const [toggleVolume, setToggleVolume] = useState("All");
 
@@ -16,6 +18,10 @@ function Trending() {
 
   const toggleVolumeHandler = (e: any) => {
     setToggleVolume(e.target.innerText);
+  };
+
+  const navigateListings = () => {
+    navigate("/listings");
   };
 
   return (
@@ -60,7 +66,10 @@ function Trending() {
                 </button>
               ))}
             </div>
-            <button className="border border-black rounded px-2 py-1 text-lg text-black transition ease-in-out hover:scale-105">
+            <button
+              className="border border-black rounded px-2 py-1 text-lg text-black transition ease-in-out hover:scale-105"
+              onClick={navigateListings}
+            >
               View More
             </button>
           </div>

@@ -91,15 +91,15 @@ function Footer() {
             </a>
           </div>
         </div>
-        <hr className="my-6 border-gray-200 2xl:mx-auto dark:border-gray-700 2xl:my-8" />
-        <div className="2xl:flex 2xl:items-center 2xl:justify-between">
-          <span className="text-gray-500 2xl:text-center dark:text-gray-400">
+        <hr className="mt-6 mb-2 border-gray-200 2xl:mx-auto dark:border-gray-700 2xl:my-8" />
+        <div className="px-3">
+          <p className="text-gray-500 2xl:text-center dark:text-gray-400 ">
             *DISCLAIMER: All trademarks, logos and brand names are the property
             of their respective owners. All company, product and service names
             used in this website are for identification and illustration
-            purposes only. Use of these names,trademarks and brands does not
+            purposes only. Usage of these names,trademarks and brands does not
             imply endorsement.
-          </span>
+          </p>
         </div>
       </footer>
     </>

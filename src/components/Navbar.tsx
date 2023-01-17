@@ -23,7 +23,7 @@ function Navbar() {
     navigate("/");
   };
 
-  const handlerListings = () => {
+  const navigateListings = () => {
     navigate("/listings");
   };
 
@@ -40,7 +40,7 @@ function Navbar() {
         </div>
         <div>
           <ul className="flex justify-between gap-6 text-base items-center  ">
-            <li className="text-white">Browse</li>
+            <li className="text-white cursor-pointer" onClick={navigateListings}>Browse</li>
             <li className="text-white">About</li>
             <li className="text-white">News</li>
             <li className="text-white flex gap-1 items-center">
