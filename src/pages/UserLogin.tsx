@@ -15,7 +15,7 @@ function UserLogin() {
 
   return (
     <>
-      <div className="bg-slate-50 px-10 pb-5 text-center center">
+      <div className="my-[10rem] bg-slate-50 px-10 pb-5 text-center center ">
         <Box
           sx={{
             mt: "7rem",

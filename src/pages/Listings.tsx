@@ -143,7 +143,7 @@ function Listings() {
 
   return (
     <>
-      <div className="my-[10rem] mx-[15rem] flex gap-10 justify-center">
+      <div className="my-[10rem] mx-[12rem] flex gap-10 justify-center">
         <div className="pt-2 border-2 rounded-sm w-1/5 p-4 flex flex-col gap-6">
           <div>
             <h2 className="text-lg font-semibold">PRICES</h2>

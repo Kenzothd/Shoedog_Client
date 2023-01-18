@@ -1,10 +1,19 @@
-import React, { useContext } from "react";
+import axios from "axios";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavbarContext } from "./Navbar";
 
 function TopTenTable() {
   const currency = useContext(NavbarContext);
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${process.env.REACT_APP_API_BASE_URL}/listings`)
+  //     .then((res) => console.log(res.data[0]))
+  //     .catch((err) => console.log(err));img
+  // }, []);
+
   const mockTopTenData = [
     {
       img: "https://images.novelship.com/product/1664391359054_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",

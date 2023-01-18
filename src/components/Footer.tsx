@@ -9,7 +9,7 @@ function Footer() {
       <footer className="mt-10 pb-4 bg-slate-100">
         <div className="mt-4 pt-10 px-[16rem] text-center border-t">
           <p>
-            ShoeDog is a website where shoe aficionados may purchase and sell
+            ShoeDog is a platform where shoe aficionados may purchase and sell
             shoes. It offers real-time data, alert prompts, and the ability to
             keep track of the status of a favourite pair of shoes.
           </p>

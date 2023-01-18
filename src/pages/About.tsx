@@ -11,7 +11,7 @@ function AboutPage() {
             alt="profile-pic"
           />
         </div>
-        <div>
+        <div className="mt-4">
           <h2 className="font-semibold text-lg">Creator Profile</h2>
           <p>
             Hi there, my name is Kenzo!👋 I am an analytical and solution-focus
