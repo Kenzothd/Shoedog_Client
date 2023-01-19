@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IAllAlerts, Ishoes } from "../pages/Interface";
+import { IAllAlerts, IShoes } from "../pages/Interface";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
@@ -22,7 +22,7 @@ function CreateListing({
   setAllAlerts,
   allAlerts,
 }: Props) {
-  const [shoes, setShoes] = useState<Ishoes[]>([
+  const [shoes, setShoes] = useState<IShoes[]>([
     {
       shoe_brand: "",
       shoe_description: "",

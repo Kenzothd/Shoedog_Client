@@ -51,11 +51,24 @@ export interface IAllAlerts {
   user_listing_id: number;
 }
 
-export interface Ishoes {
+export interface IShoes {
   shoe_brand: string;
   shoe_description: string;
   shoe_id: number;
   shoe_img: string;
   shoe_model: string;
   shoe_size: string;
+}
+
+export interface IVolume {
+  shoe_id: number;
+  shoe_brand: string;
+  shoe_model: string;
+  shoe_img: string;
+  lowest_listing_price: number;
+  total_volume: number;
+  one_month_total_volume: number;
+  three_month_total_volume: number;
+  six_month_total_volume: number;
+  one_year_total_volume: number;
 }

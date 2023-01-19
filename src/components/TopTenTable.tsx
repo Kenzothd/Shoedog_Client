@@ -1,81 +1,93 @@
 import axios from "axios";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { IVolume } from "../pages/Interface";
 import { NavbarContext } from "./Navbar";
+import { IStats } from "./Trending";
 
-function TopTenTable() {
+type Props = {
+  currentStats: IStats[];
+};
+
+function TopTenTable({ currentStats }: Props) {
   const currency = useContext(NavbarContext);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_API_BASE_URL}/listings`)
-  //     .then((res) => console.log(res.data[0]))
-  //     .catch((err) => console.log(err));img
-  // }, []);
+  // const mockTopTenData = [
+  //   {
+  //     img: "https://images.novelship.com/product/1664391359054_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+  //     shoe_name: "Jordan 1 High 'Lost & Found'",
+  //     lowest_list: 432,
+  //     volume: "64M+",
+  //   },
+  //   {
+  //     img: "https://images.novelship.com/product/1653919419146_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+  //     shoe_name: "Dunk Low 'Black White' 2021",
+  //     lowest_list: 191,
+  //     volume: "24M+",
+  //   },
+  //   {
+  //     img: "https://images.novelship.com/product/1664411976537_AirJordan40.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+  //     shoe_name: "Jordan 4 Retro 'Midnight Navy",
+  //     lowest_list: 325,
+  //     volume: "4M+",
+  //   },
+  //   {
+  //     img: "https://images.novelship.com/product/1666960814609_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+  //     shoe_name: "Jordan 1 Low 'Aluminum'(W)",
+  //     lowest_list: 140,
+  //     volume: "1M+",
+  //   },
+  //   {
+  //     img: "https://images.novelship.com/product/1653918046201_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+  //     shoe_name: "Dunk Low SP 'Kentucky'",
+  //     lowest_list: 206,
+  //     volume: "1M+",
+  //   },
+  //   {
+  //     img: "https://images.novelship.com/product/1658762197699_YeezySlide0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+  //     shoe_name: "Yeezy Slides 'Bone' (2022 Restock)",
+  //     lowest_list: 156,
+  //     volume: "987K",
+  //   },
+  //   {
+  //     img: "https://images.novelship.com/product/1653919400399_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+  //     shoe_name: "Dunk Low 'Black White' 2021 (W)",
+  //     lowest_list: 186,
+  //     volume: "854K",
+  //   },
+  //   {
+  //     img: "https://images.novelship.com/product/1653919040759_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+  //     shoe_name: "Jordan 1 Mid 'Smoke Grey'",
+  //     lowest_list: 156,
+  //     volume: "800K",
+  //   },
+  //   {
+  //     img: "https://images.novelship.com/product/1654843117055_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+  //     shoe_name: "Jordan 1 Low 'Bulls'",
+  //     lowest_list: 101,
+  //     volume: "500K",
+  //   },
+  //   {
+  //     img: "https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+  //     shoe_name: "Air Force 1 Low White '07",
+  //     lowest_list: 113,
+  //     volume: "343K",
+  //   },
+  // ];
 
-  const mockTopTenData = [
-    {
-      img: "https://images.novelship.com/product/1664391359054_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 High 'Lost & Found'",
-      lowest_list: 432,
-      volume: "64M+",
-    },
-    {
-      img: "https://images.novelship.com/product/1653919419146_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Dunk Low 'Black White' 2021",
-      lowest_list: 191,
-      volume: "24M+",
-    },
-    {
-      img: "https://images.novelship.com/product/1664411976537_AirJordan40.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 4 Retro 'Midnight Navy",
-      lowest_list: 325,
-      volume: "4M+",
-    },
-    {
-      img: "https://images.novelship.com/product/1666960814609_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 Low 'Aluminum'(W)",
-      lowest_list: 140,
-      volume: "1M+",
-    },
-    {
-      img: "https://images.novelship.com/product/1653918046201_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Dunk Low SP 'Kentucky'",
-      lowest_list: 206,
-      volume: "1M+",
-    },
-    {
-      img: "https://images.novelship.com/product/1658762197699_YeezySlide0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Yeezy Slides 'Bone' (2022 Restock)",
-      lowest_list: 156,
-      volume: "987K",
-    },
-    {
-      img: "https://images.novelship.com/product/1653919400399_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Dunk Low 'Black White' 2021 (W)",
-      lowest_list: 186,
-      volume: "854K",
-    },
-    {
-      img: "https://images.novelship.com/product/1653919040759_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 Mid 'Smoke Grey'",
-      lowest_list: 156,
-      volume: "800K",
-    },
-    {
-      img: "https://images.novelship.com/product/1654843117055_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 Low 'Bulls'",
-      lowest_list: 101,
-      volume: "500K",
-    },
-    {
-      img: "https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Air Force 1 Low White '07",
-      lowest_list: 113,
-      volume: "343K",
-    },
-  ];
+  const formatNumber = (num: number) => {
+    if (num >= 1000000000) {
+      return parseFloat((num / 1000000000).toFixed(2)) + "B";
+    }
+    if (num >= 1000000) {
+      return parseFloat((num / 1000000).toFixed(2)) + "M";
+    }
+    if (num >= 1000) {
+      return parseFloat((num / 1000).toFixed(2)) + "K";
+    }
+    return num;
+  };
 
   const navigateSingleListing = () => {
     navigate("/listings/0");
@@ -142,7 +154,7 @@ function TopTenTable() {
       </div> */}
 
       {/* using grid with divs */}
-      <div className="flex justify-between gap-10">
+      <div className="flex justify-evenly gap-14">
         <div id="type-2-left">
           <div className="grid grid-cols-6 gap-2 items-center">
             <div className="col-span-6 grid grid-cols-6 mb-2">
@@ -157,35 +169,39 @@ function TopTenTable() {
                 VOLUME
               </div>
             </div>
-            {mockTopTenData.slice(0, 5).map((e, i) => (
-              <div
-                className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50"
-                key={i}
-                onClick={navigateSingleListing}
-              >
-                <div className="grid grid-cols-5 gap-2 items-center font-semibold ">
-                  <div>{i + 1}</div>
-                  <div className="col-start-2 col-end-6">
-                    <img
-                      className="w-16 h-16 py-3 border rounded  bg-white"
-                      src={e.img}
-                      alt="shoe"
-                    />
+            {currentStats[0] ? (
+              currentStats?.slice(0, 5).map((e, i) => (
+                <div
+                  className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50"
+                  key={e.shoe_id}
+                  onClick={navigateSingleListing}
+                >
+                  <div className="grid grid-cols-5 gap-2 items-center font-semibold ">
+                    <div>{i + 1}</div>
+                    <div className="col-start-2 col-end-6">
+                      <img
+                        className="w-16 h-16 py-3 border rounded  bg-white"
+                        src={e.shoe_img}
+                        alt="shoe"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-span-3 break-all px-2 font-semibold">
+                    {e.shoe_model}
+                  </div>
+                  <div className="place-self-center font-semibold ">
+                    <p className="">
+                      {currency} <span>{e.lowest_listing_price}</span>
+                    </p>
+                  </div>
+                  <div className="place-self-center font-semibold">
+                    {formatNumber(e.volume)}
                   </div>
                 </div>
-                <div className="col-span-3 break-all px-2 font-semibold">
-                  {e.shoe_name}
-                </div>
-                <div className="place-self-center font-semibold ">
-                  <p className="">
-                    {currency} <span>{e.lowest_list}</span>
-                  </p>
-                </div>
-                <div className="place-self-center font-semibold">
-                  {e.volume}
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <div>Loading...</div>
+            )}
           </div>
         </div>
         <div id="type-2-right">
@@ -202,35 +218,39 @@ function TopTenTable() {
                 VOLUME
               </div>
             </div>
-            {mockTopTenData.slice(5, 10).map((e, i) => (
-              <div
-                className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50"
-                key={i}
-                onClick={navigateSingleListing}
-              >
-                <div className="grid grid-cols-5 gap-2 items-center font-semibold">
-                  <div>{i + 6}</div>
-                  <div className="col-start-2 col-end-6">
-                    <img
-                      className="w-16 h-16 py-3 border rounded bg-white"
-                      src={e.img}
-                      alt="shoe"
-                    />
+            {currentStats[0] ? (
+              currentStats?.slice(5, 10).map((e, i) => (
+                <div
+                  className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50"
+                  key={e.shoe_id}
+                  onClick={navigateSingleListing}
+                >
+                  <div className="grid grid-cols-5 gap-2 items-center font-semibold ">
+                    <div>{i + 6}</div>
+                    <div className="col-start-2 col-end-6">
+                      <img
+                        className="w-16 h-16 py-3 border rounded  bg-white"
+                        src={e.shoe_img}
+                        alt="shoe"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-span-3 break-all px-2 font-semibold">
+                    {e.shoe_model}
+                  </div>
+                  <div className="place-self-center font-semibold ">
+                    <p className="">
+                      {currency} <span>{e.lowest_listing_price}</span>
+                    </p>
+                  </div>
+                  <div className="place-self-center font-semibold">
+                    {formatNumber(e.volume)}
                   </div>
                 </div>
-                <div className="col-span-3 break-all px-2 font-semibold">
-                  {e.shoe_name}
-                </div>
-                <div className="place-self-center font-semibold ">
-                  <p className="">
-                    {currency} <span>{e.lowest_list}</span>
-                  </p>
-                </div>
-                <div className="place-self-center font-semibold">
-                  {e.volume}
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <div>Loading...</div>
+            )}
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { IAllAlerts, Ishoes } from "../pages/Interface";
+import { IAllAlerts, IShoes } from "../pages/Interface";
 
 type Props = {
   // alertsHistory: IAllAlerts[];
@@ -22,7 +22,7 @@ function CreateAlert({
   setAllAlerts,
   allAlerts,
 }: Props) {
-  const [shoes, setShoes] = useState<Ishoes[]>([
+  const [shoes, setShoes] = useState<IShoes[]>([
     {
       shoe_brand: "",
       shoe_description: "",

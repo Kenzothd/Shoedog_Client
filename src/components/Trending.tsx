@@ -1,14 +1,62 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { IVolume } from "../pages/Interface";
 import TopTenTable from "./TopTenTable";
+
+export interface IStats {
+  shoe_brand: string;
+  shoe_model: string;
+  shoe_id: number;
+  shoe_img: string;
+  lowest_listing_price: number;
+  volume: number;
+}
 
 function Trending() {
   const navigate = useNavigate();
   const [toggleTrending, setToggleTrending] = useState("Top");
   const [toggleVolume, setToggleVolume] = useState("All");
+  const [volumeStats, setVolumeStats] = useState<IVolume[]>([]);
+  const [currentStats, setCurrentStats] = useState<IStats[]>([]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/volume`)
+      .then((res) => {
+        setVolumeStats(res.data);
+        setCurrentStats(
+          res.data.map(
+            ({
+              shoe_brand,
+              shoe_model,
+              shoe_id,
+              shoe_img,
+              lowest_listing_price,
+              total_volume,
+            }: {
+              shoe_brand: string;
+              shoe_model: string;
+              shoe_id: number;
+              shoe_img: string;
+              lowest_listing_price: number;
+              total_volume: number;
+            }) => ({
+              shoe_brand,
+              shoe_model,
+              shoe_id,
+              shoe_img,
+              lowest_listing_price,
+              volume: total_volume,
+            })
+          )
+        );
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const trendingBtn = ["Trending", "Top"];
-  const volBtn = ["All", "1D", "7D", "30D"];
+  const volBtn = ["All", "1M", "3M", "6M", "1Y"];
 
   const toggleTrendingHandler = (param: string) => {
     param === "Trending"
@@ -16,8 +64,40 @@ function Trending() {
       : setToggleTrending("Top");
   };
 
-  const toggleVolumeHandler = (e: any) => {
-    setToggleVolume(e.target.innerText);
+  const toggleVolumeHandler = (e: React.MouseEvent<HTMLElement>) => {
+    const volumePeriod = e.currentTarget.innerText;
+    setToggleVolume(volumePeriod);
+    let newArray: IStats[] = [];
+    const volumePeriodMap: { [key: string]: string } = {
+      All: "total_volume",
+      "1M": "one_month_total_volume",
+      "3M": "three_month_total_volume",
+      "6M": "six_month_total_volume",
+      "1Y": "one_year_total_volume",
+    };
+    const volumePeriodKey = volumePeriodMap[volumePeriod];
+    if (volumeStats && volumePeriodKey) {
+      newArray = volumeStats
+        .map(
+          ({
+            shoe_brand,
+            shoe_model,
+            shoe_id,
+            shoe_img,
+            lowest_listing_price,
+            [volumePeriodKey as keyof IVolume]: volume,
+          }) => ({
+            shoe_brand,
+            shoe_model,
+            shoe_id,
+            shoe_img,
+            lowest_listing_price,
+            volume: +volume,
+          })
+        )
+        .sort((a, b) => b.volume - a.volume);
+      setCurrentStats(newArray);
+    }
   };
 
   const navigateListings = () => {
@@ -74,7 +154,7 @@ function Trending() {
             </button>
           </div>
         </div>
-        <TopTenTable />
+        <TopTenTable currentStats={currentStats} />
       </div>
     </>
   );
