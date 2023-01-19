@@ -92,7 +92,7 @@ function Trending() {
             shoe_id,
             shoe_img,
             lowest_listing_price,
-            volume: +volume,
+            volume: Number(volume),
           })
         )
         .sort((a, b) => b.volume - a.volume);
