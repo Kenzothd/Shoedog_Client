@@ -87,8 +87,8 @@ function TopTenTable({ currentStats }: Props) {
     return num;
   };
 
-  const navigateSingleListing = () => {
-    navigate("/listings/0");
+  const navigateSingleListing = (e: any) => {
+    navigate(`/listings/${e.currentTarget.id}`);
   };
 
   return (
@@ -172,6 +172,7 @@ function TopTenTable({ currentStats }: Props) {
                 <div
                   className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50"
                   key={e.shoe_id}
+                  id={e.shoe_id.toString()}
                   onClick={navigateSingleListing}
                 >
                   <div className="grid grid-cols-5 gap-2 items-center font-semibold ">
@@ -217,7 +218,9 @@ function TopTenTable({ currentStats }: Props) {
                     />
                   </svg>
                 </div>
-                <div className="pt-2">Loading might take awhile...</div>
+                <div className="pt-2 font-medium">
+                  Loading might take awhile...
+                </div>
               </div>
             )}
           </div>
@@ -241,6 +244,7 @@ function TopTenTable({ currentStats }: Props) {
                 <div
                   className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50"
                   key={e.shoe_id}
+                  id={e.shoe_id.toString()}
                   onClick={navigateSingleListing}
                 >
                   <div className="grid grid-cols-5 gap-2 items-center font-semibold ">
@@ -286,7 +290,9 @@ function TopTenTable({ currentStats }: Props) {
                     />
                   </svg>
                 </div>
-                <div className="pt-2">Loading might take awhile...</div>
+                <div className="pt-2 font-medium">
+                  Loading might take awhile...
+                </div>
               </div>
             )}
           </div>

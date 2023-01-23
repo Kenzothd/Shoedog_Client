@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Ilistings } from "./Interface";
+import { Ilistings, IShoeData } from "./Interface";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { format } from "date-fns";
 
 function SingleListing() {
   const [listing, setListing] = useState<Ilistings>({
@@ -22,8 +23,8 @@ function SingleListing() {
     user_listing_id: 0,
     verified: "",
   });
+  const [shoeData, setShoeData] = useState<IShoeData[]>([]);
   const [toggleVolume, setToggleVolume] = useState("All");
-
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -83,10 +84,12 @@ function SingleListing() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/${id}`)
-      .then((res) => setListing(res.data))
+      .get(`${process.env.REACT_APP_API_BASE_URL}/shoes/${id}`)
+      .then((res) => setShoeData(res.data))
       .catch((err) => console.log(err));
   }, [id]);
+
+  console.log(shoeData);
 
   const handleToggleVol = (e: any) => {
     setToggleVolume(e.target.innerText);
@@ -96,20 +99,26 @@ function SingleListing() {
     navigate("/profile/0");
   };
 
+  const randomNumber = Math.round(Math.random() * 10 * 5);
+
   return (
     <>
       <div className="mt-[10rem] mx-[10rem] flex flex-col gap-10">
         <div className="flex gap-12 justify-center items-center">
-          <div className="rounded w-[44%] border-2 mb-12">
+          <div className="rounded w-[36rem] border-2 mb-12">
             <img
-              className="py-10 object-contain border-b rounded"
-              src="https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200"
+              className="py-8 px-2 h-[21.3rem] w-full aspect-auto object-contain border-b rounded"
+              src={
+                shoeData[0]
+                  ? shoeData[0].shoe_img
+                  : "https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200"
+              }
               alt="shoe"
             />
             <div className="px-2 py-3 flex justify-between items-center">
-              <p className="font-semibold text-xl">Air Force 1 Low White '07</p>
+              <p className="font-semibold text-xl">{shoeData[0]?.shoe_model}</p>
               <div className="flex gap-1">
-                <p>121</p>
+                <p>{shoeData[0]?.shoe_likes + randomNumber}</p>
                 <button className="">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -130,10 +139,12 @@ function SingleListing() {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <h1 className="font-medium text-lg text-slate-400">Nike</h1>
+            <h2 className="font-medium text-lg text-slate-400">
+              {shoeData[0]?.shoe_brand}
+            </h2>
             <div className="flex justify-between items-center">
               <h2 className="font-semibold text-xl">
-                Air Force 1 Low White '07
+                {shoeData[0]?.shoe_model}
               </h2>
               <button>
                 <svg
@@ -262,30 +273,31 @@ function SingleListing() {
           <h3 className="font-semibold text-xl mb-10">Product Details</h3>
           <div className="flex  gap-28 px-2">
             <div className="grid grid-cols-2 place-items-start gap-x-10 gap-y-1 h-1/2">
-              <p className="font-semibold text-md">Colorway</p>
-              <p>White</p>
               <p className="font-semibold text-md">Retail Price</p>
-              <p>$120</p>
+              <p>${shoeData[0]?.shoe_retail_price}</p>
               <p className="font-semibold text-md">Average Price</p>
               <p>$160</p>
               <p className="font-semibold text-md">Release Date</p>
-              <p>06 Apr 2022</p>
+              <p>
+                {shoeData[0]
+                  ? format(
+                      new Date(shoeData[0]?.shoe_release_date),
+                      "dd MMM yyyy"
+                    )
+                  : " "}
+              </p>
             </div>
             <div className="w-8/12">
               <h4 className="font-semibold text-lg pb-1">
                 Product Description
               </h4>
               <p className="text-md">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                {shoeData[0]?.shoe_description}
                 <br />
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
                 dolor in reprehenderit in voluptate velit esse cillum dolore eu
                 fugiat nulla pariatur.
-                <br />
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                qui officia deserunt mollit anim id est laborum.
               </p>
             </div>
           </div>
@@ -294,8 +306,9 @@ function SingleListing() {
           <h2 className="font-semibold text-xl">Price History</h2>
           <div className="flex justify-between items-center mt-5">
             <div className="flex border rounded font-medium text-sm">
-              {volbtn.map((e) => (
+              {volbtn.map((e, i) => (
                 <button
+                  key={i}
                   className={
                     toggleVolume === e
                       ? "px-8 border rounded bg-black text-white"
@@ -331,19 +344,30 @@ function SingleListing() {
           <h2 className="font-semibold text-xl">12-Month Historical</h2>
           <div className="grid grid-cols-3 gap-4 mt-5">
             <div className="bg-gray-100 rounded py-4 px-6">
-              <p className="font-semibold text-xl">SGD 69 - SGD 550</p>
+              <p className="font-semibold text-xl">
+                SGD {shoeData[0]?.one_year_lowest_listing_price + randomNumber}{" "}
+                - SGD{" "}
+                {shoeData[0]?.one_year_highest_listing_price - randomNumber}
+              </p>
               <p className="font-medium text-sm">12-Month Trade Range</p>
             </div>
             <div className="bg-gray-100 rounded py-4 px-6">
-              <p className="font-semibold text-xl">SGD 170 - SGD 244</p>
+              <p className="font-semibold text-xl">
+                SGD {shoeData[0]?.all_time_lowest_listing_price} - SGD{" "}
+                {shoeData[0]?.all_time_highest_listing_price}
+              </p>
               <p className="font-medium text-sm">All-Time Trade Range</p>
             </div>
             <div className="bg-gray-100 rounded py-4 px-6">
-              <p className="font-semibold text-xl">18%</p>
+              <p className="font-semibold text-xl">
+                {shoeData[0]?.volatility}%
+              </p>
               <p className="font-medium text-sm">Volatility</p>
             </div>
             <div className="bg-gray-100 rounded py-4 px-6">
-              <p className="font-semibold text-xl">2,190</p>
+              <p className="font-semibold text-xl">
+                {shoeData[0]?.number_of_sales}
+              </p>
               <p className="font-medium text-sm">Number of Sales</p>
             </div>
             <div className="bg-gray-100 rounded py-4 px-6">
@@ -351,7 +375,9 @@ function SingleListing() {
               <p className="font-medium text-sm">Price Premium</p>
             </div>
             <div className="bg-gray-100 rounded py-4 px-6">
-              <p className="font-semibold text-xl">SGD 232</p>
+              <p className="font-semibold text-xl">
+                SGD {shoeData[0]?.average_listing_price}
+              </p>
               <p className="font-medium text-sm">Average Sale Price</p>
             </div>
           </div>

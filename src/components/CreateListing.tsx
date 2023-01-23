@@ -22,28 +22,19 @@ function CreateListing({
   setAllAlerts,
   allAlerts,
 }: Props) {
-  const [shoes, setShoes] = useState<IShoes[]>([
-    {
-      shoe_brand: "",
-      shoe_description: "",
-      shoe_id: 0,
-      shoe_img: "",
-      shoe_model: "",
-      shoe_size: "",
-    },
-  ]);
+  const [shoes, setShoes] = useState<IShoes[]>([]);
   const { id } = useParams();
-  const shoeSize = shoes.map((e) => e.shoe_size);
+  // const shoeSize = shoes.map((e) => e.shoe_size);
 
-  useEffect(() => {
-    console.log(`alert fetch`);
-    console.log(`${process.env.REACT_APP_API_BASE_URL}`);
+  // useEffect(() => {
+  //   console.log(`alert fetch`);
+  //   console.log(`${process.env.REACT_APP_API_BASE_URL}`);
 
-    axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/shoes`)
-      .then((res) => setShoes(res.data))
-      .catch((err) => console.log(err));
-  }, []);
+  //   axios
+  //     .get(`${process.env.REACT_APP_API_BASE_URL}/shoes`)
+  //     .then((res) => setShoes(res.data))
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -138,11 +129,11 @@ function CreateListing({
                 onBlur={formik.handleBlur}
                 value={formik.values.shoe_size}
               >
-                {shoeSize.map((e, i) => (
+                {/* {shoeSize.map((e, i) => (
                   <option key={i} value={e}>
                     {e}
                   </option>
-                ))}
+                ))} */}
               </select>
               {formik.touched.shoe_size && formik.errors.shoe_size ? (
                 <div>{formik.errors.shoe_size}</div>

@@ -57,7 +57,27 @@ export interface IShoes {
   shoe_id: number;
   shoe_img: string;
   shoe_model: string;
-  shoe_size: string;
+  shoe_likes: number;
+  shoe_release_date: string;
+  shoe_retail_price: number;
+}
+
+export interface IShoeData {
+  shoe_id: number;
+  shoe_brand: string;
+  shoe_model: string;
+  shoe_description: string;
+  shoe_img: string;
+  shoe_likes: number;
+  shoe_release_date: string;
+  shoe_retail_price: number;
+  all_time_lowest_listing_price: number;
+  all_time_highest_listing_price: number;
+  average_listing_price: string;
+  one_year_lowest_listing_price: number;
+  one_year_highest_listing_price: number;
+  volatility: string;
+  number_of_sales: number;
 }
 
 export interface IVolume {

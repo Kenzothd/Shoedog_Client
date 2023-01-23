@@ -56,7 +56,7 @@ function Trending() {
   }, []);
 
   const trendingBtn = ["Trending", "Top"];
-  const volBtn = ["All", "1M", "3M", "6M", "1Y"];
+  const volBtn = ["1M", "3M", "6M", "1Y", "All"];
 
   const toggleTrendingHandler = (param: string) => {
     param === "Trending"

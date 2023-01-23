@@ -23,17 +23,10 @@ function CreateAlert({
   allAlerts,
 }: Props) {
   const [shoes, setShoes] = useState<IShoes[]>([
-    {
-      shoe_brand: "",
-      shoe_description: "",
-      shoe_id: 0,
-      shoe_img: "",
-      shoe_model: "",
-      shoe_size: "",
-    },
+   
   ]);
   const { id } = useParams();
-  const shoeSize = shoes.map((e) => e.shoe_size);
+  // const shoeSize = shoes.map((e) => e.shoe_size);
 
   useEffect(() => {
     axios
@@ -135,11 +128,11 @@ function CreateAlert({
                 onBlur={formik.handleBlur}
                 value={formik.values.shoe_size}
               >
-                {shoeSize.map((e, i) => (
+                {/* {shoeSize.map((e, i) => (
                   <option key={i} value={e}>
                     {e}
                   </option>
-                ))}
+                ))} */}
               </select>
               {formik.touched.shoe_size && formik.errors.shoe_size ? (
                 <div>{formik.errors.shoe_size}</div>
