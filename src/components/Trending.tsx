@@ -22,7 +22,7 @@ function Trending() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}listings/volume`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/volume`)
       .then((res) => {
         setVolumeStats(res.data);
         setCurrentStats(

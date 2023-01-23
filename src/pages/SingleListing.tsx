@@ -84,7 +84,7 @@ function SingleListing() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}shoes/${id}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/shoes/${id}`)
       .then((res) => setShoeData(res.data))
       .catch((err) => console.log(err));
   }, [id]);
