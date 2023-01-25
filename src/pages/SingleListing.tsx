@@ -1,83 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Ilistings, IShoeData } from "./Interface";
+import { IlistingsSoldFalse, IShoeData } from "./Interface";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { format } from "date-fns";
+import { format, formatDistanceToNow, parse } from "date-fns";
 
 function SingleListing() {
-  const [listing, setListing] = useState<Ilistings>({
-    country: "",
-    email: "",
-    first_name: "",
-    last_name: "",
-    listing_id: 0,
-    listing_price: 0,
-    password: "",
-    shoe_brand: "",
-    shoe_description: "",
-    shoe_id: 0,
-    shoe_img: "",
-    shoe_model: "",
-    shoe_size: "",
-    sold: false,
-    user_listing_id: 0,
-    verified: "",
-  });
+  const [listings, setListings] = useState<IlistingsSoldFalse[]>([]);
+  const [sort, setSort] = useState("Most Recent");
+  const [toggle, setToggle] = useState(false);
   const [shoeData, setShoeData] = useState<IShoeData[]>([]);
   const [toggleVolume, setToggleVolume] = useState("All");
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const data = [
-    {
-      price: 177,
-      size: 6,
-      expirations: "7 hours ago",
-      seller: "big_migus",
-      verified: false,
-    },
-    {
-      price: 179,
-      size: 6,
-      expirations: "8 hours ago",
-      seller: "shadyjawn",
-      verified: false,
-    },
-    {
-      price: 185,
-      size: 6.5,
-      expirations: "16 hours ago",
-      seller: "franklinisbored",
-      verified: false,
-    },
-    {
-      price: 190,
-      size: 6.5,
-      expirations: "1 day ago",
-      seller: "StreetPigeon",
-      verified: false,
-    },
-    {
-      price: 199,
-      size: 7,
-      expirations: "1 day ago",
-      seller: "Darlington",
-      verified: true,
-    },
-    {
-      price: 199,
-      size: 7,
-      expirations: "1 day ago",
-      seller: "Darlington",
-      verified: true,
-    },
-    {
-      price: 199,
-      size: 7,
-      expirations: "1 day ago",
-      seller: "Darlington",
-      verified: true,
-    },
+  const sortList = [
+    "Most Recent",
+    "Least Recent",
+    "Lowest Price",
+    "Highest Price",
+    "Smallest Size",
+    "Largest Size",
   ];
 
   const volbtn = ["1M", "3M", "6M", "1Y", "All"];
@@ -87,9 +29,56 @@ function SingleListing() {
       .get(`${process.env.REACT_APP_API_BASE_URL}/shoes/${id}`)
       .then((res) => setShoeData(res.data))
       .catch((err) => console.log(err));
+
+    axios
+      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/false/${id}`)
+      .then((res) => {
+        setListings(res.data);
+      })
+      .catch((err) => console.log(err));
   }, [id]);
 
-  console.log(shoeData);
+  let sortedListings = listings;
+
+  const handleToggleSort = () => {
+    setToggle(!toggle);
+  };
+
+  switch (sort) {
+    case "Least Recent":
+      sortedListings = sortedListings?.sort(
+        (a, b) => Date.parse(a.listing_date) - Date.parse(b.listing_date)
+      );
+      break;
+    case "Lowest Price":
+      console.log("Lowest Price sorting");
+      sortedListings = sortedListings?.sort(
+        (a, b) => a.listing_price - b.listing_price
+      );
+      break;
+    case "Highest Price":
+      console.log("Highest Price sorting");
+      sortedListings = sortedListings?.sort(
+        (a, b) => b.listing_price - a.listing_price
+      );
+      break;
+    case "Smallest Size":
+      console.log("Smallest Size sorting");
+      sortedListings = sortedListings.sort(
+        (a, b) => Number(a.shoe_size) - Number(b.shoe_size)
+      );
+      break;
+    case "Largest Size":
+      console.log("Largest Size sorting");
+      sortedListings = sortedListings.sort(
+        (a, b) => Number(b.shoe_size) - Number(a.shoe_size)
+      );
+      break;
+    default:
+      sortedListings = sortedListings?.sort(
+        (a, b) => Date.parse(b.listing_date) - Date.parse(a.listing_date)
+      );
+  }
 
   const handleToggleVol = (e: any) => {
     setToggleVolume(e.target.innerText);
@@ -118,7 +107,9 @@ function SingleListing() {
             <div className="px-2 py-3 flex justify-between items-center">
               <p className="font-semibold text-xl">{shoeData[0]?.shoe_model}</p>
               <div className="flex gap-1">
-                <p>{shoeData[0]?.shoe_likes + randomNumber}</p>
+                <p>
+                  {shoeData[0] ? shoeData[0].shoe_likes + randomNumber : "..."}
+                </p>
                 <button className="">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -138,7 +129,7 @@ function SingleListing() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 w-[36rem]">
             <h2 className="font-medium text-lg text-slate-400">
               {shoeData[0]?.shoe_brand}
             </h2>
@@ -161,7 +152,7 @@ function SingleListing() {
                 </svg>
               </button>
             </div>
-            <div className="border rounded">
+            <div className="border-2 rounded">
               <div className="flex justify-between border-b px-2 items-center">
                 <div className="flex gap-1">
                   <svg
@@ -182,21 +173,46 @@ function SingleListing() {
                 </div>
                 <div className="flex gap-2 items-center py-2">
                   Sort:
-                  <button className="p-1 bg-white rounded border border-solid border hover:bg-slate-300 font-semibold flex gap-0.5">
-                    Most Recent
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-6 h-6"
+                  <div className="relative text-center">
+                    <button
+                      onClick={handleToggleSort}
+                      className="p-1 bg-white rounded border border-solid border hover:bg-slate-300 font-semibold flex gap-0.5"
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M12.53 16.28a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 011.06-1.06L12 14.69l6.97-6.97a.75.75 0 111.06 1.06l-7.5 7.5z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
+                      {sort}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M12.53 16.28a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 011.06-1.06L12 14.69l6.97-6.97a.75.75 0 111.06 1.06l-7.5 7.5z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                    {toggle ? (
+                      <div className="absolute">
+                        <ul className="bg-white border-2 rounded ">
+                          {sortList
+                            .filter((e) => e !== sort)
+                            .map((e, i) => (
+                              <li
+                                key={i}
+                                onClick={(e: any) => {
+                                  setSort(e.target.innerText);
+                                  handleToggleSort();
+                                }}
+                                className="py-1 px-3 border-b hover:bg-slate-300 cursor-pointer"
+                              >
+                                {e}
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               </div>
               <div className="grid grid-cols-5 gap-1.5 items-center text-center pl-2 pr-6 border-b">
@@ -207,46 +223,82 @@ function SingleListing() {
                 <div></div>
               </div>
               <div className="grid grid-cols-5 gap-1.5 items-center text-center h-60 overflow-auto ">
-                <div className="col-span-5"></div>
-                {data.map((e, i) => {
-                  return (
-                    <React.Fragment key={i}>
-                      <div className="font-semibold pl-2">SGD {e.price}</div>
-                      <div>{e.size}</div>
-                      <div className="text-sm">{e.expirations}</div>
-                      <div
-                        className="text-blue-500 font-semibold text-sm flex items-center justify-center cursor-pointer hover:text-blue-700"
-                        onClick={navigateProfile}
-                      >
-                        {e.seller}
-                        {e.verified ? (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
+                {sortedListings[0] ? (
+                  sortedListings.map((e, i) => {
+                    return (
+                      <React.Fragment key={i}>
+                        <div className="col-span-5"></div>
+                        <div className="font-semibold pl-2">
+                          SGD {e.listing_price}
+                        </div>
+                        <div>{e.shoe_size}</div>
+                        <div className="text-sm">
+                          {formatDistanceToNow(new Date(e.listing_date))
+                            ?.split(" ")
+                            .filter((e) => e !== "about")
+                            .join(" ")}{" "}
+                          ago
+                        </div>
+                        <div
+                          className="text-blue-500 font-semibold text-sm flex items-center justify-center cursor-pointer hover:text-blue-700 whitespace-normal"
+                          onClick={navigateProfile}
+                        >
+                          {e.username}
+                          {e.verified ? (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="currentColor"
+                              className="w-5 h-5"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <div>
+                          <button className="border rounded px-2 py-1 bg-black text-white font-semibold transition ease-in-out hover:scale-105">
+                            Buy Now
+                          </button>
+                        </div>
+                        <div className="col-span-5">
+                          <hr />
+                        </div>
+                      </React.Fragment>
+                    );
+                  })
+                ) : (
+                  <>
+                    <div className="col-span-5 p-20 flex flex-col justify-align  items-center h-full w-full border">
+                      <div role="status">
+                        <svg
+                          aria-hidden="true"
+                          className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+                          viewBox="0 0 100 101"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
                             fill="currentColor"
-                            className="w-5 h-5"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        ) : (
-                          ""
-                        )}
+                          />
+                          <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="currentFill"
+                          />
+                        </svg>
                       </div>
-                      <div>
-                        <button className="border rounded px-2 py-1  bg-black text-white font-semibold transition ease-in-out hover:scale-105">
-                          Buy Now
-                        </button>
+                      <div className="pt-2 font-medium">
+                        Loading might take awhile...
                       </div>
-                      <div className="col-span-5">
-                        <hr />
-                      </div>
-                    </React.Fragment>
-                  );
-                })}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
             <div className="flex gap-2 justify-center mt-2">

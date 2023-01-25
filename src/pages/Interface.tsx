@@ -17,6 +17,19 @@ export interface Ilistings {
   verified: string;
 }
 
+export interface IlistingsSoldFalse {
+  listing_date: string;
+  listing_date_close: string;
+  listing_id: number;
+  listing_price: number;
+  shoe_id: number;
+  shoe_size: string;
+  sold: false;
+  user_id: number;
+  username: string;
+  verified: boolean;
+}
+
 export interface IAlerts {
   alert_id: number;
   alert_price: number;

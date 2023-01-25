@@ -49,12 +49,12 @@ function Listings() {
   const currency = useContext(NavbarContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    axios
-      .get(`https://shoedog-server.onrender.com/listings/`)
-      .then((res) => setListings(res.data))
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`https://shoedog-server.onrender.com/listings/`)
+  //     .then((res) => setListings(res.data))
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   const handlerSingleListing = (e: any) => {
     navigate(`/listings/${e.target.id}`);
@@ -64,7 +64,8 @@ function Listings() {
     setDate(e.target.value);
   };
 
-  const navigateSingleListing = () => {
+  const navigateSingleListing = (e: any) => {
+    // console.log(e.currentTarget.id);
     navigate("/listings/0");
   };
 
@@ -147,12 +148,13 @@ function Listings() {
         <div className="pt-2 border-2 rounded-sm w-1/5 p-4 flex flex-col gap-6">
           <div>
             <h2 className="text-lg font-semibold">PRICES</h2>
-            {pricesTag.map((e) => (
+            {pricesTag.map((e, i) => (
               <>
                 <input
                   type="checkbox"
                   name={e.input}
                   className="border-2 rounded"
+                  key={i}
                 />
                 <label className="pl-2 align-middle font-medium">
                   {e.label}
@@ -163,9 +165,14 @@ function Listings() {
           </div>
           <div>
             <h2 className="text-lg font-semibold">BRANDS</h2>
-            {brandsTag.map((e) => (
+            {brandsTag.map((e, i) => (
               <>
-                <input type="checkbox" name={e} className="border-2 rounded" />
+                <input
+                  key={i}
+                  type="checkbox"
+                  name={e}
+                  className="border-2 rounded"
+                />
                 <label className="pl-2 align-middle font-medium">{e}</label>
                 <br />
               </>
@@ -174,8 +181,11 @@ function Listings() {
           <div>
             <h2 className="text-lg font-semibold">SIZES(US)</h2>
             <div className="grid grid-cols-4 gap-2 place-items-center mt-2">
-              {sizesTag.map((e) => (
-                <button className="border-2 border-black py-0.5 w-full h-full text-center font-medium text-[10] hover:bg-slate-100">
+              {sizesTag.map((e, i) => (
+                <button
+                  key={i}
+                  className="border-2 border-black py-0.5 w-full h-full text-center font-medium text-[10] hover:bg-slate-100"
+                >
                   {e}
                 </button>
               ))}
@@ -234,8 +244,9 @@ function Listings() {
             </div>
           </div>
           <div className="grid grid-cols-4 gap-4 ">
-            {mockShoesData.map((e) => (
+            {mockShoesData.map((e, i) => (
               <div
+                key={i}
                 className="border-2 rounded font-medium cursor-pointer transition ease-in-out hover:scale-105 h-72"
                 onClick={navigateSingleListing}
               >

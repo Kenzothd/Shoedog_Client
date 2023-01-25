@@ -7,7 +7,7 @@ export const NavbarContext = createContext("SGD");
 function Navbar() {
   const navigate = useNavigate();
   const [currency, setCurrency] = useState("SGD");
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(false);
 
   const currencyType = ["SGD", "USD", "MYR", "TKY"];
 
@@ -98,17 +98,17 @@ function Navbar() {
                   />
                 </svg>
               </span>
-              {!toggle ? (
+              {toggle ? (
                 <div className="absolute top-12 right-5">
                   <ul className="bg-black border-2 rounded ">
-                    {currencyType.map((e) => (
+                    {currencyType.map((e, i) => (
                       <li
+                        key={i}
                         onClick={(e: any) => {
                           setCurrency(e.target.innerText);
                           handlerCurrency();
                         }}
                         className="py-0.5 px-3 border-b border-b-white hover:bg-slate-600"
-                        value={e}
                       >
                         {e}
                       </li>
