@@ -40,6 +40,10 @@ function SingleListing() {
 
   let sortedListings = listings;
 
+  const avgListingPrice =
+    listings?.map((e) => e.listing_price).reduce((a, b) => a + b, 0) /
+    listings.length;
+
   const handleToggleSort = () => {
     setToggle(!toggle);
   };
@@ -328,7 +332,7 @@ function SingleListing() {
               <p className="font-semibold text-md">Retail Price</p>
               <p>${shoeData[0]?.shoe_retail_price}</p>
               <p className="font-semibold text-md">Average Price</p>
-              <p>$160</p>
+              <p>${Math.round(avgListingPrice)}</p>
               <p className="font-semibold text-md">Release Date</p>
               <p>
                 {shoeData[0]
