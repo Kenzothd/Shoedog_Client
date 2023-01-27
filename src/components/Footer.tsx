@@ -91,9 +91,9 @@ function Footer() {
             </a>
           </div>
         </div>
-        <hr className="mt-6 mb-2 border-gray-200 2xl:mx-auto dark:border-gray-700 2xl:my-8" />
+        <hr className="mt-6 mb-2 border-gray-200 dark:border-gray-700" />
         <div className="px-3">
-          <p className="text-gray-500 2xl:text-center dark:text-gray-400 ">
+          <p className="text-gray-500  dark:text-gray-400 ">
             *DISCLAIMER: All trademarks, logos and brand names are the property
             of their respective owners. All company, product and service names
             used in this website are for identification and illustration

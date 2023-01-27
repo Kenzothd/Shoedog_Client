@@ -87,18 +87,17 @@ function FeaturedSection() {
   };
 
   return (
-    <>
-      <div className="">
-        <div className="flex justify-between font-semibold pb-2 border-b">
-          <div className=" text-3xl">Featured</div>
-          <button
-            className="border border-black rounded px-2 py-1 text-lg text-black transition ease-in-out hover:scale-105"
-            onClick={navigateListings}
-          >
-            View More
-          </button>
-        </div>
-        {/* <button
+    <div className="">
+      <div className="flex justify-between font-semibold pb-2 border-b">
+        <div className=" text-3xl">Featured</div>
+        <button
+          className="border border-black rounded px-2 py-1 text-lg text-black transition ease-in-out hover:scale-105"
+          onClick={navigateListings}
+        >
+          View More
+        </button>
+      </div>
+      {/* <button
           onClick={btnLeft}
           className=" bg-slate-100 left-0 top-1/2 border-2 transition ease-in-out hover:scale-105 z-20"
         >
@@ -110,57 +109,56 @@ function FeaturedSection() {
         >
           right
         </button> */}
-        <div
-          className="flex gap-5 mt-10 w-auto overflow-y-hidden overflow-x-scroll touch-auto snap-x snap-mandatory scroll-smooth will-change-scroll hover:"
-          onClick={navigateSingleListing}
-        >
-          {featured.map((e, i) => (
-            <div
-              className={
-                "relative group w-56 h-[17rem] cursor-pointer ml-[5.5rem] shrink-0 snap-center"
-              }
-              key={i}
-            >
-              <div className="absolute bottom--16 left-[-6rem] text-[14rem] font-bold text-gray-400/40 whitespace-nowrap z-10 ">
-                {i + 1}
-              </div>
-              <div className="relative h-full w-full bg-white rounded-tr-3xl rounded-bl-3xl border-4 transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] ">
-                <div className="absolute inset-0 whitespace-nowrap flex flex-col gap-3 justify-around px-2 pt-3 ">
-                  <img
-                    className="w-full h-[35%] object-fill bg-white"
-                    src={e.img}
-                    alt="shoe"
-                  />
-                  <p className="text-lg font-bold whitespace-normal group-hover:text-white duration-700 ">
-                    {e.featuredBrand}
-                  </p>
+      <div
+        className="flex gap-5 mt-10 w-auto overflow-y-hidden overflow-x-scroll touch-auto snap-x snap-mandatory scroll-smooth will-change-scroll hover:"
+        onClick={navigateSingleListing}
+      >
+        {featured.map((e, i) => (
+          <div
+            className={
+              "relative group w-56 h-[17rem] cursor-pointer ml-[5.5rem] shrink-0 snap-center"
+            }
+            key={i}
+          >
+            <div className="absolute bottom--16 left-[-6rem] text-[14rem] font-bold text-gray-400/40 whitespace-nowrap z-10 ">
+              {i + 1}
+            </div>
+            <div className="relative h-full w-full bg-white rounded-tr-3xl rounded-bl-3xl border-4 transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] ">
+              <div className="absolute inset-0 whitespace-nowrap flex flex-col gap-3 justify-around px-2 pt-3 ">
+                <img
+                  className="w-full h-[35%] object-fill bg-white"
+                  src={e.img}
+                  alt="shoe"
+                />
+                <p className="text-lg font-bold whitespace-normal group-hover:text-white duration-700 ">
+                  {e.featuredBrand}
+                </p>
 
-                  <div className="flex justify-between items-end p-1  group-hover:text-white duration-700">
-                    <p className="bg-slate-100 text-sm font-medium">
-                      {e.releaseDate}
+                <div className="flex justify-between items-end p-1  group-hover:text-white duration-700">
+                  <p className="bg-slate-100 text-sm font-medium">
+                    {e.releaseDate}
+                  </p>
+                  <div className="text-end group-hover:text-white duration-300">
+                    <p className="text-sm ">Lowest List</p>
+                    <p className="font-semibold">
+                      {currency} {e.lowestPrice}
                     </p>
-                    <div className="text-end group-hover:text-white duration-300">
-                      <p className="text-sm ">Lowest List</p>
-                      <p className="font-semibold">
-                        {currency} {e.lowestPrice}
-                      </p>
-                    </div>
                   </div>
                 </div>
-                <div className="absolute inset-0 h-full w-full rounded bg-black/80 text-center text-slate-200 p-2 [transform:rotateY(180deg)] [backface-visibility:hidden]">
-                  <div className="flex h-full flex-col items-center justify-center gap-2">
-                    <h1 className="text font-bold">9.0 Rating</h1>
-                    <p className="text-base px-1">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit
-                    </p>
-                  </div>
+              </div>
+              <div className="absolute inset-0 h-full w-full rounded bg-black/80 text-center text-slate-200 p-2 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                <div className="flex h-full flex-col items-center justify-center gap-2">
+                  <h1 className="text font-bold">9.0 Rating</h1>
+                  <p className="text-base px-1">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit
+                  </p>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 }
 
