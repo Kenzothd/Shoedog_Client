@@ -31,7 +31,7 @@ function SingleListing() {
       .catch((err) => console.log(err));
 
     axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/false/${id}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/false/${id}/all`)
       .then((res) => {
         setListings(res.data);
       })
