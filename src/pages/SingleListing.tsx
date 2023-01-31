@@ -3,6 +3,7 @@ import { IlistingsSoldFalse, IShoeData } from "./Interface";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { format, formatDistanceToNow, parse } from "date-fns";
+import PriceHistory from "../components/PriceHistory";
 
 function SingleListing() {
   const [listings, setListings] = useState<IlistingsSoldFalse[]>([]);
@@ -29,13 +30,16 @@ function SingleListing() {
       .get(`${process.env.REACT_APP_API_BASE_URL}/shoes/${id}`)
       .then((res) => setShoeData(res.data))
       .catch((err) => console.log(err));
-
     axios
       .get(`${process.env.REACT_APP_API_BASE_URL}/listings/false/${id}/all`)
       .then((res) => {
         setListings(res.data);
       })
       .catch((err) => console.log(err));
+    // axios
+    //   .get(`${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/6 month`)
+    //   .then((res) => console.log(res.data))
+    //   .catch((err) => console.log(err));
   }, [id]);
 
   let sortedListings = listings;
@@ -392,8 +396,8 @@ function SingleListing() {
               </svg>
             </button>
           </div>
-          <div className=" mt-4 border border-black text-center py-28">
-            Input Chart Here
+          <div className="mt-4 border border-black text-center p-2">
+            <PriceHistory />
           </div>
         </div>
         <div className="px-5 pb-10">
