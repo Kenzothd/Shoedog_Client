@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { IlistingsSoldFalse, IPriceHistoryData, IShoeData } from "./Interface";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,19 +13,6 @@ function SingleListing() {
   const [toggleVolume, setToggleVolume] = useState("All");
   const { id } = useParams();
   const navigate = useNavigate();
-  const [allPriceHistory, setAllPriceHistory] = useState<IPriceHistoryData[]>(
-    []
-  );
-  const [oneYearHistory, setOneYearHistory] = useState<IPriceHistoryData[]>([]);
-  const [threeMonthHistory, setThreeMonthHistory] = useState<
-    IPriceHistoryData[]
-  >([]);
-  const [sixMonthHistory, setSixMonthHistory] = useState<IPriceHistoryData[]>(
-    []
-  );
-  const [oneMonthHistory, setOneMonthHistory] = useState<IPriceHistoryData[]>(
-    []
-  );
   const [shownData, setShownData] = useState<IPriceHistoryData[]>([]);
 
   const sortList = [
@@ -39,6 +26,27 @@ function SingleListing() {
 
   const volbtn = ["1M", "3M", "6M", "1Y", "All"];
 
+  const fetchPriceHistory = useCallback(
+    (duration: string, dateRange: string = "dd MMM yy") => {
+      axios
+        .get(
+          `${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/${duration}`
+        )
+        .then((res) => {
+          const filteredData = res.data.map((e: any) => ({
+            "Average price": Number(e.avg_listing_price),
+            listing_start_date: format(
+              new Date(e.listing_start_date),
+              dateRange
+            ),
+          }));
+          setShownData(filteredData);
+        })
+        .catch((err) => console.log(err));
+    },
+    [id]
+  );
+
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_BASE_URL}/shoes/${id}`)
@@ -51,94 +59,12 @@ function SingleListing() {
       })
       .catch((err) => console.log(err));
 
-    let timer = setTimeout(
-      () =>
-        axios
-          .get(
-            `${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/one-month`
-          )
-          .then((res) => {
-            const filteredDataOneMonth = res.data.map((e: any) => ({
-              "Average price": Number(e.avg_listing_price),
-              listing_start_date: format(
-                new Date(e.listing_start_date),
-                "dd MMM yy HH:mm"
-              ),
-            }));
-            setOneMonthHistory(filteredDataOneMonth);
-            axios
-              .get(
-                `${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/three-month`
-              )
-              .then((res) => {
-                const filteredDataThreeMonth = res.data.map((e: any) => ({
-                  "Average price": Number(e.avg_listing_price),
-                  listing_start_date: format(
-                    new Date(e.listing_start_date),
-                    "dd MMM yy"
-                  ),
-                }));
-                setThreeMonthHistory(filteredDataThreeMonth);
-                axios
-                  .get(
-                    `${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/six-month`
-                  )
-                  .then((res) => {
-                    const filteredDataSixMonth = res.data.map((e: any) => ({
-                      "Average price": Number(e.avg_listing_price),
-                      listing_start_date: format(
-                        new Date(e.listing_start_date),
-                        "dd MMM yy"
-                      ),
-                    }));
-                    setSixMonthHistory(filteredDataSixMonth);
-                    axios
-                      .get(
-                        `${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/one-year`
-                      )
-                      .then((res) => {
-                        const filteredDataOneYear = res.data.map((e: any) => ({
-                          "Average price": Number(e.avg_listing_price),
-                          listing_start_date: format(
-                            new Date(e.listing_start_date),
-                            "dd MMM yy"
-                          ),
-                        }));
-                        setOneYearHistory(filteredDataOneYear);
-                        axios
-                          .get(
-                            `${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/all`
-                          )
-                          .then((res) => {
-                            const filteredDataAll = res.data.map((e: any) => ({
-                              "Average price": Number(e.avg_listing_price),
-                              listing_start_date: format(
-                                new Date(e.listing_start_date),
-                                "dd MMM yy"
-                              ),
-                            }));
-                            setAllPriceHistory(filteredDataAll);
-                            setShownData(filteredDataAll);
-                          })
-                          .catch((err) => console.log(err));
-                      })
-                      .catch((err) => console.log(err));
-                  })
-                  .catch((err) => console.log(err));
-              })
-              .catch((err) => console.log(err));
-          })
-          .catch((err) => console.log(err)),
-      1000
-    );
+    let timer = setTimeout(() => fetchPriceHistory("all"), 1000);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [id]);
-
-  console.log("one-month", oneMonthHistory);
-  console.log("parent", shownData);
+  }, [id, fetchPriceHistory]);
 
   let sortedListings = listings;
 
@@ -188,23 +114,24 @@ function SingleListing() {
 
   const handleToggleVol = (e: any) => {
     const volume = e.target.innerText;
+    setShownData([]);
     setToggleVolume(volume);
 
     switch (volume) {
       case "1Y":
-        setShownData(oneYearHistory);
+        fetchPriceHistory("one-year");
         break;
       case "6M":
-        setShownData(sixMonthHistory);
+        fetchPriceHistory("six-month");
         break;
       case "3M":
-        setShownData(threeMonthHistory);
+        fetchPriceHistory("three-month");
         break;
       case "1M":
-        setShownData(oneMonthHistory);
+        fetchPriceHistory("one-month", "dd MMM yy HH:mm");
         break;
       case "All":
-        setShownData(allPriceHistory);
+        fetchPriceHistory("all");
         break;
     }
   };
@@ -520,7 +447,7 @@ function SingleListing() {
             {shownData[0] ? (
               <PriceHistory shownData={shownData} />
             ) : (
-              <div className="py-32">
+              <div className="py-28">
                 <div role="status">
                   <svg
                     aria-hidden="true"
