@@ -140,8 +140,6 @@ function SingleListing() {
     navigate("/profile/0");
   };
 
-  const randomNumber = Math.round(Math.random() * 10 * 5);
-
   return (
     <>
       <div className="mt-[10rem] mx-[10rem] flex flex-col gap-10">
@@ -159,9 +157,7 @@ function SingleListing() {
             <div className="px-2 py-3 flex justify-between items-center">
               <p className="font-semibold text-xl">{shoeData[0]?.shoe_model}</p>
               <div className="flex gap-1">
-                <p>
-                  {shoeData[0] ? shoeData[0].shoe_likes + randomNumber : "..."}
-                </p>
+                <p>{shoeData[0] ? shoeData[0].shoe_likes : "..."}</p>
                 <button className="">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -477,10 +473,8 @@ function SingleListing() {
             <div className="grid grid-cols-3 gap-4 mt-5">
               <div className="bg-gray-100 rounded py-4 px-6">
                 <p className="font-semibold text-xl">
-                  SGD{" "}
-                  {shoeData[0]?.one_year_lowest_listing_price + randomNumber} -
-                  SGD{" "}
-                  {shoeData[0]?.one_year_highest_listing_price - randomNumber}
+                  SGD {shoeData[0]?.one_year_lowest_listing_price + 10} - SGD{" "}
+                  {shoeData[0]?.one_year_highest_listing_price - 10}
                 </p>
                 <p className="font-medium text-sm">12-Month Trade Range</p>
               </div>
