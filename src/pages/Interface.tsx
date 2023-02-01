@@ -105,3 +105,8 @@ export interface IVolume {
   six_month_total_volume: number;
   one_year_total_volume: number;
 }
+
+export interface IPriceHistoryData {
+  "Average price": number;
+  listing_start_date: string;
+}

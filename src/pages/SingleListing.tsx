@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { IlistingsSoldFalse, IShoeData } from "./Interface";
+import { IlistingsSoldFalse, IPriceHistoryData, IShoeData } from "./Interface";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { format, formatDistanceToNow, parse } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 import PriceHistory from "../components/PriceHistory";
 
 function SingleListing() {
@@ -13,6 +13,20 @@ function SingleListing() {
   const [toggleVolume, setToggleVolume] = useState("All");
   const { id } = useParams();
   const navigate = useNavigate();
+  const [allPriceHistory, setAllPriceHistory] = useState<IPriceHistoryData[]>(
+    []
+  );
+  const [oneYearHistory, setOneYearHistory] = useState<IPriceHistoryData[]>([]);
+  const [threeMonthHistory, setThreeMonthHistory] = useState<
+    IPriceHistoryData[]
+  >([]);
+  const [sixMonthHistory, setSixMonthHistory] = useState<IPriceHistoryData[]>(
+    []
+  );
+  const [oneMonthHistory, setOneMonthHistory] = useState<IPriceHistoryData[]>(
+    []
+  );
+  const [shownData, setShownData] = useState<IPriceHistoryData[]>([]);
 
   const sortList = [
     "Most Recent",
@@ -36,11 +50,95 @@ function SingleListing() {
         setListings(res.data);
       })
       .catch((err) => console.log(err));
-    // axios
-    //   .get(`${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/6 month`)
-    //   .then((res) => console.log(res.data))
-    //   .catch((err) => console.log(err));
+
+    let timer = setTimeout(
+      () =>
+        axios
+          .get(
+            `${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/one-month`
+          )
+          .then((res) => {
+            const filteredDataOneMonth = res.data.map((e: any) => ({
+              "Average price": Number(e.avg_listing_price),
+              listing_start_date: format(
+                new Date(e.listing_start_date),
+                "dd MMM yy HH:mm"
+              ),
+            }));
+            setOneMonthHistory(filteredDataOneMonth);
+            axios
+              .get(
+                `${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/three-month`
+              )
+              .then((res) => {
+                const filteredDataThreeMonth = res.data.map((e: any) => ({
+                  "Average price": Number(e.avg_listing_price),
+                  listing_start_date: format(
+                    new Date(e.listing_start_date),
+                    "dd MMM yy"
+                  ),
+                }));
+                setThreeMonthHistory(filteredDataThreeMonth);
+                axios
+                  .get(
+                    `${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/six-month`
+                  )
+                  .then((res) => {
+                    const filteredDataSixMonth = res.data.map((e: any) => ({
+                      "Average price": Number(e.avg_listing_price),
+                      listing_start_date: format(
+                        new Date(e.listing_start_date),
+                        "dd MMM yy"
+                      ),
+                    }));
+                    setSixMonthHistory(filteredDataSixMonth);
+                    axios
+                      .get(
+                        `${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/one-year`
+                      )
+                      .then((res) => {
+                        const filteredDataOneYear = res.data.map((e: any) => ({
+                          "Average price": Number(e.avg_listing_price),
+                          listing_start_date: format(
+                            new Date(e.listing_start_date),
+                            "dd MMM yy"
+                          ),
+                        }));
+                        setOneYearHistory(filteredDataOneYear);
+                        axios
+                          .get(
+                            `${process.env.REACT_APP_API_BASE_URL}/listings/true/${id}/all`
+                          )
+                          .then((res) => {
+                            const filteredDataAll = res.data.map((e: any) => ({
+                              "Average price": Number(e.avg_listing_price),
+                              listing_start_date: format(
+                                new Date(e.listing_start_date),
+                                "dd MMM yy"
+                              ),
+                            }));
+                            setAllPriceHistory(filteredDataAll);
+                            setShownData(filteredDataAll);
+                          })
+                          .catch((err) => console.log(err));
+                      })
+                      .catch((err) => console.log(err));
+                  })
+                  .catch((err) => console.log(err));
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err)),
+      1000
+    );
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [id]);
+
+  console.log("one-month", oneMonthHistory);
+  console.log("parent", shownData);
 
   let sortedListings = listings;
 
@@ -89,7 +187,26 @@ function SingleListing() {
   }
 
   const handleToggleVol = (e: any) => {
-    setToggleVolume(e.target.innerText);
+    const volume = e.target.innerText;
+    setToggleVolume(volume);
+
+    switch (volume) {
+      case "1Y":
+        setShownData(oneYearHistory);
+        break;
+      case "6M":
+        setShownData(sixMonthHistory);
+        break;
+      case "3M":
+        setShownData(threeMonthHistory);
+        break;
+      case "1M":
+        setShownData(oneMonthHistory);
+        break;
+      case "All":
+        setShownData(allPriceHistory);
+        break;
+    }
   };
 
   const navigateProfile = () => {
@@ -380,7 +497,9 @@ function SingleListing() {
                 </button>
               ))}
             </div>
-            <button className="font-medium flex items-center gap-1 text-green-700">
+            <div>
+              {/*For future view sales(KIV) */}
+              {/* <button className="font-medium flex items-center gap-1 text-green-700">
               View Sales
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -394,10 +513,35 @@ function SingleListing() {
                   clipRule="evenodd"
                 />
               </svg>
-            </button>
+            </button> */}
+            </div>
           </div>
-          <div className="mt-4 border border-black text-center p-2">
-            <PriceHistory />
+          <div className="mt-4 border border-black text-center p-4">
+            {shownData[0] ? (
+              <PriceHistory shownData={shownData} />
+            ) : (
+              <div className="py-32">
+                <div role="status">
+                  <svg
+                    aria-hidden="true"
+                    className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+                    viewBox="0 0 100 101"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                      fill="currentFill"
+                    />
+                  </svg>
+                </div>
+                <div>Loading might take awhile...</div>{" "}
+              </div>
+            )}
           </div>
         </div>
         <div className="px-5 pb-10">
