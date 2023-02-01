@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { IVolumeStats } from "../pages/Interface";
 import { NavbarContext } from "./Navbar";
-import { IStats } from "./Trending";
 
 type Props = {
-  currentStats: IStats[];
+  currentStats: IVolumeStats[];
 };
 
 function TopTenTable({ currentStats }: Props) {

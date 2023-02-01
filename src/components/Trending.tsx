@@ -1,31 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IVolume } from "../pages/Interface";
+import { IVolumeStats } from "../pages/Interface";
 import TopTenTable from "./TopTenTable";
-
-export interface IStats {
-  shoe_brand: string;
-  shoe_model: string;
-  shoe_id: number;
-  shoe_img: string;
-  lowest_listing_price: number;
-  volume: number;
-}
 
 function Trending() {
   const navigate = useNavigate();
   const [toggleTrending, setToggleTrending] = useState("Top");
   const [toggleVolume, setToggleVolume] = useState("All");
-  const [volumeStats, setVolumeStats] = useState<IVolume[]>([]);
-  const [currentStats, setCurrentStats] = useState<IStats[]>([]);
+  const [volumeStats, setVolumeStats] = useState<IVolumeStats[]>([]);
 
-  useEffect(() => {
+  const fetchVolume = (time: string) => {
     axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/volume`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/volume/${time}`)
       .then((res) => {
-        setVolumeStats(res.data);
-        setCurrentStats(
+        setVolumeStats(
           res.data.map(
             ({
               shoe_brand,
@@ -53,6 +42,10 @@ function Trending() {
         );
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchVolume("2 year");
   }, []);
 
   const trendingBtn = ["Trending", "Top"];
@@ -67,36 +60,24 @@ function Trending() {
   const toggleVolumeHandler = (e: React.MouseEvent<HTMLElement>) => {
     const volumePeriod = e.currentTarget.innerText;
     setToggleVolume(volumePeriod);
-    let newArray: IStats[] = [];
-    const volumePeriodMap: { [key: string]: string } = {
-      All: "total_volume",
-      "1M": "one_month_total_volume",
-      "3M": "three_month_total_volume",
-      "6M": "six_month_total_volume",
-      "1Y": "one_year_total_volume",
-    };
-    const volumePeriodKey = volumePeriodMap[volumePeriod];
-    if (volumeStats && volumePeriodKey) {
-      newArray = volumeStats
-        .map(
-          ({
-            shoe_brand,
-            shoe_model,
-            shoe_id,
-            shoe_img,
-            lowest_listing_price,
-            [volumePeriodKey as keyof IVolume]: volume,
-          }) => ({
-            shoe_brand,
-            shoe_model,
-            shoe_id,
-            shoe_img,
-            lowest_listing_price,
-            volume: Number(volume),
-          })
-        )
-        .sort((a, b) => b.volume - a.volume);
-      setCurrentStats(newArray);
+    setVolumeStats([]);
+
+    switch (volumePeriod) {
+      case "1M":
+        fetchVolume("1 month");
+        break;
+      case "3M":
+        fetchVolume("3 month");
+        break;
+      case "6M":
+        fetchVolume("6 month");
+        break;
+      case "1Y":
+        fetchVolume("1 year");
+        break;
+      case "All":
+        fetchVolume("2 year");
+        break;
     }
   };
 
@@ -154,7 +135,7 @@ function Trending() {
             </button>
           </div>
         </div>
-        <TopTenTable currentStats={currentStats} />
+        <TopTenTable currentStats={volumeStats} />
       </div>
     </>
   );

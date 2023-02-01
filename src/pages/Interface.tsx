@@ -93,17 +93,13 @@ export interface IShoeData {
   number_of_sales: number;
 }
 
-export interface IVolume {
-  shoe_id: number;
+export interface IVolumeStats {
   shoe_brand: string;
   shoe_model: string;
+  shoe_id: number;
   shoe_img: string;
   lowest_listing_price: number;
-  total_volume: number;
-  one_month_total_volume: number;
-  three_month_total_volume: number;
-  six_month_total_volume: number;
-  one_year_total_volume: number;
+  volume: number;
 }
 
 export interface IPriceHistoryData {
