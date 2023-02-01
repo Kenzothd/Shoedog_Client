@@ -13,7 +13,7 @@ function SingleListing() {
   const [toggleVolume, setToggleVolume] = useState("All");
   const { id } = useParams();
   const navigate = useNavigate();
-  const [shownData, setShownData] = useState<IPriceHistoryData[]>([]);
+  const [data, setData] = useState<IPriceHistoryData[]>([]);
 
   const sortList = [
     "Most Recent",
@@ -40,7 +40,7 @@ function SingleListing() {
               dateRange
             ),
           }));
-          setShownData(filteredData);
+          setData(filteredData);
         })
         .catch((err) => console.log(err));
     },
@@ -114,7 +114,7 @@ function SingleListing() {
 
   const handleToggleVol = (e: any) => {
     const volume = e.target.innerText;
-    setShownData([]);
+    setData([]);
     setToggleVolume(volume);
 
     switch (volume) {
@@ -444,8 +444,8 @@ function SingleListing() {
             </div>
           </div>
           <div className="mt-4 border border-black text-center p-4">
-            {shownData[0] ? (
-              <PriceHistory shownData={shownData} />
+            {data[0] ? (
+              <PriceHistory data={data} />
             ) : (
               <div className="py-28">
                 <div role="status">

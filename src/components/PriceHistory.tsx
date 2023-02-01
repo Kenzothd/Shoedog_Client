@@ -3,16 +3,10 @@ import { Area } from "@ant-design/plots";
 import { IPriceHistoryData } from "../pages/Interface";
 
 type Props = {
-  shownData: IPriceHistoryData[];
+  data: IPriceHistoryData[];
 };
 
-function PriceHistory({ shownData }: Props) {
-  const [data, setData] = useState<IPriceHistoryData[]>([]);
-
-  useEffect(() => {
-    setData(shownData);
-  }, [shownData]);
-
+function PriceHistory({ data }: Props) {
   const config = {
     data,
     xField: "listing_start_date",
