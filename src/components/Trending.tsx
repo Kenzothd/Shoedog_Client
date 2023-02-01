@@ -45,7 +45,7 @@ function Trending() {
   };
 
   useEffect(() => {
-    fetchVolume("2 year");
+    fetchVolume("2-year");
   }, []);
 
   const trendingBtn = ["Trending", "Top"];
@@ -64,19 +64,19 @@ function Trending() {
 
     switch (volumePeriod) {
       case "1M":
-        fetchVolume("1 month");
+        fetchVolume("1-month");
         break;
       case "3M":
-        fetchVolume("3 month");
+        fetchVolume("3-month");
         break;
       case "6M":
-        fetchVolume("6 month");
+        fetchVolume("6-month");
         break;
       case "1Y":
-        fetchVolume("1 year");
+        fetchVolume("1-year");
         break;
       case "All":
-        fetchVolume("2 year");
+        fetchVolume("2-year");
         break;
     }
   };

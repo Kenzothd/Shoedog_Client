@@ -268,7 +268,7 @@ function TopTenTable({ currentStats }: Props) {
             </svg>
           </div>
           <div className="pt-2 font-medium">
-            Loading might take up to 3 mins...
+            Loading might take awhile...
           </div>
         </div>
       )}
