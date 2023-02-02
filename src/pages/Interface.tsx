@@ -106,3 +106,15 @@ export interface IPriceHistoryData {
   "Average price": number;
   listing_start_date: string;
 }
+
+export interface IProfileDetails {
+  country: string;
+  first_name: string;
+  followers: number;
+  followings: number;
+  joined_date: string;
+  last_name: string;
+  user_id: number;
+  username: string;
+  verified: boolean;
+}

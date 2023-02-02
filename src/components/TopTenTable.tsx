@@ -4,10 +4,10 @@ import { IVolumeStats } from "../pages/Interface";
 import { NavbarContext } from "./Navbar";
 
 type Props = {
-  currentStats: IVolumeStats[];
+  volumeStats: IVolumeStats[];
 };
 
-function TopTenTable({ currentStats }: Props) {
+function TopTenTable({ volumeStats }: Props) {
   const currency = useContext(NavbarContext);
   const navigate = useNavigate();
 
@@ -152,7 +152,7 @@ function TopTenTable({ currentStats }: Props) {
       </div> */}
 
       {/* using grid with divs */}
-      {currentStats[0] ? (
+      {volumeStats[0] ? (
         <div className="flex justify-evenly gap-14">
           <div id="type-2-left">
             <div className="grid grid-cols-6 gap-2 items-center">
@@ -168,7 +168,7 @@ function TopTenTable({ currentStats }: Props) {
                   VOLUME
                 </div>
               </div>
-              {currentStats?.slice(0, 5).map((e, i) => (
+              {volumeStats?.slice(0, 5).map((e, i) => (
                 <div
                   className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50"
                   key={e.shoe_id}
@@ -214,7 +214,7 @@ function TopTenTable({ currentStats }: Props) {
                   VOLUME
                 </div>
               </div>
-              {currentStats?.slice(5, 10).map((e, i) => (
+              {volumeStats?.slice(5, 10).map((e, i) => (
                 <div
                   className="col-span-6 grid grid-cols-6 items-center py-1 rounded hover:drop-shadow-sm transition ease-in-out cursor-pointer hover:scale-105 hover:bg-gray-50"
                   key={e.shoe_id}
@@ -267,9 +267,7 @@ function TopTenTable({ currentStats }: Props) {
               />
             </svg>
           </div>
-          <div className="pt-2 font-medium">
-            Loading might take awhile...
-          </div>
+          <div className="pt-2 font-medium">Loading might take awhile...</div>
         </div>
       )}
     </>

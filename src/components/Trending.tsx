@@ -45,38 +45,8 @@ function Trending() {
   };
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/volume/all`)
-      .then((res) => {
-        setVolumeStats(
-          res.data.map(
-            ({
-              shoe_brand,
-              shoe_model,
-              shoe_id,
-              shoe_img,
-              lowest_listing_price,
-              total_volume,
-            }: {
-              shoe_brand: string;
-              shoe_model: string;
-              shoe_id: number;
-              shoe_img: string;
-              lowest_listing_price: number;
-              total_volume: number;
-            }) => ({
-              shoe_brand,
-              shoe_model,
-              shoe_id,
-              shoe_img,
-              lowest_listing_price,
-              volume: total_volume,
-            })
-          )
-        );
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    fetchVolume("all");
+  }, [volumeStats]);
 
   const trendingBtn = ["Trending", "Top"];
   const volBtn = ["1M", "3M", "6M", "1Y", "All"];
@@ -165,7 +135,7 @@ function Trending() {
             </button>
           </div>
         </div>
-        <TopTenTable currentStats={volumeStats} />
+        <TopTenTable volumeStats={volumeStats} />
       </div>
     </>
   );

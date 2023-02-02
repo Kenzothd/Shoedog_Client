@@ -136,8 +136,8 @@ function SingleListing() {
     }
   };
 
-  const navigateProfile = () => {
-    navigate("/profile/0");
+  const navigateProfile = (e: any) => {
+    navigate(`/profile/${e.target.id}`);
   };
 
   return (
@@ -289,6 +289,7 @@ function SingleListing() {
                         </div>
                         <div
                           className="text-blue-500 font-semibold text-sm flex items-center justify-center cursor-pointer hover:text-blue-700 whitespace-normal"
+                          id={e.username}
                           onClick={navigateProfile}
                         >
                           {e.username}

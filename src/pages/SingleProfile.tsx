@@ -1,10 +1,29 @@
-import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
+import format from "date-fns/format";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { IProfileDetails } from "./Interface";
 
 function SingleProfile() {
   const navigate = useNavigate();
   const [tab, setTab] = useState("Listed");
+  const [profileDetails, setProfileDetails] = useState<IProfileDetails[]>([]);
   const tabs = ["Listed", "Reviews", "Favourited"];
+
+  const { username } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_BASE_URL}/users/findbyusername/${username}`
+      )
+      .then((res) => {
+        setProfileDetails(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [username]);
+
+  console.log(profileDetails);
 
   const toggleTabHandler = (e: any) => {
     setTab(e.target.innerText);
@@ -98,7 +117,11 @@ function SingleProfile() {
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <p className="font-semibold text-3xl">Darlington</p>
+            <p className="font-semibold text-3xl">
+              {profileDetails[0]
+                ? profileDetails[0].first_name + profileDetails[0].last_name
+                : "Loading..."}
+            </p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -112,14 +135,21 @@ function SingleProfile() {
               />
             </svg>
           </div>
-          <p className="font-semibold ">@big_mingus777</p>
+          <p className="font-semibold ">
+            @{profileDetails[0] ? profileDetails[0].username : "Loading..."}
+          </p>
         </div>
       </div>
       <div className="flex items-center justify-between font-medium">
         <div className="flex items-center gap-5 text-gray-400">
           <button>Followers (212)</button>
           <button>Following (430)</button>
-          <p>Joined April 2022</p>
+          <p>
+            {profileDetails[0]
+              ? "Joined " +
+                format(new Date(profileDetails[0].joined_date), "MMM yyyy")
+              : "Loading..."}
+          </p>
         </div>
         <div className="flex gap-2 items-center">
           <button className="font-semibold flex items-center border border-black pr-1 py-1 transition ease-in-out hover:scale-105">
@@ -170,8 +200,9 @@ function SingleProfile() {
       </div>
 
       <div className="grid grid-cols-4 gap-8 px-10 mt-4">
-        {mockShoesData.map((e) => (
+        {mockShoesData.map((e, i) => (
           <div
+            key={i}
             className="border-2 rounded font-medium cursor-pointer transition ease-in-out hover:scale-105 h-72"
             onClick={navigateSingleListing}
           >
