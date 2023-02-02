@@ -46,7 +46,7 @@ function Trending() {
 
   useEffect(() => {
     fetchVolume("all");
-  }, [volumeStats]);
+  }, []);
 
   const trendingBtn = ["Trending", "Top"];
   const volBtn = ["1M", "3M", "6M", "1Y", "All"];
