@@ -1,12 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { IlistingsSoldFalse, IPriceHistoryData, IShoeData } from "./Interface";
+import {
+  IListingsAndUsersSoldFalse,
+  IPriceHistoryData,
+  IShoeData,
+} from "./Interface";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { format, formatDistanceToNow } from "date-fns";
 import PriceHistory from "../components/PriceHistory";
 
 function SingleListing() {
-  const [listings, setListings] = useState<IlistingsSoldFalse[]>([]);
+  const [listings, setListings] = useState<IListingsAndUsersSoldFalse[]>([]);
   const [sort, setSort] = useState("Most Recent");
   const [toggle, setToggle] = useState(false);
   const [shoeData, setShoeData] = useState<IShoeData[]>([]);

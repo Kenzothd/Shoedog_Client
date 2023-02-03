@@ -1,19 +1,33 @@
 import axios from "axios";
 import format from "date-fns/format";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { IProfileDetails, IProfileListingsFalse } from "./Interface";
+import ListingTable from "../components/ListingTable";
+import { IProfileDetails, IDisplayListings } from "./Interface";
 
 function SingleProfile() {
-  const navigate = useNavigate();
   const [tab, setTab] = useState("Listed");
   const [profileDetails, setProfileDetails] = useState<IProfileDetails[]>([]);
-  const [falseListings, setFalseListings] = useState<IProfileListingsFalse[]>(
+  const [ProfileListings, setProfileListings] = useState<IDisplayListings[]>(
     []
   );
-  const tabs = ["Listed", "Sold", "Reviews", "Favourited"];
+  const tabs = ["Listed", "Sold"];
 
   const { username } = useParams();
+
+  const fetchListings = useCallback(
+    (condition: string) => {
+      axios
+        .get(
+          `${process.env.REACT_APP_API_BASE_URL}/listings/sold-${condition}/${username}/limit-ten`
+        )
+        .then((res) => {
+          setProfileListings(res.data);
+        })
+        .catch((err) => console.log(err));
+    },
+    [username]
+  );
 
   useEffect(() => {
     axios
@@ -24,95 +38,19 @@ function SingleProfile() {
         setProfileDetails(res.data);
       })
       .catch((err) => console.log(err));
-    axios
-      .get(
-        `${process.env.REACT_APP_API_BASE_URL}/listings/sold-false/${username}/limit-ten`
-      )
-      .then((res) => {
-        setFalseListings(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [username]);
+
+    switch (tab) {
+      case "Listed":
+        fetchListings("false");
+        break;
+      case "Sold":
+        fetchListings("true");
+        break;
+    }
+  }, [username, fetchListings, tab]);
 
   const toggleTabHandler = (e: any) => {
     setTab(e.target.innerText);
-  };
-
-  const mockShoesData = [
-    {
-      img: "https://images.novelship.com/product/1664391359054_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 High 'Lost & Found'",
-      listing_price: 432,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653919419146_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Dunk Low 'Black White' 2021",
-      listing_price: 191,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1664411976537_AirJordan40.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 4 Retro 'Midnight Navy",
-      listing_price: 325,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1666960814609_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 Low 'Aluminum'(W)",
-      listing_price: 140,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653918046201_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Dunk Low SP 'Kentucky'",
-      listing_price: 206,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1658762197699_YeezySlide0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Yeezy Slides 'Bone' (2022 Restock)",
-      listing_price: 156,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653919400399_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Dunk Low 'Black White' 2021 (W)",
-      listing_price: 186,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653919040759_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 Mid 'Smoke Grey'",
-      listing_price: 156,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1654843117055_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 Low 'Bulls'",
-      listing_price: 101,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Air Force 1 Low White '07",
-      listing_price: 113,
-      size: "US 6",
-      quantity: 1,
-    },
-  ];
-
-  const navigateSingleListing = () => {
-    navigate("/listings/0");
   };
 
   return (
@@ -156,7 +94,7 @@ function SingleProfile() {
           <p>
             {profileDetails[0]
               ? "Joined " +
-                format(new Date(profileDetails[0].joined_date), "MMM yyyy")
+                format(new Date(profileDetails[0].joined_date), "dd MMM yy")
               : "Loading..."}
           </p>
         </div>
@@ -208,35 +146,7 @@ function SingleProfile() {
         ))}
       </div>
 
-      <div className="grid grid-cols-4 gap-10 px-10 mt-4">
-        {falseListings.map((e, i) => (
-          <div
-            key={i}
-            className="border-2 rounded font-medium cursor-pointer transition ease-in-out hover:scale-105 h-72"
-            onClick={navigateSingleListing}
-          >
-            <div className="h-1/2 p-2">
-              <img
-                className="object-contain h-full"
-                src={e.shoe_img}
-                alt="shoe"
-              />
-            </div>
-            <div className="p-2 h-1/2 flex flex-col justify-between">
-              <p className="pb-6 font-semibold">{e.shoe_model}</p>
-              <div>
-                <p className=" text-gray-400">Size: US {e.shoe_size}</p>
-                <div className="pt-0.5 flex justify-between">
-                  <p className="text-gray-400">
-                    Listed: {format(new Date(e.listing_date), "MMM yyyy")}
-                  </p>
-                  <p className="font-semibold">SGD {e.listing_price}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ListingTable listings={ProfileListings} condition={tab} />
     </div>
   );
 }

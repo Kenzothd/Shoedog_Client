@@ -7,7 +7,7 @@ import TopTenTable from "./TopTenTable";
 function Trending() {
   const navigate = useNavigate();
   const [toggleTrending, setToggleTrending] = useState("Top");
-  const [toggleVolume, setToggleVolume] = useState("All");
+  const [toggleVolume, setToggleVolume] = useState("1M");
   const [volumeStats, setVolumeStats] = useState<IVolumeStats[]>([]);
 
   const fetchVolume = (time: string) => {
@@ -45,24 +45,7 @@ function Trending() {
   };
 
   useEffect(() => {
-    fetchVolume("all");
-  }, []);
-
-  const trendingBtn = ["Trending", "Top"];
-  const volBtn = ["1M", "3M", "6M", "1Y", "All"];
-
-  const toggleTrendingHandler = (param: string) => {
-    param === "Trending"
-      ? setToggleTrending("Trending")
-      : setToggleTrending("Top");
-  };
-
-  const toggleVolumeHandler = (e: React.MouseEvent<HTMLElement>) => {
-    const volumePeriod = e.currentTarget.innerText;
-    setToggleVolume(volumePeriod);
-    setVolumeStats([]);
-
-    switch (volumePeriod) {
+    switch (toggleVolume) {
       case "1M":
         fetchVolume("one-month");
         break;
@@ -79,6 +62,21 @@ function Trending() {
         fetchVolume("all");
         break;
     }
+  }, [toggleVolume]);
+
+  const trendingBtn = ["Trending", "Top"];
+  const volBtn = ["1M", "3M", "6M", "1Y", "All"];
+
+  const toggleTrendingHandler = (tab: string) => {
+    tab === "Trending"
+      ? setToggleTrending("Trending")
+      : setToggleTrending("Top");
+  };
+
+  const toggleVolumeHandler = (e: React.MouseEvent<HTMLElement>) => {
+    const volumePeriod = e.currentTarget.innerText;
+    setVolumeStats([]);
+    setToggleVolume(volumePeriod);
   };
 
   const navigateListings = () => {

@@ -17,7 +17,7 @@ export interface Ilistings {
   verified: string;
 }
 
-export interface IlistingsSoldFalse {
+export interface IListingsAndUsersSoldFalse {
   listing_date: string;
   listing_date_close: string;
   listing_id: number;
@@ -30,13 +30,13 @@ export interface IlistingsSoldFalse {
   verified: boolean;
 }
 
-export interface IProfileListingsFalse {
+export interface IDisplayListings {
   listing_id: number;
   shoe_brand?: string;
   shoe_model: string;
   shoe_img: string;
   shoe_size: string;
-  listing_date: string;
+  date: string;
   listing_price: number;
 }
 
