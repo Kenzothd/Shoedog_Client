@@ -2,13 +2,16 @@ import axios from "axios";
 import format from "date-fns/format";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { IProfileDetails } from "./Interface";
+import { IProfileDetails, IProfileListingsFalse } from "./Interface";
 
 function SingleProfile() {
   const navigate = useNavigate();
   const [tab, setTab] = useState("Listed");
   const [profileDetails, setProfileDetails] = useState<IProfileDetails[]>([]);
-  const tabs = ["Listed", "Reviews", "Favourited"];
+  const [falseListings, setFalseListings] = useState<IProfileListingsFalse[]>(
+    []
+  );
+  const tabs = ["Listed", "Sold", "Reviews", "Favourited"];
 
   const { username } = useParams();
 
@@ -21,9 +24,15 @@ function SingleProfile() {
         setProfileDetails(res.data);
       })
       .catch((err) => console.log(err));
+    axios
+      .get(
+        `${process.env.REACT_APP_API_BASE_URL}/listings/sold-false/${username}/limit-ten`
+      )
+      .then((res) => {
+        setFalseListings(res.data);
+      })
+      .catch((err) => console.log(err));
   }, [username]);
-
-  console.log(profileDetails);
 
   const toggleTabHandler = (e: any) => {
     setTab(e.target.innerText);
@@ -107,8 +116,8 @@ function SingleProfile() {
   };
 
   return (
-    <div className="my-[10rem] mx-[16rem] flex flex-col gap-8">
-      <div className="flex flex-start gap-12 items-center">
+    <div className="my-[10rem] mx-[15rem] flex flex-col gap-8">
+      <div className="flex flex-start gap-12 items-center mx-[1rem]">
         <div className="py-12 border-2 rounded-[5rem] w-1/6 overflow-hidden">
           <img
             src="https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200"
@@ -140,7 +149,7 @@ function SingleProfile() {
           </p>
         </div>
       </div>
-      <div className="flex items-center justify-between font-medium">
+      <div className="flex items-center justify-between font-medium mx-[1rem]">
         <div className="flex items-center gap-5 text-gray-400">
           <button>Followers (212)</button>
           <button>Following (430)</button>
@@ -199,22 +208,28 @@ function SingleProfile() {
         ))}
       </div>
 
-      <div className="grid grid-cols-4 gap-8 px-10 mt-4">
-        {mockShoesData.map((e, i) => (
+      <div className="grid grid-cols-4 gap-10 px-10 mt-4">
+        {falseListings.map((e, i) => (
           <div
             key={i}
             className="border-2 rounded font-medium cursor-pointer transition ease-in-out hover:scale-105 h-72"
             onClick={navigateSingleListing}
           >
             <div className="h-1/2 p-2">
-              <img className="object-contain h-full" src={e.img} alt="shoe" />
+              <img
+                className="object-contain h-full"
+                src={e.shoe_img}
+                alt="shoe"
+              />
             </div>
             <div className="p-2 h-1/2 flex flex-col justify-between">
-              <p className="pb-6 font-semibold">{e.shoe_name}</p>
+              <p className="pb-6 font-semibold">{e.shoe_model}</p>
               <div>
-                <p className=" text-gray-400">Size: {e.size}</p>
+                <p className=" text-gray-400">Size: US {e.shoe_size}</p>
                 <div className="pt-0.5 flex justify-between">
-                  <p className="text-gray-400">Quantity: {e.quantity}</p>
+                  <p className="text-gray-400">
+                    Listed: {format(new Date(e.listing_date), "MMM yyyy")}
+                  </p>
                   <p className="font-semibold">SGD {e.listing_price}</p>
                 </div>
               </div>

@@ -30,6 +30,16 @@ export interface IlistingsSoldFalse {
   verified: boolean;
 }
 
+export interface IProfileListingsFalse {
+  listing_id: number;
+  shoe_brand?: string;
+  shoe_model: string;
+  shoe_img: string;
+  shoe_size: string;
+  listing_date: string;
+  listing_price: number;
+}
+
 export interface IAlerts {
   alert_id: number;
   alert_price: number;
