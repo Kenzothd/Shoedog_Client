@@ -54,7 +54,7 @@ function SingleProfile() {
   };
 
   return (
-    <div className="my-[10rem] mx-[15rem] flex flex-col gap-8">
+    <div className="my-[10rem] mx-[12rem] flex flex-col gap-8">
       <div className="flex flex-start gap-12 items-center mx-[1rem]">
         <div className="py-12 border-2 rounded-[5rem] w-1/6 overflow-hidden">
           <img
