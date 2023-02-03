@@ -32,9 +32,9 @@ function ListingTable({ listings, condition, gap }: Props) {
           <div className="p-2 h-1/2 flex flex-col justify-between">
             <p className="pb-6 font-semibold">{e.shoe_model}</p>
             <div>
-              <p className=" text-gray-400">Size: US {e.shoe_size}</p>
+              <p className="text-sm text-gray-400">Size: US {e.shoe_size}</p>
               <div className="pt-0.5 flex justify-between">
-                <p className="text-gray-400">
+                <p className="text-sm text-gray-400">
                   {condition === "Listed" ? "Listed" : "Closed"}:{" "}
                   {format(new Date(e.date), "dd/MM/yy")}
                 </p>
