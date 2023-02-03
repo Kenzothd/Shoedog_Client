@@ -206,7 +206,7 @@ function SingleListing() {
             </div>
             <div className="border-2 rounded">
               <div className="flex justify-between border-b px-2 items-center">
-                <div className="flex gap-1">
+                <div className="flex gap-1 font-bold">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

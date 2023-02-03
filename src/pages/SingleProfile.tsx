@@ -55,7 +55,7 @@ function SingleProfile() {
 
   return (
     <div className="my-[10rem] mx-[12rem] flex flex-col gap-8">
-      <div className="flex flex-start gap-12 items-center mx-[1rem]">
+      <div className="flex flex-start gap-12 items-center mx-[0.5rem]">
         <div className="py-12 border-2 rounded-[5rem] w-1/6 overflow-hidden">
           <img
             src="https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200"
@@ -146,7 +146,7 @@ function SingleProfile() {
         ))}
       </div>
 
-      <ListingTable listings={ProfileListings} condition={tab} />
+      <ListingTable listings={ProfileListings} condition={tab} gap={10} />
     </div>
   );
 }

@@ -6,15 +6,16 @@ import { IDisplayListings } from "../pages/Interface";
 type Props = {
   listings: IDisplayListings[];
   condition: string;
+  gap: number;
 };
 
-function ListingTable({ listings, condition }: Props) {
+function ListingTable({ listings, condition, gap }: Props) {
   const navigate = useNavigate();
   const navigateSingleListing = () => {
     navigate("/listings/0");
   };
   return (
-    <div className="grid grid-cols-4 gap-8 px-12 mt-4">
+    <div className={`grid grid-cols-4 gap-${gap} px-12 mt-4`}>
       {listings?.map((e, i) => (
         <div
           key={i}
