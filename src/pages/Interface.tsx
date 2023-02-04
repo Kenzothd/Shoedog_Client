@@ -32,6 +32,7 @@ export interface IListingsAndUsersSoldFalse {
 
 export interface IDisplayListings {
   listing_id: number;
+  shoe_id: number;
   shoe_brand?: string;
   shoe_model: string;
   shoe_img: string;

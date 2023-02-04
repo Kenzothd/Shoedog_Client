@@ -29,7 +29,7 @@ function App() {
             </Route>
             <Route path="/" element={<PersonalNavBar />}>
               <Route path="/:username/dashboard" element={<UserDashboard />} />
-              <Route path="/:username" element={<UserProfile />} />
+              <Route path="/in/:username" element={<UserProfile />} />
             </Route>
           </Route>
         </Routes>

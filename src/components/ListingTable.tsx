@@ -11,8 +11,8 @@ type Props = {
 
 function ListingTable({ listings, condition, gap }: Props) {
   const navigate = useNavigate();
-  const navigateSingleListing = () => {
-    navigate("/listings/0");
+  const navigateSingleListing = (e: any) => {
+    navigate(`/listings/${e.currentTarget.id}`);
   };
   return (
     <div className={`grid grid-cols-4 gap-${gap} px-12 mt-4`}>
@@ -20,6 +20,7 @@ function ListingTable({ listings, condition, gap }: Props) {
         <div
           key={i}
           className="border-2 rounded font-medium cursor-pointer transition ease-in-out hover:scale-105 h-72"
+          id={e.shoe_id.toString()}
           onClick={navigateSingleListing}
         >
           <div className="h-1/2 p-2">
