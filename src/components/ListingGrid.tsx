@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { IDisplayListings } from "../pages/Interface";
 
@@ -9,7 +8,7 @@ type Props = {
   gap: number;
 };
 
-function ListingTable({ listings, condition, gap }: Props) {
+function ListingGrid({ listings, condition, gap }: Props) {
   const navigate = useNavigate();
   const navigateSingleListing = (e: any) => {
     navigate(`/listings/${e.currentTarget.id}`);
@@ -49,4 +48,4 @@ function ListingTable({ listings, condition, gap }: Props) {
   );
 }
 
-export default ListingTable;
+export default ListingGrid;

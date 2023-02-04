@@ -1,90 +1,63 @@
-import React, { useState } from "react";
+import axios from "axios";
+import format from "date-fns/format";
+import React, { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import AlertTable from "../components/AlertTable";
+import ListingGrid from "../components/ListingGrid";
+import { IProfileDetails, IDisplayListings } from "./Interface";
 
 function UserProfile() {
   const [tab, setTab] = useState("Listed");
-  const tabs = ["Listed", "Reviews", "Favourited", "Alerts", "Alert History"];
+  const [profileDetails, setProfileDetails] = useState<IProfileDetails[]>([]);
+  const [ProfileListings, setProfileListings] = useState<IDisplayListings[]>(
+    []
+  );
+  const tabs = ["Listed", "Sold", "Watchlist"];
+
+  const { username } = useParams();
+
+  const fetchListings = useCallback(
+    (condition: string) => {
+      axios
+        .get(
+          `${process.env.REACT_APP_API_BASE_URL}/listings/sold-${condition}/${username}/limit-ten`
+        )
+        .then((res) => {
+          setProfileListings(res.data);
+        })
+        .catch((err) => console.log(err));
+    },
+    [username]
+  );
+
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_BASE_URL}/users/findbyusername/${username}`
+      )
+      .then((res) => {
+        setProfileDetails(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    switch (tab) {
+      case "Listed":
+        fetchListings("false");
+        break;
+      case "Sold":
+        fetchListings("true");
+        break;
+    }
+  }, [username, fetchListings, tab]);
 
   const toggleTabHandler = (e: any) => {
     setTab(e.target.innerText);
   };
 
-  const mockShoesData = [
-    {
-      img: "https://images.novelship.com/product/1664391359054_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 High 'Lost & Found'",
-      listing_price: 432,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653919419146_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Dunk Low 'Black White' 2021",
-      listing_price: 191,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1664411976537_AirJordan40.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 4 Retro 'Midnight Navy",
-      listing_price: 325,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1666960814609_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 Low 'Aluminum'(W)",
-      listing_price: 140,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653918046201_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Dunk Low SP 'Kentucky'",
-      listing_price: 206,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1658762197699_YeezySlide0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Yeezy Slides 'Bone' (2022 Restock)",
-      listing_price: 156,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653919400399_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Dunk Low 'Black White' 2021 (W)",
-      listing_price: 186,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653919040759_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 Mid 'Smoke Grey'",
-      listing_price: 156,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1654843117055_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 Low 'Bulls'",
-      listing_price: 101,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Air Force 1 Low White '07",
-      listing_price: 113,
-      size: "US 6",
-      quantity: 1,
-    },
-  ];
-
   return (
-    <div className="my-[10rem] mx-[16rem] flex flex-col gap-8">
-      <div className="flex flex-start gap-12 items-center ">
-        <div className="py-12 border-2 rounded-[5rem] w-[18%] overflow-hidden">
+    <div className="my-[10rem] mx-[12rem] flex flex-col gap-8">
+      <div className="flex flex-start gap-12 items-center mx-[0.5rem]">
+        <div className="py-12 border-2 rounded-[5rem] w-1/6 overflow-hidden">
           <img
             src="https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200"
             alt="shoe"
@@ -92,7 +65,11 @@ function UserProfile() {
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <p className="font-semibold text-3xl">Darlington</p>
+            <p className="font-semibold text-3xl">
+              {profileDetails[0]
+                ? profileDetails[0].first_name + profileDetails[0].last_name
+                : "Loading..."}
+            </p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -106,16 +83,34 @@ function UserProfile() {
               />
             </svg>
           </div>
-          <p className="font-semibold ">@big_mingus777</p>
+          <p className="font-semibold ">
+            @{profileDetails[0] ? profileDetails[0].username : "Loading..."}
+          </p>
         </div>
       </div>
-      <div className="flex items-center justify-between font-medium ">
+      <div className="flex items-center justify-between font-medium mx-[1rem]">
         <div className="flex items-center gap-5 text-gray-400">
           <button>Followers (212)</button>
           <button>Following (430)</button>
-          <p>Joined April 2022</p>
+          <p>
+            {profileDetails[0]
+              ? "Joined " +
+                format(new Date(profileDetails[0].joined_date), "dd MMM yy")
+              : "Loading..."}
+          </p>
         </div>
         <div className="flex gap-2 items-center">
+          <button className="font-semibold flex items-center border border-black pr-1 py-1 transition ease-in-out hover:scale-105">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="w-5 h-5 pointer-events-none"
+            >
+              <path d="M10.75 6.75a.75.75 0 00-1.5 0v2.5h-2.5a.75.75 0 000 1.5h2.5v2.5a.75.75 0 001.5 0v-2.5h2.5a.75.75 0 000-1.5h-2.5v-2.5z" />
+            </svg>
+            Follow
+          </button>
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -152,25 +147,11 @@ function UserProfile() {
         ))}
       </div>
 
-      <div className="grid grid-cols-4 gap-8 px-10 mt-4">
-        {mockShoesData.map((e) => (
-          <div className="border-2 rounded font-medium cursor-pointer transition ease-in-out hover:scale-105 h-72">
-            <div className="h-1/2 p-2">
-              <img className="object-contain h-full" src={e.img} alt="shoe" />
-            </div>
-            <div className="p-2 h-1/2 flex flex-col justify-between">
-              <p className="pb-6 font-semibold">{e.shoe_name}</p>
-              <div>
-                <p className=" text-gray-400">Size: {e.size}</p>
-                <div className="pt-0.5 flex justify-between">
-                  <p className="text-gray-400">Quantity: {e.quantity}</p>
-                  <p className="font-semibold">SGD {e.listing_price}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      {tab === "Watchlist" ? (
+        <AlertTable />
+      ) : (
+        <ListingGrid listings={ProfileListings} condition={tab} gap={10} />
+      )}
     </div>
   );
 }

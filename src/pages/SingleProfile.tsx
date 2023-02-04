@@ -2,7 +2,7 @@ import axios from "axios";
 import format from "date-fns/format";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ListingTable from "../components/ListingTable";
+import ListingGrid from "../components/ListingGrid";
 import { IProfileDetails, IDisplayListings } from "./Interface";
 
 function SingleProfile() {
@@ -146,7 +146,7 @@ function SingleProfile() {
         ))}
       </div>
 
-      <ListingTable listings={ProfileListings} condition={tab} gap={10} />
+      <ListingGrid listings={ProfileListings} condition={tab} gap={10} />
     </div>
   );
 }
