@@ -10,8 +10,6 @@ type Props = {
 function TopTenTable({ volumeStats }: Props) {
   const currency = useContext(NavbarContext);
   const navigate = useNavigate();
-
-  // const mockTopTenData = [
   //   {
   //     img: "https://images.novelship.com/product/1664391359054_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
   //     shoe_name: "Jordan 1 High 'Lost & Found'",
@@ -267,7 +265,9 @@ function TopTenTable({ volumeStats }: Props) {
               />
             </svg>
           </div>
-          <div className="pt-2 font-medium">Loading might take awhile...</div>
+          <div className="pt-2 font-medium">
+            Loading might take up to 2 mins...
+          </div>
         </div>
       )}
     </>

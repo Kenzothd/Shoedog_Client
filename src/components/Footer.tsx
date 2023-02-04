@@ -10,8 +10,9 @@ function Footer() {
         <div className="mt-4 pt-10 px-[16rem] text-center border-t">
           <p>
             ShoeDog is a platform where shoe aficionados may purchase and sell
-            shoes. It offers mocked shoe data, real-time alert prompts, and the
-            ability to keep track of the status of a favourite pair of shoes.
+            shoes. It offers more than 100,000 mocked shoe listing data,
+            real-time alert prompts, and the ability to keep track of the status
+            of a favourite pair of shoes.
           </p>
           <div className="flex justify-center items-center gap-2 mt-2">
             {/* <a className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
