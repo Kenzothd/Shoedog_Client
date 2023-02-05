@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import UserAlerts from "../components/UserAlerts";
-import UserAlertsHistory from "../components/UserAlertsHistory";
 import UserListings from "../components/UserListings";
 
 function UserDashboard() {
@@ -29,24 +27,10 @@ function UserDashboard() {
         );
 
       case "alerts":
-        return (
-          <UserAlerts
-            // alertsHistory={alertsHistory}
-            // setAlertsHistory={setAlertsHistory}
-            allAlerts={allAlerts}
-            setAllAlerts={setAllAlerts}
-          />
-        );
+        return <div>User Alerts</div>;
 
       case "history":
-        return (
-          <UserAlertsHistory
-            // alertsHistory={alertsHistory}
-            // setAlertsHistory={setAlertsHistory}
-            allAlerts={allAlerts}
-            setAllAlerts={setAllAlerts}
-          />
-        );
+        return <div>Alerts History</div>;
     }
   };
 

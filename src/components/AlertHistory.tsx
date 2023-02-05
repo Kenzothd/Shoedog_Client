@@ -5,11 +5,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
-  title?: string;
   listings: IListingsAndUsersSoldFalse[];
 };
 
-function ListingTable({ title, listings }: Props) {
+function AlertHistory({ listings }: Props) {
   const [toggle, setToggle] = useState(false);
   const [sort, setSort] = useState("Most Recent");
   const navigate = useNavigate();
@@ -87,7 +86,7 @@ function ListingTable({ title, listings }: Props) {
               d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
             />
           </svg>
-          <p className="font-bold">{title}</p>
+          <p className="font-bold">Alerts History</p>
         </div>
         <div className="flex gap-2 items-center py-2">
           Sort:
@@ -133,15 +132,56 @@ function ListingTable({ title, listings }: Props) {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-5 gap-1.5 items-center text-center pl-2 pr-6 border-b">
+      <div className="grid grid-cols-9 gap-1.5 items-center text-center pl-2 pr-3 border-b">
+        <div className="col-span-3">Shoe</div>
         <div>Price</div>
         <div>Size</div>
-        <div>Expirations</div>
-        <div>Seller</div>
+        <div className="col-span-3">
+          <div className="grid grid-cols-2">
+            <div>Expirations</div>
+            <div>Seller</div>
+          </div>
+        </div>
         <div></div>
       </div>
-      <div className="grid grid-cols-5 gap-1.5 items-center text-center h-60 overflow-auto ">
-        {sortedListings[0] ? (
+      <div className="h-80 overflow-auto text-sm">
+        <div className="grid grid-cols-9 gap-1.5 items-center text-center pl-2 pr-1 py-1 border-b">
+          <div className="col-span-3 flex justify-center items-center gap-0.5 ">
+            <img
+              className="h-12 w-12 py-3 border rounded bg-white"
+              src="https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200"
+              alt="shoe"
+            />
+            <p>Yeezy Slides "Bone" (2022 Restock)ll</p>
+          </div>
+          <div>SGD 100</div>
+          <div>US 10</div>
+          <div className="col-span-3">
+            <div className="grid grid-cols-2">
+              <div>1 days ago</div>
+              <div className="text-blue-500 font-semibold text-sm flex items-center justify-center cursor-pointer hover:text-blue-700 whitespace-normal">
+                <p>big_migus</p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-5 h-5 pointer-events-none"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button className="border rounded px-2 py-1 my-1 bg-black text-white font-semibold transition ease-in-out hover:scale-105">
+              Buy Now
+            </button>
+          </div>
+          {/* {sortedListings[0] ? (
           <>
             <div className="col-span-5"></div>
             {sortedListings.map((e, i) => {
@@ -221,10 +261,11 @@ function ListingTable({ title, listings }: Props) {
               </div>
             </div>
           </>
-        )}
+        )} */}
+        </div>
       </div>
     </div>
   );
 }
 
-export default ListingTable;
+export default AlertHistory;
