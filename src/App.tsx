@@ -30,6 +30,10 @@ function App() {
             <Route path="/" element={<PersonalNavBar />}>
               <Route path="/:username/dashboard" element={<UserDashboard />} />
               <Route path="/in/:username" element={<UserProfile />} />
+              <Route
+                path="/in/:user/profile/:username"
+                element={<SingleProfile />}
+              />
             </Route>
           </Route>
         </Routes>

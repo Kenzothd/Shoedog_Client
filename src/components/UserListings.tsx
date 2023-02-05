@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { IAllAlerts, Ilistings } from "../pages/Interface";
+import { Ilistings } from "../pages/Interface";
 import CreateListing from "./CreateListing";
 
 type Props = {

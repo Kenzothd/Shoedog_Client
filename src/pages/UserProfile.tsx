@@ -155,7 +155,10 @@ function UserProfile() {
             <Alerts userId={profileDetails[0].user_id} />
 
             <div className="col-span-2">
-              <AlertHistory listings={[]} />
+              <AlertHistory
+                userId={profileDetails[0].user_id}
+                username={profileDetails[0].username}
+              />
             </div>
           </div>
         ) : (

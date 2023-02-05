@@ -42,37 +42,27 @@ export interface IDisplayListings {
 }
 
 export interface IAlerts {
-  alert_id: number;
-  alert_price: number;
-  country: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  password: string;
-  shoe_brand: string;
-  shoe_description: string;
-  shoe_id: number;
   shoe_img: string;
   shoe_model: string;
   shoe_size: string;
-  user_alert_id: number;
-  verified: string;
+  alert_price: number;
+  user_id: number;
+  alert_id: number;
+  shoe_id: number;
 }
 
-export interface IAllAlerts {
-  alert_id: number;
-  alert_price: number;
-  listing_id: number;
-  listing_price: number;
-  shoe_brand: string;
-  shoe_description: string;
-  shoe_id: number;
+export interface IAlertsHistory {
+  user_id: number;
+  username: string;
+  verified: boolean;
   shoe_img: string;
   shoe_model: string;
   shoe_size: string;
+  listing_id: number;
   sold: boolean;
-  user_alert_id: number;
-  user_listing_id: number;
+  alert_price: number;
+  listing_price: number;
+  listing_date: string;
 }
 
 export interface IShoes {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IAllAlerts, IShoes } from "../pages/Interface";
+import {  IShoes } from "../pages/Interface";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
