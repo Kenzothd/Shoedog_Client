@@ -47,9 +47,9 @@ function CreateListing({
 
   const formik = useFormik({
     initialValues: {
-      shoe_model: shoeModel ? shoeModel : "",
-      shoe_size: shoeSize ? shoeSize : "6",
-      listing_price: shoePrice ? shoePrice : "",
+      shoe_model: title === "Edit" && shoeModel ? shoeModel : "",
+      shoe_size: title === "Edit" && shoeSize ? shoeSize : "6",
+      listing_price: title === "Edit" && shoePrice ? shoePrice : "",
     },
     validationSchema: Yup.object({
       shoe_model: Yup.string().required("Required"),

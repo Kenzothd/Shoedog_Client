@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+type Props = {
+  handleAutoGenerate: any;
+  loginDetails: { username: string; password: string };
+};
+
+function Login({ handleAutoGenerate, loginDetails }: Props) {
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      username: loginDetails.username,
+      password: loginDetails.password,
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email address").required("Required"),
+      username: Yup.string(),
       password: Yup.string(),
     }),
     onSubmit: (values) => {
@@ -32,30 +37,36 @@ function Login() {
           config
         )
         .then((res) => {
-          if (res.data.id !== "") {
-            navigate(`/user/${res.data.id}/dashboard`);
+          if (res.data.username !== "") {
+            navigate(`/in/${res.data.username}`);
           }
         }) //navigate with user/id
         .catch((err) => console.log(err));
     },
   });
+
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
-        <div className="flex flex-col text-center gap-5">
-          <div>
+        <div className="grid grid-rows-4 place-items-center ">
+          <div className="flex flex-col gap-2 items-center">
             <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Email Address"
+              id="username"
+              name="username"
+              type="text"
+              placeholder="Username"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.email}
+              value={formik.values.username}
+              className="m-0"
             />
-            {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+            {formik.errors.username ? (
+              <div>{formik.errors.username}</div>
+            ) : (
+              <div></div>
+            )}
           </div>
-          <div>
+          <div className="flex flex-col gap-2 items-center">
             <input
               id="password"
               name="password"
@@ -67,11 +78,23 @@ function Login() {
             />
             {formik.errors.password ? (
               <div>{formik.errors.password}</div>
-            ) : null}
+            ) : (
+              <div></div>
+            )}
           </div>
 
-          <button className="hover:bg-slate-200" type="submit">
+          <button
+            className="hover:bg-slate-200 border p-2 font-medium w-44"
+            type="submit"
+          >
             Log in
+          </button>
+
+          <button
+            onClick={handleAutoGenerate}
+            className="hover:bg-slate-200 border p-2 font-medium w-44"
+          >
+            Auto Generate
           </button>
         </div>
       </form>

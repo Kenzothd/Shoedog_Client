@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SignUp from "../components/SignUp";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -8,9 +8,22 @@ import "../App.css";
 
 function UserLogin() {
   const [value, setValue] = useState("login");
+  const [loginDetails, setLoginDetails] = useState({
+    username: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    setValue("login");
+  }, [loginDetails]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
+  };
+
+  const handleAutoGenerate = () => {
+    setLoginDetails({ username: "big_migus", password: "PeterLim123" });
+    setValue("signup");
   };
 
   return (
@@ -43,7 +56,14 @@ function UserLogin() {
             <Tab value="login" label="Login" />
           </Tabs>
         </Box>
-        {value === "login" ? <Login /> : <SignUp />}
+        {value === "login" ? (
+          <Login
+            handleAutoGenerate={handleAutoGenerate}
+            loginDetails={loginDetails}
+          />
+        ) : (
+          <SignUp />
+        )}
       </div>
     </>
   );
