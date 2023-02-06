@@ -221,9 +221,7 @@ function AlertHistory({ userId, username }: Props) {
             </div>
           ))
         ) : (
-          <div className="text-center text-lg py-32">
-            No Alerts History yet...
-          </div>
+          <div className="text-center text-lg py-32">No Alerts History yet</div>
         )}
       </div>
     </div>

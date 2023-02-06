@@ -8,22 +8,21 @@ import { IAlertsHistory, IShoes } from "../pages/Interface";
 type Props = {
   // alertsHistory: IAllAlerts[];
   // setAlertsHistory: any;
-  alertBtn: boolean;
-  toggleAlertBtn: any;
-  allAlerts: string;
-  setAllAlerts: any;
+  // alertBtn: boolean;
+  // toggleAlertBtn: any;
+  // allAlerts: string;
+  // setAllAlerts: any;
 };
 
-function CreateAlert({
-  alertBtn,
-  toggleAlertBtn,
-  // alertsHistory,
-  // setAlertsHistory,
-  setAllAlerts,
-  allAlerts,
-}: Props) {
+function CreateAlert({}: // alertBtn,
+// toggleAlertBtn,
+// alertsHistory,
+// setAlertsHistory,
+// setAllAlerts,
+// allAlerts,
+Props) {
   const [shoes, setShoes] = useState<IShoes[]>([]);
-  const { id } = useParams();
+  const { username } = useParams();
   // const shoeSize = shoes.map((e) => e.shoe_size);
 
   useEffect(() => {
@@ -50,34 +49,32 @@ function CreateAlert({
     }),
     onSubmit: (values) => {
       //   console.log("submit button", JSON.stringify(values));
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      axios
-        .post(
-          `${process.env.REACT_APP_API_BASE_URL}/alerts/${id}`,
-          values,
-          config
-        )
-        .then((res) => {
-          toggleAlertBtn(!alertBtn);
-          setAllAlerts(!allAlerts);
-        })
-        .catch((err) => console.log(err));
+      // const config = {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // };
+      // axios
+      //   .post(
+      //     `${process.env.REACT_APP_API_BASE_URL}/alerts/${id}`,
+      //     values,
+      //     config
+      //   )
+      //   .then((res) => {
+      //     toggleAlertBtn(!alertBtn);
+      //     setAllAlerts(!allAlerts);
+      //   })
+      //   .catch((err) => console.log(err));
     },
   });
 
-  const closeAlertPopUp = () => {
-    toggleAlertBtn(!alertBtn);
-  };
+  // const closeAlertPopUp = () => {
+  //   toggleAlertBtn(!alertBtn);
+  // };
 
   return (
     <>
-      <div className="absolute p-3 rounded opacity-90 bg-black text-center top-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute py-3 px-20 rounded opacity-90 bg-black text-center  left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <h2 className="text-white py-3 font-bold">Alert Settings</h2>
         <form onSubmit={formik.handleSubmit}>
           <div className="flex flex-col text-center gap-5">
@@ -160,7 +157,7 @@ function CreateAlert({
                 Create Alert
               </button>
               <button
-                onClick={closeAlertPopUp}
+                // onClick={closeAlertPopUp}
                 className="text-white rounded border-2 border-solid border-white hover:bg-slate-400 p-2"
               >
                 Cancel

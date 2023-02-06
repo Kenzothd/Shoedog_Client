@@ -146,7 +146,7 @@ function SingleProfile() {
         ))}
       </div>
 
-      <ListingGrid listings={ProfileListings} condition={tab} gap={10} />
+      <ListingGrid listings={ProfileListings} tab={tab} gap={10} />
     </div>
   );
 }

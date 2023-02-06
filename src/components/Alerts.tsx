@@ -58,7 +58,7 @@ function Alerts({ userId }: Props) {
       </div>
 
       <div className="h-80 overflow-auto">
-        {alerts ? (
+        {alerts[0] ? (
           alerts.map((e) => (
             <div
               key={e.alert_id}
@@ -107,7 +107,7 @@ function Alerts({ userId }: Props) {
             </div>
           ))
         ) : (
-          <div>No Alerts Yet</div>
+          <div className="text-center text-lg py-32">No Alerts yet</div>
         )}
       </div>
     </div>

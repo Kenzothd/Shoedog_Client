@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import UserListings from "../components/UserListings";
 
 function UserDashboard() {
   const [value, setValue] = useState("alerts");
@@ -17,14 +16,7 @@ function UserDashboard() {
   const valueRendering = (value: string) => {
     switch (value) {
       case "listings":
-        return (
-          <UserListings
-            // alertsHistory={alertsHistory}
-            // setAlertsHistory={setAlertsHistory}
-            allAlerts={allAlerts}
-            setAllAlerts={setAllAlerts}
-          />
-        );
+        return <div>Listings</div>;
 
       case "alerts":
         return <div>User Alerts</div>;

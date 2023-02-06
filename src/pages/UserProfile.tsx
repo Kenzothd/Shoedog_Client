@@ -37,7 +37,6 @@ function UserProfile() {
         `${process.env.REACT_APP_API_BASE_URL}/users/findbyusername/${username}`
       )
       .then((res) => {
-        console.log(res.data);
         setProfileDetails(res.data);
       })
       .catch((err) => console.log(err));
@@ -162,7 +161,12 @@ function UserProfile() {
             </div>
           </div>
         ) : (
-          <ListingGrid listings={ProfileListings} condition={tab} gap={10} />
+          <ListingGrid
+            userId={profileDetails[0].user_id}
+            listings={ProfileListings}
+            tab={tab}
+            gap={10}
+          />
         )
       ) : (
         <div className="col-span-5 p-20 flex flex-col justify-align  items-center h-full w-full">
