@@ -56,7 +56,7 @@ function UserProfile() {
   };
 
   return (
-    <div className="my-[10rem] mx-[12rem] flex flex-col gap-8">
+    <div className="mt-[10rem] mb-[4rem] mx-[12rem] flex flex-col gap-8">
       <div className="flex flex-start gap-12 items-center mx-[0.5rem]">
         <div className="py-12 border-2 rounded-[5rem] w-1/6 overflow-hidden">
           <img
@@ -162,6 +162,7 @@ function UserProfile() {
           </div>
         ) : (
           <ListingGrid
+            fetchListings={fetchListings}
             userId={profileDetails[0].user_id}
             listings={ProfileListings}
             tab={tab}

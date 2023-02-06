@@ -1,7 +1,7 @@
 import axios from "axios";
 import format from "date-fns/format";
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ListingGrid from "../components/ListingGrid";
 import { IProfileDetails, IDisplayListings } from "./Interface";
 
@@ -54,7 +54,7 @@ function SingleProfile() {
   };
 
   return (
-    <div className="my-[10rem] mx-[12rem] flex flex-col gap-8">
+    <div className="mt-[10rem] mb-[4rem] mx-[12rem] flex flex-col gap-8">
       <div className="flex flex-start gap-12 items-center mx-[0.5rem]">
         <div className="py-12 border-2 rounded-[5rem] w-1/6 overflow-hidden">
           <img

@@ -5,17 +5,22 @@ import { IDisplayListings } from "../pages/Interface";
 import CreateListing from "./CreateListing";
 
 type Props = {
+  fetchListings?: any;
   userId?: number;
   listings: IDisplayListings[];
   tab: string;
   gap: number;
 };
 
-function ListingGrid({ userId, listings, tab, gap }: Props) {
+function ListingGrid({ fetchListings, userId, listings, tab, gap }: Props) {
   const [toggleSort, setToggleSort] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [sort, setSort] = useState("Most Recent");
   const [title, setTitle] = useState("");
+  const [listingId, setListingId] = useState(0);
+  const [shoeModel, setShoeModel] = useState("");
+  const [shoeSize, setShoeSize] = useState("");
+  const [shoePrice, setShoePrice] = useState("");
   const navigate = useNavigate();
 
   const sortList = [
@@ -69,10 +74,24 @@ function ListingGrid({ userId, listings, tab, gap }: Props) {
     setToggleSort(!toggleSort);
   };
 
-  const handleToggle = (e: any) => {
-    console.log(e.target.id);
+  const handleToggle = (
+    e: any,
+    listing_id: number = 0,
+    shoe_model: string = "",
+    shoe_size: string = "",
+    shoe_price: string = ""
+  ) => {
     setToggle(!toggle);
-    e.target.id === "Create" ? setTitle("Create") : setTitle("Update");
+
+    if (e.target.id === "Create") {
+      setTitle("Create");
+    } else {
+      setTitle("Edit");
+      setListingId(listing_id);
+      setShoeModel(shoe_model);
+      setShoeSize(shoe_size);
+      setShoePrice(shoe_price);
+    }
   };
 
   const navigateSingleListing = (e: any) => {
@@ -81,18 +100,8 @@ function ListingGrid({ userId, listings, tab, gap }: Props) {
 
   return (
     <div className="px-12">
-      {toggle ? (
-        <CreateListing
-          title={"Create"}
-          userId={userId}
-          listingBtn={toggle}
-          toggleListingBtn={setToggle}
-        />
-      ) : (
-        <></>
-      )}
       <div className="flex justify-between items-center">
-        {tab === "Listed" ? (
+        {userId && tab === "Listed" ? (
           <button
             id="Create"
             onClick={handleToggle}
@@ -124,6 +133,7 @@ function ListingGrid({ userId, listings, tab, gap }: Props) {
                 />
               </svg>
             </button>
+
             {toggleSort ? (
               <div className="absolute">
                 <ul className="bg-white border-2 rounded ">
@@ -148,47 +158,76 @@ function ListingGrid({ userId, listings, tab, gap }: Props) {
         </div>
       </div>
       <div className={`grid grid-cols-4 gap-${gap} mt-4`}>
-        {sortedListings?.map((e, i) => (
+        {toggle ? (
+          <CreateListing
+            fetchListings={fetchListings}
+            listingId={listingId}
+            shoeModel={shoeModel}
+            shoeSize={shoeSize}
+            shoePrice={shoePrice}
+            title={title}
+            userId={userId}
+            listingBtn={toggle}
+            toggleListingBtn={setToggle}
+          />
+        ) : (
+          <></>
+        )}
+        {sortedListings?.map((ele, i) => (
           <div
             key={i}
             className={`border-2 rounded font-medium cursor-pointer transition ease-in-out h-72 ${
               toggle ? null : "hover:scale-105"
             }`}
-            id={e.shoe_id.toString()}
-            onClick={userId ? () => {} : navigateSingleListing}
+            id={ele.shoe_id.toString()}
+            onClick={
+              userId && tab === "Listed"
+                ? (e) =>
+                    handleToggle(
+                      e,
+                      ele.listing_id,
+                      ele.shoe_model,
+                      ele.shoe_size,
+                      ele.listing_price.toString()
+                    )
+                : navigateSingleListing
+            }
           >
-            <div className="h-1/2 p-2 relative">
+            <div className="h-1/2 p-2">
               <img
                 className="object-contain h-full"
-                src={e.shoe_img}
+                src={ele.shoe_img}
                 alt="shoe"
               />
-              <button
-                id="Update"
-                className="absolute top-1 right-1 transition ease-in-out hover:scale-105 hover:text-gray-500 z-50"
-                onClick={handleToggle}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-8 h-8 pointer-events-none "
+              {userId && tab === "Listed" ? (
+                <button
+                  id="Update"
+                  className="absolute top-1 right-1 transition ease-in-out hover:scale-105 hover:text-gray-500"
                 >
-                  <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
-                  <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="w-8 h-8 pointer-events-none "
+                  >
+                    <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
+                    <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
+                  </svg>
+                </button>
+              ) : (
+                <></>
+              )}
             </div>
             <div className="p-2 h-1/2 flex flex-col justify-between">
-              <p className="pb-6 font-semibold">{e.shoe_model}</p>
+              <p className="pb-6 font-semibold">{ele.shoe_model}</p>
               <div className="text-[14px]">
-                <p className=" text-gray-400">Size: US {e.shoe_size}</p>
+                <p className=" text-gray-400">Size: US {ele.shoe_size}</p>
                 <div className="pt-0.5 flex justify-between">
                   <p className="text-gray-400">
                     {tab === "Listed" ? "Listed" : "Closed"}:{" "}
-                    {format(new Date(e.date), "dd/MM/yy")}
+                    {format(new Date(ele.date), "dd/MM/yy")}
                   </p>
-                  <p className="font-semibold">SGD {e.listing_price}</p>
+                  <p className="font-semibold">SGD {ele.listing_price}</p>
                 </div>
               </div>
             </div>
