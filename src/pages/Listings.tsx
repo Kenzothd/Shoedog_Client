@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { NavbarContext } from "../components/Navbar";
 import coverOne from "../imgs/cover-one.png";
 import { format } from "date-fns";
+import Pagination from "../components/Pagination";
 
 function Listings() {
   const [listings, setListings] = useState<IListings[]>([]);
@@ -68,26 +69,21 @@ function Listings() {
   ];
 
   const priceList = [
-    { input: "under_retail", label: "Under Retail Price" },
-    { input: "> 100", label: "Under - 100" },
-    {
-      input: "100 200",
-      label: "100 - 200",
-    },
-    {
-      input: "200 300",
-      label: "200 - 300",
-    },
-    {
-      input: "e.lowest_listing_price >= 300 && e.lowest_listing_price <= 400",
-      label: "300 - 400",
-    },
-    { input: "price >= 400 && price < 500", label: "400 - 500" },
-    { input: "price >= 500 && price < 600", label: "500 - 600" },
-    { input: "price >= 600 && price < 700", label: "600 - 700" },
-    { input: "price >= 700 && price < 800", label: "700 - 800" },
-    { input: "price >= 800 && price < 900", label: "800 - 900" },
-    { input: "price >= 900 && price < 1000", label: "900 - 1000" },
+    "Under Retail Price",
+    "Under - 100",
+
+    "100 - 200",
+
+    "200 - 300",
+
+    "300 - 400",
+
+    "400 - 500",
+    "500 - 600",
+    "600 - 700",
+    "700 - 800",
+    "800 - 900",
+    "900 - 1000",
   ];
 
   let sortedListings = listings;
@@ -101,14 +97,14 @@ function Listings() {
     //Filter by price
     if (pricesTag[0]) {
       sortedListings = sortedListings.filter((e) => {
-        if (pricesTag.includes("under_retail")) {
+        if (pricesTag.includes("Under Retail Price")) {
           return e.shoe_retail_price > e.lowest_listing_price;
         } else {
           return pricesTag.some((prices) => {
-            if (prices.startsWith(">")) {
+            if (prices === "Under - 100") {
               return e.lowest_listing_price <= 100;
             } else {
-              let [lower, upper] = prices.split("-").map(Number);
+              let [lower, upper] = prices.split(" - ").map(Number);
               return (
                 e.lowest_listing_price >= lower &&
                 e.lowest_listing_price <= upper
@@ -272,13 +268,11 @@ function Listings() {
               <div key={i}>
                 <input
                   type="checkbox"
-                  id={e.input}
+                  id={e}
                   className="border-2 rounded"
                   onChange={handleAddPrice}
                 />
-                <label className="pl-2 align-middle font-medium">
-                  {e.label}
-                </label>
+                <label className="pl-2 align-middle font-medium">{e}</label>
                 <br />
               </div>
             ))}
@@ -322,7 +316,7 @@ function Listings() {
               </button>
 
               {toggleMonth ? (
-                <div className="absolute w-full">
+                <div className="absolute w-full z-10">
                   <ul className="bg-white border-2 rounded z-0">
                     {monthList
                       .filter((e) => e !== month)
@@ -449,7 +443,7 @@ function Listings() {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-4 gap-4 ">
+          <div className="grid grid-cols-4 gap-4 h-[56rem]">
             {sortedListings.map((e, i) => (
               <div
                 key={i}
@@ -488,17 +482,7 @@ function Listings() {
               </div>
             ))}
           </div>
-          <div className="flex justify-center gap-2">
-            {sortedListings.map((e, i) => {
-              if (i % 12) {
-                return (
-                  <button className="border-2 px-4 py-1 font-semibold hover:bg-slate-100">
-                    1
-                  </button>
-                );
-              }
-            })}
-          </div>
+          <Pagination sortedListings={sortedListings} />
         </div>
       </div>
     </>
