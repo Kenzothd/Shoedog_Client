@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { IAlerts } from "../pages/Interface";
 
 type Props = {
@@ -9,6 +10,12 @@ type Props = {
 };
 
 function Alerts({ userId, handleToggleAlert, alerts }: Props) {
+  const navigate = useNavigate();
+
+  const navigateSingleListing = (e: any) => {
+    navigate(`/listings/${e.currentTarget.id}`);
+  };
+
   return (
     <div className="border-2 rounded">
       <div className="flex justify-between border-b px-2 items-center">
@@ -54,13 +61,19 @@ function Alerts({ userId, handleToggleAlert, alerts }: Props) {
               key={ele.alert_id}
               className="grid grid-cols-7 items-center text-center pl-3 border-b text-sm "
             >
-              <div className="col-span-4 grid grid-cols-4 gap-2 py-2">
+              <div
+                id={ele.shoe_id.toString()}
+                onClick={navigateSingleListing}
+                className="col-span-4 grid grid-cols-4 gap-2 py-2 cursor-pointer hover:text-gray-500"
+              >
                 <img
                   className="h-12 w-12 py-3 border rounded bg-white object-fit"
                   src={ele.shoe_img}
                   alt="shoe"
                 />
-                <p className="col-span-3 flex items-center">{ele.shoe_model}</p>
+                <p className="col-span-3 flex items-center font-medium ">
+                  {ele.shoe_model}
+                </p>
               </div>
               <div className="col-span-2 grid grid-cols-3">
                 <div>{ele.shoe_size}</div>

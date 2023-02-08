@@ -89,6 +89,10 @@ function AlertHistory({ userId, username, alerts, profileListings }: Props) {
     navigate(`/in/${username}/profile/${e.target.id}`);
   };
 
+  const navigateSingleListing = (e: any) => {
+    navigate(`/listings/${e.currentTarget.id}`);
+  };
+
   return (
     <div className="border-2 rounded">
       <div className="flex justify-between border-b px-2 items-center">
@@ -172,13 +176,19 @@ function AlertHistory({ userId, username, alerts, profileListings }: Props) {
               key={e.listing_id}
               className="grid grid-cols-9 gap-1.5 items-center text-center pl-3 pr-3 border-b"
             >
-              <div className="col-span-3 grid grid-cols-4 py-2">
+              <div
+                id={e.shoe_id.toString()}
+                onClick={navigateSingleListing}
+                className="col-span-3 grid grid-cols-4 py-2 cursor-pointer  hover:text-gray-500"
+              >
                 <img
                   className="h-12 w-12 py-3 border rounded bg-white object-fit"
                   src={e.shoe_img}
                   alt="shoe"
                 />
-                <p className="col-span-3 flex items-center">{e.shoe_model}</p>
+                <p className="col-span-3 flex items-center font-medium ">
+                  {e.shoe_model}
+                </p>
               </div>
               <div>{e.shoe_size}</div>
               <div>SGD {e.listing_price}</div>
@@ -219,7 +229,11 @@ function AlertHistory({ userId, username, alerts, profileListings }: Props) {
                 </div>
               </div>
               <div>
-                <button className="border rounded px-2 py-1 my-1 bg-black text-white font-semibold transition ease-in-out hover:scale-105">
+                <button
+                  id={e.shoe_id.toString()}
+                  onClick={navigateSingleListing}
+                  className="border rounded px-2 py-1 my-1 bg-black text-white font-semibold transition ease-in-out hover:scale-105"
+                >
                   Buy Now
                 </button>
               </div>

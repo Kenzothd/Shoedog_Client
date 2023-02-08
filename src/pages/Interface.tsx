@@ -55,6 +55,7 @@ export interface IAlertsHistory {
   user_id: number;
   username: string;
   verified: boolean;
+  shoe_id: number;
   shoe_img: string;
   shoe_model: string;
   shoe_size: string;
