@@ -1,20 +1,11 @@
-export interface Ilistings {
-  country: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  listing_id: number;
-  listing_price: number;
-  password: string;
-  shoe_brand: string;
-  shoe_description: string;
+export interface IListings {
   shoe_id: number;
+  shoe_brand: string;
   shoe_img: string;
   shoe_model: string;
-  shoe_size: string;
-  sold: boolean;
-  user_listing_id: number;
-  verified: string;
+  shoe_release_date: string;
+  shoe_retail_price: number;
+  lowest_listing_price: number;
 }
 
 export interface IListingsAndUsersSoldFalse {

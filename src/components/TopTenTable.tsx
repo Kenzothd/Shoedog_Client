@@ -10,67 +10,6 @@ type Props = {
 function TopTenTable({ volumeStats }: Props) {
   const currency = useContext(NavbarContext);
   const navigate = useNavigate();
-  //   {
-  //     img: "https://images.novelship.com/product/1664391359054_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-  //     shoe_name: "Jordan 1 High 'Lost & Found'",
-  //     lowest_list: 432,
-  //     volume: "64M+",
-  //   },
-  //   {
-  //     img: "https://images.novelship.com/product/1653919419146_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-  //     shoe_name: "Dunk Low 'Black White' 2021",
-  //     lowest_list: 191,
-  //     volume: "24M+",
-  //   },
-  //   {
-  //     img: "https://images.novelship.com/product/1664411976537_AirJordan40.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-  //     shoe_name: "Jordan 4 Retro 'Midnight Navy",
-  //     lowest_list: 325,
-  //     volume: "4M+",
-  //   },
-  //   {
-  //     img: "https://images.novelship.com/product/1666960814609_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-  //     shoe_name: "Jordan 1 Low 'Aluminum'(W)",
-  //     lowest_list: 140,
-  //     volume: "1M+",
-  //   },
-  //   {
-  //     img: "https://images.novelship.com/product/1653918046201_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-  //     shoe_name: "Dunk Low SP 'Kentucky'",
-  //     lowest_list: 206,
-  //     volume: "1M+",
-  //   },
-  //   {
-  //     img: "https://images.novelship.com/product/1658762197699_YeezySlide0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-  //     shoe_name: "Yeezy Slides 'Bone' (2022 Restock)",
-  //     lowest_list: 156,
-  //     volume: "987K",
-  //   },
-  //   {
-  //     img: "https://images.novelship.com/product/1653919400399_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-  //     shoe_name: "Dunk Low 'Black White' 2021 (W)",
-  //     lowest_list: 186,
-  //     volume: "854K",
-  //   },
-  //   {
-  //     img: "https://images.novelship.com/product/1653919040759_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-  //     shoe_name: "Jordan 1 Mid 'Smoke Grey'",
-  //     lowest_list: 156,
-  //     volume: "800K",
-  //   },
-  //   {
-  //     img: "https://images.novelship.com/product/1654843117055_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-  //     shoe_name: "Jordan 1 Low 'Bulls'",
-  //     lowest_list: 101,
-  //     volume: "500K",
-  //   },
-  //   {
-  //     img: "https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-  //     shoe_name: "Air Force 1 Low White '07",
-  //     lowest_list: 113,
-  //     volume: "343K",
-  //   },
-  // ];
 
   const formatNumber = (num: number) => {
     if (num >= 1000000000) {
