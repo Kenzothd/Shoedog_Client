@@ -3,14 +3,16 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { IAlertsHistory } from "../pages/Interface";
+import { IAlerts, IAlertsHistory, IDisplayListings } from "../pages/Interface";
 
 type Props = {
+  alerts: IAlerts[];
   userId: number;
   username: string;
+  profileListings: IDisplayListings[];
 };
 
-function AlertHistory({ userId, username }: Props) {
+function AlertHistory({ userId, username, alerts, profileListings }: Props) {
   const [toggle, setToggle] = useState(false);
   const [sort, setSort] = useState("Most Recent");
   const [alertsHistory, setAlertsHistory] = useState<IAlertsHistory[]>([]);
@@ -35,16 +37,13 @@ function AlertHistory({ userId, username }: Props) {
   };
 
   useEffect(() => {
-    let timer = setTimeout(() => fetchAlertsHistory(userId), 1000);
-
+    let interval = setInterval(() => fetchAlertsHistory(userId), 6000);
     return () => {
-      clearTimeout(timer);
+      clearInterval(interval);
     };
-  }, [userId]);
+  }, [userId, alerts]);
 
   let sortedAlertsHistory = alertsHistory;
-
-  console.log(sortedAlertsHistory);
 
   const handleToggleSort = () => {
     setToggle(!toggle);
@@ -171,7 +170,7 @@ function AlertHistory({ userId, username }: Props) {
           sortedAlertsHistory.map((e) => (
             <div
               key={e.listing_id}
-              className="grid grid-cols-9 gap-1.5 items-center text-center pl-2 pr-1 border-b"
+              className="grid grid-cols-9 gap-1.5 items-center text-center pl-3 pr-3 border-b"
             >
               <div className="col-span-3 grid grid-cols-4 py-2">
                 <img

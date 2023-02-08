@@ -1,29 +1,40 @@
-import React, { useEffect, useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { IAlertsHistory, IShoes } from "../pages/Interface";
+import React, { useEffect, useState } from "react";
+import { IShoes } from "../pages/Interface";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 
 type Props = {
-  // alertsHistory: IAllAlerts[];
-  // setAlertsHistory: any;
-  // alertBtn: boolean;
-  // toggleAlertBtn: any;
+  //   alertsHistory: IAllAlerts[];
+  //   setAlertsHistory: any;
+  title: string;
+  alertBtn: boolean;
+  setAlertBtn: any;
+  handleToggleAlert: any;
+  userId?: number;
+  fetchAlerts: any;
+  alertId: number;
+  shoeModel: string;
+  shoeSize: string;
+  shoePrice: string;
   // allAlerts: string;
   // setAllAlerts: any;
 };
 
-function CreateAlert({}: // alertBtn,
-// toggleAlertBtn,
-// alertsHistory,
-// setAlertsHistory,
-// setAllAlerts,
-// allAlerts,
-Props) {
+function CreateAlert({
+  // fetchListings,
+  title,
+  userId,
+  alertBtn,
+  setAlertBtn,
+  alertId,
+  shoeModel,
+  shoeSize,
+  shoePrice,
+  handleToggleAlert,
+  fetchAlerts,
+}: Props) {
   const [shoes, setShoes] = useState<IShoes[]>([]);
-  const { username } = useParams();
-  // const shoeSize = shoes.map((e) => e.shoe_size);
 
   useEffect(() => {
     axios
@@ -32,141 +43,190 @@ Props) {
       .catch((err) => console.log(err));
   }, []);
 
+  const shoeModels = shoes?.map((e) => e.shoe_model);
+  const shoeSizes = Array.from({ length: 18 }, (_, index) =>
+    (6 + index * 0.5).toString()
+  );
+
   const formik = useFormik({
     initialValues: {
-      shoe_brand: "",
-      shoe_model: "",
-      shoe_size: "",
-      alert_price: "",
+      shoe_model: title === "Edit" && shoeModel ? shoeModel : "",
+      shoe_size: title === "Edit" && shoeSize ? shoeSize : "6",
+      alert_price: title === "Edit" && shoePrice ? shoePrice : "",
     },
     validationSchema: Yup.object({
-      shoe_brand: Yup.string()
-        .max(15, "Must be 15 characters or less")
-        .required("Required"),
       shoe_model: Yup.string().required("Required"),
-      shoe_size: Yup.number().required("Required"),
-      alert_price: Yup.number().required("Required"),
+      shoe_size: Yup.string().required("Required"),
+      alert_price: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      //   console.log("submit button", JSON.stringify(values));
-      // const config = {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // };
-      // axios
-      //   .post(
-      //     `${process.env.REACT_APP_API_BASE_URL}/alerts/${id}`,
-      //     values,
-      //     config
-      //   )
-      //   .then((res) => {
-      //     toggleAlertBtn(!alertBtn);
-      //     setAllAlerts(!allAlerts);
-      //   })
-      //   .catch((err) => console.log(err));
+      console.log("submit button", values);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      if (title === "Create") {
+        console.log("Created alert");
+        axios
+          .post(
+            `${process.env.REACT_APP_API_BASE_URL}/alerts/${userId}`,
+            values,
+            config
+          )
+          .then((res) => {
+            fetchAlerts();
+          })
+          .catch((err) => console.log(err));
+      } else if (title === "Edit") {
+        console.log("edited alert");
+        axios
+          .put(
+            `${process.env.REACT_APP_API_BASE_URL}/alerts/${alertId}`,
+            values,
+            config
+          )
+          .then((res) => {
+            fetchAlerts();
+          })
+          .catch((err) => console.log(err));
+      }
+
+      closeAlertPopUp();
     },
   });
 
-  // const closeAlertPopUp = () => {
-  //   toggleAlertBtn(!alertBtn);
-  // };
+  const closeAlertPopUp = () => {
+    setAlertBtn(!alertBtn);
+  };
+
+  const handleDeleteAlert = () => {
+    axios
+      .delete(`${process.env.REACT_APP_API_BASE_URL}/alerts/${alertId}`)
+      .then((res) => {
+        fetchAlerts();
+        closeAlertPopUp();
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
-    <>
-      <div className="absolute py-3 px-20 rounded opacity-90 bg-black text-center  left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <h2 className="text-white py-3 font-bold">Alert Settings</h2>
-        <form onSubmit={formik.handleSubmit}>
-          <div className="flex flex-col text-center gap-5">
-            <div>
-              <select
-                id="shoe_brand"
-                name="shoe_brand"
-                placeholder="Shoe Brand"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.shoe_brand}
-              >
-                <option>Select a Brand</option>
-                <option value="Nike">Nike</option>
-              </select>
-              {formik.touched.shoe_brand && formik.errors.shoe_brand ? (
-                <div>{formik.errors.shoe_brand}</div>
-              ) : null}
-            </div>
-
-            <div>
-              <select
-                id="shoe_model"
-                name="shoe_model"
-                placeholder="Shoe Model"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.shoe_model}
-              >
-                <option value="">Select a Model</option>
-                <option value="Nike Air Force 1 07 white">
-                  Nike Air Force 1 07 white
+    <div className="absolute p-12 rounded opacity-90 bg-black text-center  left-1/2 transform -translate-x-1/2 top-[32rem] z-10">
+      <h2 className="text-white py-3 text-xl font-bold">{title} Alert</h2>
+      <form onSubmit={formik.handleSubmit}>
+        <div className="flex flex-col text-center items-center justify-center gap-5">
+          <div className="grid grid-cols-4 gap-4 pl-6 place-items-start">
+            <label className="text-white text-lg font-semibold pr-4 my-auto">
+              Shoe Model
+            </label>
+            <select
+              id="shoe_model"
+              name="shoe_model"
+              placeholder="Shoe Model"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.shoe_model}
+              className="col-span-2 w-52 place-self-center"
+            >
+              <option value="">Select a Model</option>
+              {shoeModels?.map((e, i) => (
+                <option key={i} value={e}>
+                  {e}
                 </option>
-              </select>
-              {formik.touched.shoe_model && formik.errors.shoe_model ? (
-                <div>{formik.errors.shoe_model}</div>
-              ) : null}
-            </div>
+              ))}
+            </select>
+            {formik.touched.shoe_model && formik.errors.shoe_model ? (
+              <div className="text-white place-self-center">
+                {formik.errors.shoe_model}
+              </div>
+            ) : (
+              <div></div>
+            )}
 
-            <div>
-              <select
-                id="shoe_size"
-                name="shoe_size"
-                placeholder="Shoe Size"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.shoe_size}
-              >
-                {/* {shoeSize.map((e, i) => (
-                  <option key={i} value={e}>
-                    {e}
-                  </option>
-                ))} */}
-              </select>
-              {formik.touched.shoe_size && formik.errors.shoe_size ? (
-                <div>{formik.errors.shoe_size}</div>
-              ) : null}
-            </div>
+            <label className="text-white text-lg font-semibold pr-4 flex my-auto">
+              Shoe Size
+            </label>
+            <select
+              id="shoe_size"
+              name="shoe_size"
+              placeholder="Shoe Size"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.shoe_size}
+              className="col-span-2 w-52 place-self-center"
+            >
+              {shoeSizes.map((e, i) => (
+                <option key={i} value={e}>
+                  {e}
+                </option>
+              ))}
+            </select>
+            {formik.touched.shoe_size && formik.errors.shoe_size ? (
+              <div className="text-white place-self-center">
+                {formik.errors.shoe_size}
+              </div>
+            ) : (
+              <div></div>
+            )}
 
-            <div>
-              <input
-                id="alert_price"
-                name="alert_price"
-                type="text"
-                placeholder="Alert price"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.alert_price}
-              />
-              {formik.touched.alert_price && formik.errors.alert_price ? (
-                <div>{formik.errors.alert_price}</div>
-              ) : null}
-            </div>
+            <label className="text-white text-lg font-semibold pr-4 flex my-auto">
+              Alert Price
+            </label>
+            <input
+              id="alert_price"
+              name="alert_price"
+              type="text"
+              placeholder="Alert price"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.alert_price}
+              className="col-span-2 w-52 place-self-center"
+            />
+            {formik.touched.alert_price && formik.errors.alert_price ? (
+              <div className="text-white place-self-center">
+                {formik.errors.alert_price}
+              </div>
+            ) : (
+              <div></div>
+            )}
 
-            <div className="flex justify-center gap-5">
+            <div className="col-span-4 w-full text-center flex justify-center gap-5 ">
               <button
-                className="text-white rounded border-2 border-solid border-white hover:bg-slate-400 p-2"
+                className="text-white rounded border-2 border-solid border-white hover:bg-green-500 p-2"
                 type="submit"
               >
-                Create Alert
+                {title}
               </button>
               <button
-                // onClick={closeAlertPopUp}
+                onClick={closeAlertPopUp}
                 className="text-white rounded border-2 border-solid border-white hover:bg-slate-400 p-2"
               >
                 Cancel
               </button>
             </div>
           </div>
-        </form>
-      </div>
-    </>
+        </div>
+      </form>
+      <button
+        className="absolute top-4 right-4 text-white rounded border-2 border-solid border-white hover:bg-red-500 p-2 flex gap-1 items-center"
+        onClick={handleDeleteAlert}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className="w-5 h-5 pointers-event-none"
+        >
+          <path
+            fillRule="evenodd"
+            d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z"
+            clipRule="evenodd"
+          />
+        </svg>
+        Delete Alert
+      </button>
+    </div>
   );
 }
 

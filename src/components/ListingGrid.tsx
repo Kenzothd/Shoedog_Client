@@ -74,6 +74,7 @@ function ListingGrid({ fetchListings, userId, listings, tab, gap }: Props) {
     setToggleSort(!toggleSort);
   };
 
+  //used to open the listing popup
   const handleToggle = (
     e: any,
     listing_id: number = 0,
@@ -81,8 +82,6 @@ function ListingGrid({ fetchListings, userId, listings, tab, gap }: Props) {
     shoe_size: string = "",
     shoe_price: string = ""
   ) => {
-    setToggle(!toggle);
-
     if (e.target.id === "Create") {
       setTitle("Create");
     } else {
@@ -92,6 +91,8 @@ function ListingGrid({ fetchListings, userId, listings, tab, gap }: Props) {
       setShoeSize(shoe_size);
       setShoePrice(shoe_price);
     }
+
+    setToggle(true);
   };
 
   const navigateSingleListing = (e: any) => {

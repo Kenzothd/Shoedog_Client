@@ -4,22 +4,11 @@ import { IAlerts } from "../pages/Interface";
 
 type Props = {
   userId: number;
+  handleToggleAlert: any;
+  alerts: IAlerts[];
 };
 
-function Alerts({ userId }: Props) {
-  const [alerts, setAlerts] = useState<IAlerts[]>([]);
-
-  useEffect(() => {
-    axios
-      .get(
-        `${process.env.REACT_APP_API_BASE_URL}/alerts/findbyuserid/${userId}`
-      )
-      .then((res) => {
-        setAlerts(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [userId]);
-
+function Alerts({ userId, handleToggleAlert, alerts }: Props) {
   return (
     <div className="border-2 rounded">
       <div className="flex justify-between border-b px-2 items-center">
@@ -42,13 +31,14 @@ function Alerts({ userId }: Props) {
         </div>
 
         <button
-          // onClick={handleToggleSort}
+          id="Create"
+          onClick={handleToggleAlert}
           className="p-1 bg-white rounded border-2 border-solid border-grey-900 hover:bg-slate-100 font-semibold flex gap-0.5 my-2"
         >
           + Create Alert
         </button>
       </div>
-      <div className="grid grid-cols-7 gap-1.5 items-center text-center font-medium border-b">
+      <div className="grid grid-cols-7 gap-1.5 items-center text-center font-medium border-b pr-2">
         <div className="col-span-4">Shoe Model</div>
         <div className="col-span-2 grid grid-cols-3">
           <div>Size</div>
@@ -59,26 +49,36 @@ function Alerts({ userId }: Props) {
 
       <div className="h-80 overflow-auto">
         {alerts[0] ? (
-          alerts.map((e) => (
+          alerts.map((ele) => (
             <div
-              key={e.alert_id}
-              className="grid grid-cols-7 items-center text-center pl-2 border-b text-sm "
+              key={ele.alert_id}
+              className="grid grid-cols-7 items-center text-center pl-3 border-b text-sm "
             >
-              <div className="col-span-4 grid grid-cols-4 py-2">
+              <div className="col-span-4 grid grid-cols-4 gap-2 py-2">
                 <img
                   className="h-12 w-12 py-3 border rounded bg-white object-fit"
-                  src={e.shoe_img}
+                  src={ele.shoe_img}
                   alt="shoe"
                 />
-                <p className="col-span-3 flex items-center">{e.shoe_model}</p>
+                <p className="col-span-3 flex items-center">{ele.shoe_model}</p>
               </div>
               <div className="col-span-2 grid grid-cols-3">
-                <div>{e.shoe_size}</div>
-                <div className="col-span-2">SGD {e.alert_price}</div>
+                <div>{ele.shoe_size}</div>
+                <div className="col-span-2">SGD {ele.alert_price}</div>
               </div>
 
               <div className="flex justify-center items-center gap-1">
-                <button>
+                <button
+                  onClick={(e) =>
+                    handleToggleAlert(
+                      e,
+                      ele.alert_id,
+                      ele.shoe_model,
+                      ele.shoe_size,
+                      ele.alert_price.toString()
+                    )
+                  }
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -87,20 +87,6 @@ function Alerts({ userId }: Props) {
                   >
                     <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
                     <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
-                  </svg>
-                </button>
-                <button>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="w-4 h-4"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z"
-                      clipRule="evenodd"
-                    />
                   </svg>
                 </button>
               </div>

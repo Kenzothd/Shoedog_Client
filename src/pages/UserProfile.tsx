@@ -6,11 +6,12 @@ import ListingGrid from "../components/ListingGrid";
 import { IProfileDetails, IDisplayListings } from "./Interface";
 import Alerts from "../components/Alerts";
 import AlertHistory from "../components/AlertHistory";
+import Watchlist from "./Watchlist";
 
 function UserProfile() {
   const [tab, setTab] = useState("Listed");
   const [profileDetails, setProfileDetails] = useState<IProfileDetails[]>([]);
-  const [ProfileListings, setProfileListings] = useState<IDisplayListings[]>(
+  const [profileListings, setProfileListings] = useState<IDisplayListings[]>(
     []
   );
   const tabs = ["Listed", "Sold", "Watchlist"];
@@ -56,7 +57,7 @@ function UserProfile() {
   };
 
   return (
-    <div className="mt-[10rem] mb-[4rem] mx-[12rem] flex flex-col gap-8">
+    <div className="mt-[8rem] mb-[4rem] mx-[12rem] flex flex-col gap-8">
       <div className="flex flex-start gap-12 items-center mx-[0.5rem]">
         <div className="py-12 border-2 rounded-[5rem] w-1/6 overflow-hidden">
           <img
@@ -150,21 +151,16 @@ function UserProfile() {
 
       {profileDetails[0] ? (
         tab === "Watchlist" ? (
-          <div className="grid grid-cols-3 gap-6 px-2 mt-4">
-            <Alerts userId={profileDetails[0].user_id} />
-
-            <div className="col-span-2">
-              <AlertHistory
-                userId={profileDetails[0].user_id}
-                username={profileDetails[0].username}
-              />
-            </div>
-          </div>
+          <Watchlist
+            profileListings={profileListings}
+            userId={profileDetails[0].user_id}
+            username={profileDetails[0].username}
+          />
         ) : (
           <ListingGrid
             fetchListings={fetchListings}
             userId={profileDetails[0].user_id}
-            listings={ProfileListings}
+            listings={profileListings}
             tab={tab}
             gap={10}
           />

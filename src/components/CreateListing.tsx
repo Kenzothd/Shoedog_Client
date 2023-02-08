@@ -84,13 +84,11 @@ function CreateListing({
           )
           .then((res) => {
             fetchListings("false");
-            // toggleListingBtn(!listingBtn);
-            // setAllAlerts(!allAlerts);
           })
           .catch((err) => console.log(err));
       }
 
-      toggleListingBtn(!listingBtn);
+      closeListingPopUp();
     },
   });
 
@@ -99,7 +97,6 @@ function CreateListing({
   };
 
   const handleDeleteListing = () => {
-    console.log("deleted", listingId);
     axios
       .delete(`${process.env.REACT_APP_API_BASE_URL}/listings/${listingId}`)
       .then((res) => {
