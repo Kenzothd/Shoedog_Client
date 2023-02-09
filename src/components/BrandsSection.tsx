@@ -57,8 +57,6 @@ function BrandsSection() {
     navigate("/listings");
   };
 
-  console.log(brand);
-
   return (
     <>
       <div>
