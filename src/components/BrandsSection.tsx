@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FooterContext } from "./Footer";
 
 function BrandsSection() {
-  const { brand, setBrand } = useContext(FooterContext);
+  const { setBrand, username } = useContext(FooterContext);
   const navigate = useNavigate();
   const brands = [
     {
@@ -54,7 +54,7 @@ function BrandsSection() {
     } else {
       setBrand([]);
     }
-    navigate("/listings");
+    username ? navigate(`/in/${username}/listings`) : navigate("/listings");
   };
 
   return (

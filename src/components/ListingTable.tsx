@@ -1,8 +1,9 @@
 import { formatDistanceToNow } from "date-fns";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IListingsAndUsersSoldFalse } from "../pages/Interface";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { FooterContext } from "./Footer";
 
 type Props = {
   title?: string;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 function ListingTable({ title, listings }: Props) {
+  const { username } = useContext(FooterContext);
   const [toggle, setToggle] = useState(false);
   const [sort, setSort] = useState("Most Recent");
   const navigate = useNavigate();
@@ -66,7 +68,9 @@ function ListingTable({ title, listings }: Props) {
   }
 
   const navigateProfile = (e: any) => {
-    navigate(`/profile/${e.target.id}`);
+    username
+      ? navigate(`/in/${username}/profile/${e.target.id}`)
+      : navigate(`/profile/${e.target.id}`);
   };
 
   const navigateLogin = (e: any) => {

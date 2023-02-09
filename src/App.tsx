@@ -6,7 +6,6 @@ import Home from "./pages/Home";
 import Listings from "./pages/Listings";
 import SingleListing from "./pages/SingleListing";
 import PersonalNavBar from "./components/PersonalNavBar";
-import UserDashboard from "./pages/UserDashboard";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SingleProfile from "./pages/SingleProfile";
@@ -28,7 +27,12 @@ function App() {
               <Route path="/about" element={<AboutPage />} />
             </Route>
             <Route path="/" element={<PersonalNavBar />}>
-              <Route path="/:username/dashboard" element={<UserDashboard />} />
+              <Route
+                path="/in/:username/listings/:id"
+                element={<SingleListing />}
+              />
+              <Route path="/in/:username/home" element={<Home />} />
+              <Route path="/in/:username/listings" element={<Listings />} />
               <Route path="/in/:username" element={<UserProfile />} />
               <Route
                 path="/in/:user/profile/:username"

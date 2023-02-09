@@ -42,7 +42,7 @@ function AlertHistory({ userId, username, alerts, profileListings }: Props) {
       clearInterval(interval);
     };
   }, [userId, alerts]);
-  console.log(alertsHistory);
+
   let sortedAlertsHistory = alertsHistory;
 
   const handleToggleSort = () => {
@@ -56,25 +56,21 @@ function AlertHistory({ userId, username, alerts, profileListings }: Props) {
       );
       break;
     case "Lowest Price":
-      console.log("Lowest Price sorting");
       sortedAlertsHistory = sortedAlertsHistory?.sort(
         (a, b) => a.listing_price - b.listing_price
       );
       break;
     case "Highest Price":
-      console.log("Highest Price sorting");
       sortedAlertsHistory = sortedAlertsHistory?.sort(
         (a, b) => b.listing_price - a.listing_price
       );
       break;
     case "Smallest Size":
-      console.log("Smallest Size sorting");
       sortedAlertsHistory = sortedAlertsHistory.sort(
         (a, b) => Number(a.shoe_size) - Number(b.shoe_size)
       );
       break;
     case "Largest Size":
-      console.log("Largest Size sorting");
       sortedAlertsHistory = sortedAlertsHistory.sort(
         (a, b) => Number(b.shoe_size) - Number(a.shoe_size)
       );

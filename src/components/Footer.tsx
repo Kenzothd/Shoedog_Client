@@ -7,6 +7,8 @@ export type FooterContextType = {
   setCurrency: React.Dispatch<React.SetStateAction<string>>;
   brand: string[];
   setBrand: React.Dispatch<React.SetStateAction<string[]>>;
+  username: string;
+  setUsername: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const FooterContext = createContext<FooterContextType>({
@@ -14,16 +16,26 @@ export const FooterContext = createContext<FooterContextType>({
   setCurrency: () => {},
   brand: [],
   setBrand: () => {},
+  username: "",
+  setUsername: () => {},
 });
 
 function Footer() {
   const [currency, setCurrency] = useState("SGD");
   const [brand, setBrand] = useState<string[]>([]);
+  const [username, setUsername] = useState("");
 
   return (
     <>
       <FooterContext.Provider
-        value={{ currency, setCurrency, brand, setBrand }}
+        value={{
+          currency,
+          setCurrency,
+          brand,
+          setBrand,
+          username,
+          setUsername,
+        }}
       >
         <Outlet />
       </FooterContext.Provider>

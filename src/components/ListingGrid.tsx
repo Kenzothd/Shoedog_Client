@@ -106,7 +106,7 @@ function ListingGrid({ fetchListings, userId, listings, tab, gap }: Props) {
           <button
             id="Create"
             onClick={handleToggle}
-            className="p-2 bg-white rounded border-2 border-solid border-grey-900 hover:bg-slate-100 font-semibold flex gap-0.5 my-2 transition ease-in-out "
+            className="px-2 py-1 bg-white rounded border-2 border-solid border-grey-900 hover:bg-slate-100 font-semibold flex gap-0.5 my-2 transition ease-in-out hover:scale-105"
           >
             + Create New Listings
           </button>
@@ -174,77 +174,83 @@ function ListingGrid({ fetchListings, userId, listings, tab, gap }: Props) {
         ) : (
           <></>
         )}
-        {sortedListings?.map((ele, i) => (
-          <div
-            key={i}
-            className={`border-2 rounded font-medium cursor-pointer transition ease-in-out h-72 ${
-              toggle ? null : "hover:scale-105"
-            }`}
-            id={ele.shoe_id.toString()}
-            onClick={
-              userId && tab === "Listed"
-                ? (e) =>
-                    handleToggle(
-                      e,
-                      ele.listing_id,
-                      ele.shoe_model,
-                      ele.shoe_size,
-                      ele.listing_price.toString()
-                    )
-                : navigateSingleListing
-            }
-          >
-            <div className="h-1/2 p-2">
-              <img
-                className="object-contain h-full"
-                src={ele.shoe_img}
-                alt="shoe"
-              />
-              {userId && tab === "Listed" ? (
-                <button
-                  id="Update"
-                  className="absolute top-1 right-1 transition ease-in-out hover:scale-105 hover:text-gray-500"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="w-8 h-8 pointer-events-none "
+        {sortedListings[0] ? (
+          sortedListings?.map((ele, i) => (
+            <div
+              key={i}
+              className={`border-2 rounded font-medium cursor-pointer transition ease-in-out h-72 ${
+                toggle ? null : "hover:scale-105"
+              }`}
+              id={ele.shoe_id.toString()}
+              onClick={
+                userId && tab === "Listed"
+                  ? (e) =>
+                      handleToggle(
+                        e,
+                        ele.listing_id,
+                        ele.shoe_model,
+                        ele.shoe_size,
+                        ele.listing_price.toString()
+                      )
+                  : navigateSingleListing
+              }
+            >
+              <div className="h-1/2 p-2">
+                <img
+                  className="object-contain h-full"
+                  src={ele.shoe_img}
+                  alt="shoe"
+                />
+                {userId && tab === "Listed" ? (
+                  <button
+                    id="Update"
+                    className="absolute top-1 right-1 transition ease-in-out hover:scale-105 hover:text-gray-500"
                   >
-                    <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
-                    <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
-                  </svg>
-                </button>
-              ) : (
-                <></>
-              )}
-            </div>
-            <div className="p-2 h-1/2 flex flex-col justify-between">
-              {userId && tab === "Listed" ? (
-                <p
-                  id={ele.shoe_id.toString()}
-                  onClick={navigateSingleListing}
-                  className="pb-6 font-semibold  transition ease-in-out hover:text-gray-500"
-                >
-                  {ele.shoe_model}
-                </p>
-              ) : (
-                <p className="pb-6 font-semibold">{ele.shoe_model}</p>
-              )}
-
-              <div className="text-[14px]">
-                <p className=" text-gray-400">Size: US {ele.shoe_size}</p>
-                <div className="pt-0.5 flex justify-between">
-                  <p className="text-gray-400">
-                    {tab === "Listed" ? "Listed" : "Closed"}:{" "}
-                    {format(new Date(ele.date), "dd/MM/yy")}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="w-8 h-8 pointer-events-none "
+                    >
+                      <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
+                      <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
+                    </svg>
+                  </button>
+                ) : (
+                  <></>
+                )}
+              </div>
+              <div className="p-2 h-1/2 flex flex-col justify-between">
+                {userId && tab === "Listed" ? (
+                  <p
+                    id={ele.shoe_id.toString()}
+                    onClick={navigateSingleListing}
+                    className="pb-6 font-semibold  transition ease-in-out hover:text-gray-500"
+                  >
+                    {ele.shoe_model}
                   </p>
-                  <p className="font-semibold">SGD {ele.listing_price}</p>
+                ) : (
+                  <p className="pb-6 font-semibold">{ele.shoe_model}</p>
+                )}
+
+                <div className="text-[14px]">
+                  <p className=" text-gray-400">Size: US {ele.shoe_size}</p>
+                  <div className="pt-0.5 flex justify-between">
+                    <p className="text-gray-400">
+                      {tab === "Listed" ? "Listed" : "Closed"}:{" "}
+                      {format(new Date(ele.date), "dd/MM/yy")}
+                    </p>
+                    <p className="font-semibold">SGD {ele.listing_price}</p>
+                  </div>
                 </div>
               </div>
             </div>
+          ))
+        ) : (
+          <div className="col-span-4 text-xl text-center py-72 border-2">
+            No Listings Yet
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

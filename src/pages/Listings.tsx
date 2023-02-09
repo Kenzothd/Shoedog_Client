@@ -23,7 +23,7 @@ function Listings() {
   const [month, setMonth] = useState("All Month");
   const [pricesTag, setPricesTag] = useState<string[]>([]);
   const [page, setPage] = useState(0);
-  const { currency, brand, setBrand } = useContext(FooterContext);
+  const { username, currency, brand, setBrand } = useContext(FooterContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -186,7 +186,9 @@ function Listings() {
   };
 
   const navigateSingleListing = (e: any) => {
-    navigate(`/listings/${e.currentTarget.id}`);
+    username
+      ? navigate(`/in/${username}/listings/${e.currentTarget.id}`)
+      : navigate(`/listings/${e.currentTarget.id}`);
   };
 
   return (

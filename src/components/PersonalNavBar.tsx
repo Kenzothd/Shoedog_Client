@@ -1,143 +1,117 @@
-import React from "react";
-import { useEffect, useState, useRef } from "react";
-import { Outlet, useNavigate, Link } from "react-router-dom";
-import logo from "../imgs/logo.png";
-import profilepic from "../imgs/unemployable.png";
+import { useContext } from "react";
+import { useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { FooterContext } from "./Footer";
 
 function PersonalNavBar() {
+  const { currency, setCurrency, setBrand, username, setUsername } =
+    useContext(FooterContext);
   const navigate = useNavigate();
+  const [toggle, setToggle] = useState(false);
 
-  // const handlerLogin = () => {
-  //   navigate("/login");
-  // };
+  const currencyType = ["SGD", "USD", "MYR", "TKY"];
 
-  const handlerHome = () => {
-    navigate("/");
+  const handlerCurrency = () => {
+    setToggle(!toggle);
   };
 
-  const handlerListings = () => {
-    navigate("/listings");
+  const navigateHome = () => {
+    navigate(`/in/${username}/home`);
+  };
+
+  const navigateListings = () => {
+    setBrand([]);
+    navigate(`/in/${username}/listings`);
+  };
+
+  const navigateAbout = () => {
+    navigate("/about");
+  };
+
+  const navigateLogin = () => {
+    setUsername("");
+    navigate("/login");
+  };
+
+  const navigateUserProfile = () => {
+    navigate(`/in/${username}`);
   };
 
   return (
     <>
-      <nav className="px-2 sm:px-4 py-2.5 bg-black fixed w-full z-20 top-0 left-0 border-b border-gray-200">
-        <div className="container flex flex-wrap justify-between items-center mx-auto">
-          <p
-            onClick={handlerHome}
-            className="ml-2 flex items-center hover:cursor-pointer"
-          >
-            <img src={logo} className="mr-1 h-6 sm:h-3" alt="nike Logo" />
-            <span className="self-center text-xl font-semibold whitespace-nowrap text-white">
-              ShoeDog
+      <nav className="px-5 py-5 bg-black fixed w-full z-20 top-0 left-0  flex justify-between items-center">
+        <div className="cursor-pointer" onClick={navigateHome}>
+          <p className="text-white text-xl font-semibold">
+            ShoeDog{" "}
+            <span className="bg-gray-500 rounded text-sm whitespace-nowrap p-0.5">
+              - In Profile
             </span>
           </p>
-          <div className="flex items-center md:order-2">
-            <button
-              type="button"
-              className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-              id="user-menu-button"
-              aria-expanded="false"
-              data-dropdown-toggle="user-dropdown"
-              data-dropdown-placement="bottom"
+        </div>
+        <div>
+          <ul className="flex justify-between gap-6 text-base items-center text-white ">
+            <li className="cursor-pointer" onClick={navigateHome}>
+              Home
+            </li>
+            <li className="cursor-pointer" onClick={navigateListings}>
+              Browse
+            </li>
+            <li
+              className="cursor-pointer flex gap-3 items-center"
+              onClick={navigateUserProfile}
             >
-              <span className="sr-only">Open user menu</span>
               <img
-                className="w-8 h-8 rounded-full"
-                src={profilepic}
+                src="https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200"
+                className="h-8 w-8 border-slate-300 border-2 rounded-3xl pointers-event-none"
                 alt="profile-pic"
               />
-            </button>
-            {/* <!-- Dropdown menu --> */}
+              Profile
+            </li>
+            <li className="cursor-pointer" onClick={navigateLogin}>
+              Log Out
+            </li>
 
             <div
-              className="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-              id="user-dropdown"
+              onClick={handlerCurrency}
+              className="text-white font-semibold py-0.5 pl-2 pr-1 border rounded flex items-center hover:border-bg-black cursor-pointer"
             >
-              <div className="py-3 px-4">
-                <span className="block text-sm text-gray-900 dark:text-white">
-                  Bonnie Green
-                </span>
-                <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">
-                  name@flowbite.com
-                </span>
-              </div>
-              <ul className="py-1" aria-labelledby="user-menu-button">
-                <li>
-                  <a className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                    Dashboard
-                  </a>
-                </li>
-                <li>
-                  <a className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                    Settings
-                  </a>
-                </li>
-                <li>
-                  <a className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                    Earnings
-                  </a>
-                </li>
-                <li>
-                  <a className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                    Sign out
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <button
-              data-collapse-toggle="mobile-menu-2"
-              type="button"
-              className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              aria-controls="mobile-menu-2"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
-              <svg
-                className="w-6 h-6"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
-            </button>
-          </div>
-          <div
-            className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
-            id="navbar-sticky"
-          >
-            <ul className="flex flex-col p-4 mt-4 bg-black rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 ">
-              <li onClick={handlerHome}>
-                <span className="block py-2 pr-4 pl-3 text-gray-300  md:p-0 md:hover:text-white hover:cursor-pointer">
-                  Home
-                </span>
-              </li>
-              <li>
-                <span
-                  onClick={handlerListings}
-                  className="block py-2 pr-4 pl-3 text-gray-300  md:p-0 md:hover:text-white hover:cursor-pointer"
+              {<p>{currency}</p>}
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-4 h-4"
                 >
-                  Browse
-                </span>
-              </li>
-              <li>
-                <span className="block py-2 pr-4 pl-3 text-gray-300 text-md md:p-0 md:hover:text-white hover:cursor-pointer">
-                  Alerts
-                </span>
-              </li>
-              <li>
-                <span className="block py-2 pr-4 pl-3 text-gray-300  md:p-0 md:hover:text-white hover:cursor-pointer">
-                  Help
-                </span>
-              </li>
-            </ul>
-          </div>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              </span>
+              {toggle ? (
+                <div className="absolute top-12 right-5">
+                  <ul className="bg-black border-2 rounded ">
+                    {currencyType.map((e, i) => (
+                      <li
+                        key={i}
+                        onClick={(e: any) => {
+                          setCurrency(e.target.innerText);
+                          handlerCurrency();
+                        }}
+                        className="py-0.5 px-3 border-b border-b-white hover:bg-slate-600"
+                      >
+                        {e}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </div>
+          </ul>
         </div>
       </nav>
       <Outlet />

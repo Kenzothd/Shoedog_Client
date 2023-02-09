@@ -5,7 +5,7 @@ import { FooterContext } from "./Footer";
 function FeaturedSection() {
   const navigate = useNavigate();
   const [number, setNumber] = useState(1);
-  const { currency, setBrand } = useContext(FooterContext);
+  const { currency, setBrand, username } = useContext(FooterContext);
 
   const featured = [
     {
@@ -84,7 +84,7 @@ function FeaturedSection() {
 
   const navigateListings = () => {
     setBrand([]);
-    navigate("/listings");
+    username ? navigate(`/in/${username}/listings`) : navigate("/listings");
   };
 
   return (
@@ -112,7 +112,7 @@ function FeaturedSection() {
         </button> */}
       <div
         className="flex gap-5 mt-10 w-auto overflow-y-hidden overflow-x-scroll touch-auto snap-x snap-mandatory scroll-smooth will-change-scroll hover:"
-        onClick={navigateSingleListing}
+        // onClick={navigateSingleListing}
       >
         {featured.map((e, i) => (
           <div

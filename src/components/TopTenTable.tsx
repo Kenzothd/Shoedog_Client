@@ -8,7 +8,7 @@ type Props = {
 };
 
 function TopTenTable({ volumeStats }: Props) {
-  const { currency } = useContext(FooterContext);
+  const { currency, username } = useContext(FooterContext);
   const navigate = useNavigate();
 
   const formatNumber = (num: number) => {
@@ -25,7 +25,9 @@ function TopTenTable({ volumeStats }: Props) {
   };
 
   const navigateSingleListing = (e: any) => {
-    navigate(`/listings/${e.currentTarget.id}`);
+    username
+      ? navigate(`/in/${username}/listings/${e.currentTarget.id}`)
+      : navigate(`/listings/${e.currentTarget.id}`);
   };
 
   return (
@@ -205,7 +207,7 @@ function TopTenTable({ volumeStats }: Props) {
             </svg>
           </div>
           <div className="pt-2 font-medium">
-            Loading might take up to 2 mins...
+            Loading might take up to 3 mins...
           </div>
         </div>
       )}

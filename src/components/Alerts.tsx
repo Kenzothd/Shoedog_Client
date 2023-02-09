@@ -1,15 +1,12 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IAlerts } from "../pages/Interface";
 
 type Props = {
-  userId: number;
   handleToggleAlert: any;
   alerts: IAlerts[];
 };
 
-function Alerts({ userId, handleToggleAlert, alerts }: Props) {
+function Alerts({ handleToggleAlert, alerts }: Props) {
   const navigate = useNavigate();
 
   const navigateSingleListing = (e: any) => {
@@ -40,7 +37,7 @@ function Alerts({ userId, handleToggleAlert, alerts }: Props) {
         <button
           id="Create"
           onClick={handleToggleAlert}
-          className="p-1 bg-white rounded border-2 border-solid border-grey-900 hover:bg-slate-100 font-semibold flex gap-0.5 my-2"
+          className="p-1 bg-white rounded border-2 border-solid border-grey-900 hover:bg-slate-100 font-semibold flex gap-0.5 my-2 transition ease-in-out hover:scale-105"
         >
           + Create Alert
         </button>

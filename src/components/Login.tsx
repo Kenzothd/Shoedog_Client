@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FooterContext } from "./Footer";
 
 type Props = {
   handleAutoGenerate: any;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 function Login({ handleAutoGenerate, loginDetails }: Props) {
+  const { setUsername } = useContext(FooterContext);
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -37,10 +39,12 @@ function Login({ handleAutoGenerate, loginDetails }: Props) {
           config
         )
         .then((res) => {
+          //navigate with user/username
           if (res.data.username !== "") {
+            setUsername(res.data.username);
             navigate(`/in/${res.data.username}`);
           }
-        }) //navigate with user/id
+        })
         .catch((err) => console.log(err));
     },
   });

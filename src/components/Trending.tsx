@@ -7,7 +7,7 @@ import TopTenTable from "./TopTenTable";
 
 function Trending() {
   const navigate = useNavigate();
-  const { setBrand } = useContext(FooterContext);
+  const { setBrand, username } = useContext(FooterContext);
   const [toggleTrending, setToggleTrending] = useState("Top");
   const [toggleVolume, setToggleVolume] = useState("1M");
   const [volumeStats, setVolumeStats] = useState<IVolumeStats[]>([]);
@@ -83,7 +83,7 @@ function Trending() {
 
   const navigateListings = () => {
     setBrand([]);
-    navigate("/listings");
+    username ? navigate(`/in/${username}/listings`) : navigate("/listings");
   };
 
   return (

@@ -27,7 +27,7 @@ function UserLogin() {
   };
 
   return (
-    <>
+    <div className="h-[30rem] w-full">
       <div className="my-[10rem] bg-slate-50 px-10 pb-5 text-center center ">
         <Box
           sx={{
@@ -65,7 +65,7 @@ function UserLogin() {
           <SignUp />
         )}
       </div>
-    </>
+    </div>
   );
 }
 

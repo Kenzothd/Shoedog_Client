@@ -64,11 +64,7 @@ function Watchlist({ userId, username, profileListings }: Props) {
 
   return (
     <div className="grid grid-cols-3 gap-6 px-2 mt-4">
-      <Alerts
-        userId={userId}
-        handleToggleAlert={handleToggleAlert}
-        alerts={alerts}
-      />
+      <Alerts handleToggleAlert={handleToggleAlert} alerts={alerts} />
       {alertBtn ? (
         <CreateAlert
           title={title}
