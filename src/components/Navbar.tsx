@@ -4,7 +4,7 @@ import logo from "../imgs/logo.png";
 import { FooterContext } from "./Footer";
 
 function Navbar() {
-  const { currency, setCurrency } = useContext(FooterContext);
+  const { currency, setCurrency, setBrand } = useContext(FooterContext);
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
 
@@ -19,6 +19,7 @@ function Navbar() {
   };
 
   const navigateListings = () => {
+    setBrand([]);
     navigate("/listings");
   };
 

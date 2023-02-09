@@ -3,56 +3,73 @@ import { IListings } from "../pages/Interface";
 
 type Props = {
   sortedListings: IListings[];
+  page: number;
+  setPage: any;
+  maxPage: number;
 };
 
-const Pagination = ({ sortedListings }: Props) => {
-  const [page, setPage] = useState(0);
-  const maxPage = Math.ceil(sortedListings.length / 12);
+const Pagination = ({ sortedListings, page, setPage, maxPage }: Props) => {
+  const [pagesOfPage, setPagesOfPage] = useState(0);
 
-  const handleClick = (newPage: number) => {
-    if (newPage >= 0 && newPage <= maxPage - 1) {
-      setPage(newPage);
+  const maxPagesOfPage = Math.floor(maxPage / 2);
+
+  const handleClick = (newPagesOfPage: number) => {
+    if (newPagesOfPage >= 0 && newPagesOfPage <= maxPage - 1) {
+      setPagesOfPage(newPagesOfPage);
     }
+  };
+
+  const handleSetPage = (e: any) => {
+    setPage(e.target.id);
   };
 
   const renderButtons = () => {
     const buttons = [];
-    const startIndex = page * 5;
-    const endIndex = startIndex + 5;
-    for (let i = startIndex; i < endIndex; i++) {
-      if (i >= sortedListings.length) {
-        break;
+    let startIndex = page;
+    let endIndex = maxPage;
+
+    if (page < 4) {
+      startIndex = 0;
+      endIndex = maxPage;
+      for (let i = startIndex; i < endIndex; i++) {
+        if (i >= sortedListings.length) {
+          break;
+        }
+        buttons.push(
+          <button
+            id={i.toString()}
+            key={i}
+            className="border-2 w-10 px-2 py-1 font-semibold hover:bg-slate-100"
+            onClick={handleSetPage}
+          >
+            {i + 1}
+          </button>
+        );
       }
-      buttons.push(
-        <button
-          key={i}
-          className="border-2 px-4 py-1 font-semibold hover:bg-slate-100"
-        >
-          {i + 1}
-        </button>
-      );
-    }
-    if (page > 0) {
-      buttons.unshift(
-        <button
-          key="prev"
-          className="border-2 px-1 py-1 font-semibold hover:bg-slate-100"
-          onClick={() => handleClick(page - 1)}
-        >
-          Prev
-        </button>
-      );
-    }
-    if (endIndex < sortedListings.length) {
-      buttons.push(
-        <button
-          key="next"
-          className="border-2 px-1 py-1 font-semibold hover:bg-slate-100"
-          onClick={() => handleClick(page + 1)}
-        >
-          Next
-        </button>
-      );
+
+      if (pagesOfPage > 2) {
+        buttons.unshift(
+          <button
+            key="prev"
+            className="border-2 px-1 py-1 font-semibold hover:bg-slate-100"
+            onClick={() => handleClick(pagesOfPage - 1)}
+          >
+            Prev
+          </button>
+        );
+      }
+
+      if (maxPagesOfPage > 1 && pagesOfPage !== maxPagesOfPage) {
+        buttons.push(
+          <button
+            key="next"
+            className="border-2 px-1 py-1 font-semibold hover:bg-slate-100"
+            onClick={() => handleClick(pagesOfPage + 1)}
+          >
+            Next
+          </button>
+        );
+      }
     }
     return buttons;
   };

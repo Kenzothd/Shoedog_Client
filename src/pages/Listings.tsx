@@ -22,6 +22,7 @@ function Listings() {
   const [toggleMonth, setToggleMonth] = useState(false);
   const [month, setMonth] = useState("All Month");
   const [pricesTag, setPricesTag] = useState<string[]>([]);
+  const [page, setPage] = useState(0);
   const { currency, brand, setBrand } = useContext(FooterContext);
   const navigate = useNavigate();
 
@@ -158,6 +159,7 @@ function Listings() {
     }
   };
   sortAndFilter();
+  const maxPage = Math.ceil(sortedListings.length / 12);
 
   const handleToggleSort = () => {
     setToggleSort(!toggleSort);
@@ -373,46 +375,55 @@ function Listings() {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-4 gap-4 h-[56rem]">
-            {sortedListings.map((e, i) => (
-              <div
-                key={i}
-                id={e.shoe_id.toString()}
-                className="border-2 rounded font-medium cursor-pointer transition ease-in-out hover:scale-105 h-72"
-                onClick={navigateSingleListing}
-              >
-                <div className="h-1/2 p-2">
-                  <img
-                    className="object-contain h-full"
-                    src={e.shoe_img}
-                    alt="shoe"
-                  />
-                </div>
-                <div className="p-2 h-1/2 flex flex-col justify-between">
-                  <p className="pb-6 font-semibold">{e.shoe_model}</p>
-                  <div className="text-sm">
-                    <div className="flex justify-between">
-                      <p className="font-medium text-gray-400 pt-0.5">
-                        Released Date:
-                      </p>
-                      <p className="font-medium text-gray-400 pt-0.5">
-                        Lowest List
-                      </p>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className="font-medium text-gray-400 pt-0.5">
-                        {format(new Date(e.shoe_release_date), "dd/MM/yy")}
-                      </p>
-                      <p className="font-semibold pt-0.5 flex justify-end">
-                        {currency} {e.lowest_listing_price}
-                      </p>
+          <div className="grid grid-rows-3 gap-4 h-[56rem]">
+            <div className="grid grid-cols-4 gap-4">
+              {sortedListings.slice(page * 12, page * 12 + 12).map((e, i) => (
+                <div
+                  key={i}
+                  id={e.shoe_id.toString()}
+                  className="border-2 rounded font-medium cursor-pointer transition ease-in-out hover:scale-105 h-72"
+                  onClick={navigateSingleListing}
+                >
+                  <div className="h-1/2 p-2">
+                    <img
+                      className="object-contain h-full"
+                      src={e.shoe_img}
+                      alt="shoe"
+                    />
+                  </div>
+                  <div className="p-2 h-1/2 flex flex-col justify-between">
+                    <p className="pb-6 font-semibold overflow-hidden">
+                      {e.shoe_model}
+                    </p>
+                    <div className="text-sm">
+                      <div className="flex justify-between">
+                        <p className="font-medium text-gray-400 pt-0.5">
+                          Released Date:
+                        </p>
+                        <p className="font-medium text-gray-400 pt-0.5">
+                          Lowest List
+                        </p>
+                      </div>
+                      <div className="flex justify-between">
+                        <p className="font-medium text-gray-400 pt-0.5">
+                          {format(new Date(e.shoe_release_date), "dd/MM/yy")}
+                        </p>
+                        <p className="font-semibold pt-0.5 flex justify-end">
+                          {currency} {e.lowest_listing_price}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-          <Pagination sortedListings={sortedListings} />
+          <Pagination
+            sortedListings={sortedListings}
+            page={page}
+            setPage={setPage}
+            maxPage={maxPage}
+          />
         </div>
       </div>
     </>
