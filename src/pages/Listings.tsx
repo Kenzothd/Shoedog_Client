@@ -8,10 +8,10 @@ import React, {
 import axios from "axios";
 import { IListings } from "./Interface";
 import { useNavigate } from "react-router-dom";
-import { NavbarContext } from "../components/Navbar";
 import coverOne from "../imgs/cover-one.png";
 import { format } from "date-fns";
 import Pagination from "../components/Pagination";
+import { FooterContext } from "../components/Footer";
 
 function Listings() {
   const [listings, setListings] = useState<IListings[]>([]);
@@ -22,8 +22,7 @@ function Listings() {
   const [toggleMonth, setToggleMonth] = useState(false);
   const [month, setMonth] = useState("All Month");
   const [pricesTag, setPricesTag] = useState<string[]>([]);
-  const [brandsTag, setBrandsTag] = useState<string[]>([]);
-  const currency = useContext(NavbarContext);
+  const { currency, brand, setBrand } = useContext(FooterContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,9 +62,13 @@ function Listings() {
     "Nike",
     "Adidas",
     "Puma",
-    "Converse",
     "New Balance",
+    "Supreme",
     "Vans",
+    "Converse",
+    "Reebok",
+    "Asics",
+    "Onitsuka Tiger",
   ];
 
   const priceList = [
@@ -90,9 +93,9 @@ function Listings() {
 
   const sortAndFilter = () => {
     // Filter by brand
-    sortedListings = !brandsTag[0]
+    sortedListings = !brand[0]
       ? listings
-      : listings.filter((obj) => brandsTag.includes(obj.shoe_brand));
+      : listings.filter((obj) => brand.includes(obj.shoe_brand));
 
     //Filter by price
     if (pricesTag[0]) {
@@ -176,87 +179,14 @@ function Listings() {
   };
 
   const handleAddBrands = (event: ChangeEvent<HTMLInputElement>) => {
-    brandsTag.find((ele) => ele === event.target.id)
-      ? setBrandsTag(brandsTag.filter((ele) => ele !== event.target.id))
-      : setBrandsTag((arr) => [...arr, event.target.id]);
+    brand.find((ele) => ele === event.target.id)
+      ? setBrand(brand.filter((ele) => ele !== event.target.id))
+      : setBrand((arr) => [...arr, event.target.id]);
   };
 
   const navigateSingleListing = (e: any) => {
     navigate(`/listings/${e.currentTarget.id}`);
   };
-
-  const mockShoesData = [
-    {
-      img: "https://images.novelship.com/product/1664391359054_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 High 'Lost & Found'",
-      listing_price: 432,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653919419146_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Dunk Low 'Black White' 2021",
-      listing_price: 191,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1664411976537_AirJordan40.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 4 Retro 'Midnight Navy",
-      listing_price: 325,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1666960814609_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 Low 'Aluminum'(W)",
-      listing_price: 140,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653918046201_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Dunk Low SP 'Kentucky'",
-      listing_price: 206,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1658762197699_YeezySlide0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Yeezy Slides 'Bone' (2022 Restock)",
-      listing_price: 156,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653919400399_NikeDunkLo0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Dunk Low 'Black White' 2021 (W)",
-      listing_price: 186,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653919040759_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 Mid 'Smoke Grey'",
-      listing_price: 156,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1654843117055_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Jordan 1 Low 'Bulls'",
-      listing_price: 101,
-      size: "US 6",
-      quantity: 1,
-    },
-    {
-      img: "https://images.novelship.com/product/1653918670849_NikeAirFor0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
-      shoe_name: "Air Force 1 Low White '07",
-      listing_price: 113,
-      size: "US 6",
-      quantity: 1,
-    },
-  ];
 
   return (
     <>
@@ -283,6 +213,7 @@ function Listings() {
               <div key={i}>
                 <input
                   type="checkbox"
+                  checked={brand.includes(e) ? true : false}
                   id={e}
                   className="border-2 rounded"
                   onChange={handleAddBrands}
@@ -398,7 +329,7 @@ function Listings() {
               )}{" "}
               results
             </p>
-            <div className=" flex gap-2 items-center py-2">
+            <div className=" flex gap-2 items-center py-2 z-10">
               Sort By:
               <div className="relative text-center">
                 <button

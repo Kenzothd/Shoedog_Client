@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { NavbarContext } from "./Navbar";
+import { FooterContext } from "./Footer";
 
 function FeaturedSection() {
   const navigate = useNavigate();
   const [number, setNumber] = useState(1);
-  const currency = useContext(NavbarContext);
+  const { currency } = useContext(FooterContext);
 
   const featured = [
     {

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { FooterContext } from "./Footer";
 
 function BrandsSection() {
+  const { brand, setBrand } = useContext(FooterContext);
   const navigate = useNavigate();
   const brands = [
     {
@@ -46,9 +48,14 @@ function BrandsSection() {
     },
   ];
 
-  const navigateListings = () => {
+  const navigateListings = (e: any) => {
+    if (e.currentTarget.id) {
+      setBrand([e.currentTarget.id]);
+    }
     navigate("/listings");
   };
+
+  console.log(brand);
 
   return (
     <>
@@ -65,6 +72,7 @@ function BrandsSection() {
         <div className="grid grid-cols-5 mt-10 gap-6">
           {brands.map((e) => (
             <div
+              id={e.brand}
               className="border-2 rounded transition ease-in-out hover:scale-105 cursor-pointer drop-shadow-lg "
               key={e.brand}
               onClick={navigateListings}

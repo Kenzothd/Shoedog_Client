@@ -1,12 +1,11 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import logo from "../imgs/logo.png";
-
-export const NavbarContext = createContext("SGD");
+import { FooterContext } from "./Footer";
 
 function Navbar() {
+  const { currency, setCurrency } = useContext(FooterContext);
   const navigate = useNavigate();
-  const [currency, setCurrency] = useState("SGD");
   const [toggle, setToggle] = useState(false);
 
   const currencyType = ["SGD", "USD", "MYR", "TKY"];
@@ -120,9 +119,8 @@ function Navbar() {
           </ul>
         </div>
       </nav>
-      <NavbarContext.Provider value={currency}>
-        <Outlet />
-      </NavbarContext.Provider>
+
+      <Outlet />
     </>
   );
 }

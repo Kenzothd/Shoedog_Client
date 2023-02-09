@@ -1,11 +1,32 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 import logo from "../imgs/logo.png";
 
+export type FooterContextType = {
+  currency: string;
+  setCurrency: React.Dispatch<React.SetStateAction<string>>;
+  brand: string[];
+  setBrand: React.Dispatch<React.SetStateAction<string[]>>;
+};
+
+export const FooterContext = createContext<FooterContextType>({
+  currency: "SGD",
+  setCurrency: () => {},
+  brand: [],
+  setBrand: () => {},
+});
+
 function Footer() {
+  const [currency, setCurrency] = useState("SGD");
+  const [brand, setBrand] = useState<string[]>([]);
+
   return (
     <>
-      <Outlet />
+      <FooterContext.Provider
+        value={{ currency, setCurrency, brand, setBrand }}
+      >
+        <Outlet />
+      </FooterContext.Provider>
       <footer className="mt-10 pb-4 bg-slate-100">
         <div className="mt-4 pt-10 px-[16rem] text-center border-t">
           <p>

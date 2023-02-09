@@ -220,13 +220,18 @@ function ListingGrid({ fetchListings, userId, listings, tab, gap }: Props) {
               )}
             </div>
             <div className="p-2 h-1/2 flex flex-col justify-between">
-              <p
-                id={ele.shoe_id.toString()}
-                onClick={navigateSingleListing}
-                className="pb-6 font-semibold  transition ease-in-out hover:text-gray-500"
-              >
-                {ele.shoe_model}
-              </p>
+              {userId && tab === "Listed" ? (
+                <p
+                  id={ele.shoe_id.toString()}
+                  onClick={navigateSingleListing}
+                  className="pb-6 font-semibold  transition ease-in-out hover:text-gray-500"
+                >
+                  {ele.shoe_model}
+                </p>
+              ) : (
+                <p className="pb-6 font-semibold">{ele.shoe_model}</p>
+              )}
+
               <div className="text-[14px]">
                 <p className=" text-gray-400">Size: US {ele.shoe_size}</p>
                 <div className="pt-0.5 flex justify-between">

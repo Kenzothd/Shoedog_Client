@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { IVolumeStats } from "../pages/Interface";
-import { NavbarContext } from "./Navbar";
+import { FooterContext } from "./Footer";
 
 type Props = {
   volumeStats: IVolumeStats[];
 };
 
 function TopTenTable({ volumeStats }: Props) {
-  const currency = useContext(NavbarContext);
+  const { currency } = useContext(FooterContext);
   const navigate = useNavigate();
 
   const formatNumber = (num: number) => {
