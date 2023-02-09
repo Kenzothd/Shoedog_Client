@@ -1,6 +1,5 @@
 import React, { createContext, useState } from "react";
 import { Outlet } from "react-router-dom";
-import logo from "../imgs/logo.png";
 
 export type FooterContextType = {
   currency: string;

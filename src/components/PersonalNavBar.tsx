@@ -24,10 +24,6 @@ function PersonalNavBar() {
     navigate(`/in/${username}/listings`);
   };
 
-  const navigateAbout = () => {
-    navigate("/about");
-  };
-
   const navigateLogin = () => {
     setUsername("");
     navigate("/login");

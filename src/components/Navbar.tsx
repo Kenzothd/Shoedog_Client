@@ -1,6 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import React, { createContext, useContext, useState } from "react";
-import logo from "../imgs/logo.png";
+import { useContext, useState } from "react";
 import { FooterContext } from "./Footer";
 
 function Navbar() {
