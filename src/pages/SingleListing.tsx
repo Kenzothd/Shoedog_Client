@@ -13,7 +13,7 @@ import ListingTable from "../components/ListingTable";
 function SingleListing() {
   const [listings, setListings] = useState<IListingsAndUsersSoldFalse[]>([]);
   const [shoeData, setShoeData] = useState<IShoeData[]>([]);
-  const [toggleVolume, setToggleVolume] = useState("All");
+  const [toggleVolume, setToggleVolume] = useState("1M");
   const { id } = useParams();
   const [data, setData] = useState<IPriceHistoryData[]>([]);
 
@@ -43,16 +43,21 @@ function SingleListing() {
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_BASE_URL}/shoes/${id}`)
-      .then((res) => setShoeData(res.data))
-      .catch((err) => console.log(err));
-    axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/listings/false/${id}/all`)
       .then((res) => {
-        setListings(res.data);
+        setShoeData(res.data);
+        axios
+          .get(`${process.env.REACT_APP_API_BASE_URL}/listings/false/${id}/all`)
+          .then((res) => {
+            setListings(res.data);
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
 
-    let timer = setTimeout(() => fetchPriceHistory("all"), 1000);
+    let timer = setTimeout(
+      () => fetchPriceHistory("one-month", "dd MMM yy HH:mm"),
+      1000
+    );
 
     return () => {
       clearTimeout(timer);

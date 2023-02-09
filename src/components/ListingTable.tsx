@@ -184,7 +184,7 @@ function ListingTable({ title, listings }: Props) {
                     </div>
                   </div>
                   <div>
-                    <button className="border rounded px-2 py-1 my-1 bg-black text-white font-semibold transition ease-in-out hover:scale-105">
+                    <button className="border rounded px-1.5 py-0.5 my-1 bg-black text-white font-semibold transition ease-in-out hover:scale-105">
                       Buy Now
                     </button>
                   </div>
