@@ -56,12 +56,12 @@ function SingleListing() {
             setListings(res.data);
           })
           .catch((err) => console.log(err)),
-      1000
+      3000
     );
 
     let timerPriceHistory = setTimeout(
       () => fetchPriceHistory("one-month", "dd MMM yy HH:mm"),
-      2000
+      1000
     );
 
     return () => {
