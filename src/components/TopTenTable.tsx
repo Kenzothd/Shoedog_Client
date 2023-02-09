@@ -90,7 +90,7 @@ function TopTenTable({ volumeStats }: Props) {
 
       {/* using grid with divs */}
       {volumeStats[0] ? (
-        <div className="flex justify-evenly gap-14">
+        <div className="grid grid-cols-2 gap-14">
           <div id="type-2-left">
             <div className="grid grid-cols-6 gap-2 items-center">
               <div className="col-span-6 grid grid-cols-6 mb-2">
@@ -122,7 +122,7 @@ function TopTenTable({ volumeStats }: Props) {
                       />
                     </div>
                   </div>
-                  <div className="col-span-3 break-all px-2 font-semibold">
+                  <div className="col-span-3 break-all px-2 font-semibold overflow-hidden">
                     {e.shoe_model}
                   </div>
                   <div className="place-self-center font-semibold ">
@@ -168,7 +168,7 @@ function TopTenTable({ volumeStats }: Props) {
                       />
                     </div>
                   </div>
-                  <div className="col-span-3 break-all px-2 font-semibold">
+                  <div className="col-span-3 break-all px-2 font-semibold overflow-hidden">
                     {e.shoe_model}
                   </div>
                   <div className="place-self-center font-semibold ">
