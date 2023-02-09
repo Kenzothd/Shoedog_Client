@@ -183,7 +183,7 @@ function AlertHistory({ userId, username, alerts, profileListings }: Props) {
                     src={e.shoe_img}
                     alt="shoe"
                   />
-                  <p className="col-span-3 flex items-center font-medium ">
+                  <p className="col-span-3 flex items-center font-medium text-[13px] overflow-hidden">
                     {e.shoe_model}
                   </p>
                 </div>

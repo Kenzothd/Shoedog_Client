@@ -394,7 +394,7 @@ function Listings() {
                     />
                   </div>
                   <div className="p-2 h-1/2 flex flex-col justify-between">
-                    <p className="pb-6 font-semibold overflow-hidden">
+                    <p className="pb-6 font-semibold overflow-hidden text-[15px] overflow-hidden">
                       {e.shoe_model}
                     </p>
                     <div className="text-sm">

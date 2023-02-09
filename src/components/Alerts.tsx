@@ -68,7 +68,7 @@ function Alerts({ handleToggleAlert, alerts }: Props) {
                   src={ele.shoe_img}
                   alt="shoe"
                 />
-                <p className="col-span-3 flex items-center font-medium ">
+                <p className="col-span-3 flex items-center font-medium text-[13px] overflow-hidden">
                   {ele.shoe_model}
                 </p>
               </div>

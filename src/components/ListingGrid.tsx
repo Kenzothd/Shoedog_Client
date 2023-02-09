@@ -225,12 +225,14 @@ function ListingGrid({ fetchListings, userId, listings, tab, gap }: Props) {
                   <p
                     id={ele.shoe_id.toString()}
                     onClick={navigateSingleListing}
-                    className="pb-6 font-semibold  transition ease-in-out hover:text-gray-500"
+                    className="pb-6 font-semibold  transition ease-in-out hover:text-gray-500 text-[15px] overflow-hidden"
                   >
                     {ele.shoe_model}
                   </p>
                 ) : (
-                  <p className="pb-6 font-semibold">{ele.shoe_model}</p>
+                  <p className="pb-6 font-semibold text-[15px overflow-hidden]">
+                    {ele.shoe_model}
+                  </p>
                 )}
 
                 <div className="text-[14px]">
