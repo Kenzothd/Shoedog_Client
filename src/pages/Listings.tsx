@@ -31,7 +31,6 @@ function Listings() {
       .then((res) => setListings(res.data))
       .catch((err) => console.log(err));
   }, []);
-  console.log(listings);
 
   let yearList = [
     "All Year",

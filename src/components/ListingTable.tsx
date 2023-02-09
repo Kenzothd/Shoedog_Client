@@ -69,6 +69,10 @@ function ListingTable({ title, listings }: Props) {
     navigate(`/profile/${e.target.id}`);
   };
 
+  const navigateLogin = (e: any) => {
+    navigate(`/login`);
+  };
+
   return (
     <div className="border-2 rounded">
       <div className="flex justify-between border-b px-2 items-center">
@@ -184,7 +188,10 @@ function ListingTable({ title, listings }: Props) {
                     </div>
                   </div>
                   <div>
-                    <button className="border rounded px-1.5 py-0.5 my-1 bg-black text-white font-semibold transition ease-in-out hover:scale-105">
+                    <button
+                      onClick={navigateLogin}
+                      className="border rounded px-1.5 py-0.5 my-1 bg-black text-white font-semibold transition ease-in-out hover:scale-105"
+                    >
                       Buy Now
                     </button>
                   </div>

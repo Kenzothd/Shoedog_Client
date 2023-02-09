@@ -45,22 +45,28 @@ function SingleListing() {
       .get(`${process.env.REACT_APP_API_BASE_URL}/shoes/${id}`)
       .then((res) => {
         setShoeData(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    let timerListings = setTimeout(
+      () =>
         axios
           .get(`${process.env.REACT_APP_API_BASE_URL}/listings/false/${id}/all`)
           .then((res) => {
             setListings(res.data);
           })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
-
-    let timer = setTimeout(
-      () => fetchPriceHistory("one-month", "dd MMM yy HH:mm"),
+          .catch((err) => console.log(err)),
       1000
     );
 
+    let timerPriceHistory = setTimeout(
+      () => fetchPriceHistory("one-month", "dd MMM yy HH:mm"),
+      2000
+    );
+
     return () => {
-      clearTimeout(timer);
+      clearTimeout(timerPriceHistory);
+      clearTimeout(timerListings);
     };
   }, [id, fetchPriceHistory]);
 
@@ -107,7 +113,9 @@ function SingleListing() {
               alt="shoe"
             />
             <div className="px-2 py-3 flex justify-between items-center">
-              <p className="font-semibold text-xl">{shoeData[0]?.shoe_model}</p>
+              <p className="font-semibold text-xl">
+                {shoeData[0] ? shoeData[0].shoe_model : "..."}
+              </p>
               <div className="flex gap-1">
                 <p>{shoeData[0] ? shoeData[0].shoe_likes : "..."}</p>
                 <button className="">
@@ -131,11 +139,11 @@ function SingleListing() {
           </div>
           <div className="flex flex-col gap-2 w-[36rem]">
             <h2 className="font-medium text-lg text-slate-400">
-              {shoeData[0]?.shoe_brand}
+              {shoeData[0] ? shoeData[0].shoe_brand : "..."}
             </h2>
             <div className="flex justify-between items-center">
               <h2 className="font-semibold text-xl">
-                {shoeData[0]?.shoe_model}
+                {shoeData[0] ? shoeData[0].shoe_model : "..."}
               </h2>
               <button>
                 <svg
