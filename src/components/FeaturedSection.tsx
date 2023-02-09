@@ -5,7 +5,7 @@ import { FooterContext } from "./Footer";
 function FeaturedSection() {
   const navigate = useNavigate();
   const [number, setNumber] = useState(1);
-  const { currency } = useContext(FooterContext);
+  const { currency, setBrand } = useContext(FooterContext);
 
   const featured = [
     {
@@ -83,6 +83,7 @@ function FeaturedSection() {
   };
 
   const navigateListings = () => {
+    setBrand([]);
     navigate("/listings");
   };
 

@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IVolumeStats } from "../pages/Interface";
+import { FooterContext } from "./Footer";
 import TopTenTable from "./TopTenTable";
 
 function Trending() {
   const navigate = useNavigate();
+  const { setBrand } = useContext(FooterContext);
   const [toggleTrending, setToggleTrending] = useState("Top");
   const [toggleVolume, setToggleVolume] = useState("1M");
   const [volumeStats, setVolumeStats] = useState<IVolumeStats[]>([]);
@@ -80,6 +82,7 @@ function Trending() {
   };
 
   const navigateListings = () => {
+    setBrand([]);
     navigate("/listings");
   };
 

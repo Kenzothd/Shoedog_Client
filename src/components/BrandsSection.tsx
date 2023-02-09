@@ -51,6 +51,8 @@ function BrandsSection() {
   const navigateListings = (e: any) => {
     if (e.currentTarget.id) {
       setBrand([e.currentTarget.id]);
+    } else {
+      setBrand([]);
     }
     navigate("/listings");
   };

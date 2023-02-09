@@ -405,7 +405,7 @@ function Listings() {
                         {format(new Date(e.shoe_release_date), "dd/MM/yy")}
                       </p>
                       <p className="font-semibold pt-0.5 flex justify-end">
-                        SGD {e.lowest_listing_price}
+                        {currency} {e.lowest_listing_price}
                       </p>
                     </div>
                   </div>
