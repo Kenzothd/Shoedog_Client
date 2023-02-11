@@ -1,9 +1,10 @@
 import { formatDistanceToNow } from "date-fns";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IAlerts, IAlertsHistory, IDisplayListings } from "../pages/Interface";
+import { FooterContext } from "./Footer";
 
 type Props = {
   alerts: IAlerts[];
@@ -17,6 +18,7 @@ function AlertHistory({ userId, username, alerts, profileListings }: Props) {
   const [sort, setSort] = useState("Most Recent");
   const [alertsHistory, setAlertsHistory] = useState<IAlertsHistory[]>([]);
   const navigate = useNavigate();
+  const { currency } = useContext(FooterContext);
 
   const sortList = [
     "Most Recent",
@@ -188,7 +190,9 @@ function AlertHistory({ userId, username, alerts, profileListings }: Props) {
                   </p>
                 </div>
                 <div>{e.shoe_size}</div>
-                <div>SGD {e.listing_price}</div>
+                <div>
+                  {currency} {e.listing_price}
+                </div>
                 <div className="col-span-3">
                   <div className="grid grid-cols-2">
                     <div>

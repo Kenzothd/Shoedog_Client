@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { IAlerts } from "../pages/Interface";
+import { FooterContext } from "./Footer";
 
 type Props = {
   handleToggleAlert: any;
@@ -7,6 +9,7 @@ type Props = {
 };
 
 function Alerts({ handleToggleAlert, alerts }: Props) {
+  const { currency } = useContext(FooterContext);
   const navigate = useNavigate();
 
   const navigateSingleListing = (e: any) => {
@@ -74,7 +77,9 @@ function Alerts({ handleToggleAlert, alerts }: Props) {
               </div>
               <div className="col-span-2 grid grid-cols-3">
                 <div>{ele.shoe_size}</div>
-                <div className="col-span-2">SGD {ele.alert_price}</div>
+                <div className="col-span-2">
+                  {currency} {ele.alert_price}
+                </div>
               </div>
 
               <div className="flex justify-center items-center gap-1">

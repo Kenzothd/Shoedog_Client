@@ -1,8 +1,9 @@
 import { format } from "date-fns";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IDisplayListings } from "../pages/Interface";
 import CreateListing from "./CreateListing";
+import { FooterContext } from "./Footer";
 
 type Props = {
   fetchListings?: any;
@@ -22,6 +23,7 @@ function ListingGrid({ fetchListings, userId, listings, tab, gap }: Props) {
   const [shoeSize, setShoeSize] = useState("");
   const [shoePrice, setShoePrice] = useState("");
   const navigate = useNavigate();
+  const { currency } = useContext(FooterContext);
 
   const sortList = [
     "Most Recent",
@@ -242,7 +244,9 @@ function ListingGrid({ fetchListings, userId, listings, tab, gap }: Props) {
                       {tab === "Listed" ? "Listed" : "Closed"}:{" "}
                       {format(new Date(ele.date), "dd/MM/yy")}
                     </p>
-                    <p className="font-semibold">SGD {ele.listing_price}</p>
+                    <p className="font-semibold">
+                      {currency} {ele.listing_price}
+                    </p>
                   </div>
                 </div>
               </div>

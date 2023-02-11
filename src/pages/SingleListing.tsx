@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   IListingsAndUsersSoldFalse,
   IPriceHistoryData,
@@ -9,8 +9,10 @@ import { useParams } from "react-router-dom";
 import { format } from "date-fns";
 import PriceHistory from "../components/PriceHistory";
 import ListingTable from "../components/ListingTable";
+import { FooterContext } from "../components/Footer";
 
 function SingleListing() {
+  const { currency } = useContext(FooterContext);
   const [listings, setListings] = useState<IListingsAndUsersSoldFalse[]>([]);
   const [shoeData, setShoeData] = useState<IShoeData[]>([]);
   const [toggleVolume, setToggleVolume] = useState("1M");
@@ -285,15 +287,15 @@ function SingleListing() {
             <div className="grid grid-cols-3 gap-4 mt-5">
               <div className="bg-gray-100 rounded py-4 px-6">
                 <p className="font-semibold text-xl">
-                  SGD {shoeData[0]?.one_year_lowest_listing_price + 10} - SGD{" "}
-                  {shoeData[0]?.one_year_highest_listing_price - 10}
+                  {currency} {shoeData[0]?.one_year_lowest_listing_price + 10} -{" "}
+                  {currency} {shoeData[0]?.one_year_highest_listing_price - 10}
                 </p>
                 <p className="font-medium text-sm">12-Month Trade Range</p>
               </div>
               <div className="bg-gray-100 rounded py-4 px-6">
                 <p className="font-semibold text-xl">
-                  SGD {shoeData[0]?.all_time_lowest_listing_price} - SGD{" "}
-                  {shoeData[0]?.all_time_highest_listing_price}
+                  {currency} {shoeData[0]?.all_time_lowest_listing_price} -{" "}
+                  {currency} {shoeData[0]?.all_time_highest_listing_price}
                 </p>
                 <p className="font-medium text-sm">All-Time Trade Range</p>
               </div>
@@ -315,7 +317,7 @@ function SingleListing() {
               </div>
               <div className="bg-gray-100 rounded py-4 px-6">
                 <p className="font-semibold text-xl">
-                  SGD {shoeData[0]?.average_listing_price}
+                  {currency} {shoeData[0]?.average_listing_price}
                 </p>
                 <p className="font-medium text-sm">Average Sale Price</p>
               </div>

@@ -11,7 +11,7 @@ type Props = {
 };
 
 function ListingTable({ title, listings }: Props) {
-  const { username } = useContext(FooterContext);
+  const { username, currency } = useContext(FooterContext);
   const [toggle, setToggle] = useState(false);
   const [sort, setSort] = useState("Most Recent");
   const navigate = useNavigate();
@@ -156,7 +156,7 @@ function ListingTable({ title, listings }: Props) {
               return (
                 <React.Fragment key={i}>
                   <div className="font-semibold pl-2">
-                    SGD {e.listing_price}
+                    {currency} {e.listing_price}
                   </div>
                   <div>{e.shoe_size}</div>
                   <div className="text-sm">
