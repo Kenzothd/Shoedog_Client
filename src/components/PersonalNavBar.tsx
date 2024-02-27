@@ -40,7 +40,7 @@ function PersonalNavBar() {
           <p className="text-white text-xl font-semibold">
             ShoeDog{" "}
             <span className="bg-gray-500 rounded text-sm whitespace-nowrap p-0.5">
-              - In Profile
+              - In Progress
             </span>
           </p>
         </div>

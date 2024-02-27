@@ -15,11 +15,11 @@ function SingleListing() {
   const { currency } = useContext(FooterContext);
   const [listings, setListings] = useState<IListingsAndUsersSoldFalse[]>([]);
   const [shoeData, setShoeData] = useState<IShoeData[]>([]);
-  const [toggleVolume, setToggleVolume] = useState("1M");
+  const [toggleVolume, setToggleVolume] = useState("6M");
   const { id } = useParams();
   const [data, setData] = useState<IPriceHistoryData[]>([]);
 
-  const volbtn = ["1M", "3M", "6M", "1Y", "All"];
+  const volBtn = ["All", "1Y", "6M", "3M", "1M"];
 
   const fetchPriceHistory = useCallback(
     (duration: string, dateRange: string = "dd MMM yy") => {
@@ -220,7 +220,7 @@ function SingleListing() {
           <h2 className="font-semibold text-xl">Price History</h2>
           <div className="flex justify-between items-center mt-5">
             <div className="flex border rounded font-medium text-sm">
-              {volbtn.map((e, i) => (
+              {volBtn.map((e, i) => (
                 <button
                   key={i}
                   className={

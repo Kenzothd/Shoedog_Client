@@ -9,7 +9,7 @@ function Trending() {
   const navigate = useNavigate();
   const { setBrand, username } = useContext(FooterContext);
   const [toggleTrending, setToggleTrending] = useState("Top");
-  const [toggleVolume, setToggleVolume] = useState("1M");
+  const [toggleVolume, setToggleVolume] = useState("6M");
   const [volumeStats, setVolumeStats] = useState<IVolumeStats[]>([]);
 
   const fetchVolume = (time: string) => {
@@ -67,7 +67,7 @@ function Trending() {
   }, [toggleVolume]);
 
   const trendingBtn = ["Trending", "Top"];
-  const volBtn = ["1M", "3M", "6M", "1Y", "All"];
+  const volBtn = ["All", "1Y", "6M", "3M", "1M"];
 
   const toggleTrendingHandler = (tab: string) => {
     tab === "Trending"

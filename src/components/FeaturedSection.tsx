@@ -10,13 +10,13 @@ function FeaturedSection() {
   const featured = [
     {
       featuredBrand: "Jordan 1 Low 'Wear Away Yellow'",
-      img: "https://images.novelship.com/product/1670481652483_AirJordan10.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+      img: "https://images.novelship.com/product/air_jordan_1_low__wear_away_yellow__dq8422_001_0_2711.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
       lowestPrice: "109",
       releaseDate: "08 DEC(SG)",
     },
     {
       featuredBrand: "NB 650R 'Cloudy Grey'",
-      img: "https://images.novelship.com/product/1670006788136_NewBalance0.png?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+      img: "https://images.novelship.com/product/new_balance_650r__cloudy_grey__bb650rwc_0_82763.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
       lowestPrice: "356",
       releaseDate: "08 DEC(SG)",
     },
@@ -33,14 +33,14 @@ function FeaturedSection() {
       releaseDate: "08 DEC(SG)",
     },
     {
-      featuredBrand: "Air Max 97 'No Bubble'",
-      img: "https://images.novelship.com/product/1665103137822_NikeAirMax0.png?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+      featuredBrand: "Air Max 97 'On Air: Neon Seoul'",
+      img: "https://images.novelship.com/product/nike_air_max_97__on_air__neon_seoul__ci1503_001_0_56494.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
       lowestPrice: "-",
       releaseDate: "08 DEC(SG)",
     },
     {
       featuredBrand: "AirMax Penny 1 'Black and Metallic Silver'",
-      img: "https://images.novelship.com/product/1667997766602_NikeAirMax0.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
+      img: "https://images.novelship.com/product/nike_air_max_penny_1__black_and_metallic_silver__d_0_87343.jpeg?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=200",
       lowestPrice: "192",
       releaseDate: "09 DEC(SG)",
     },
