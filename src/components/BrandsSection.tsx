@@ -20,7 +20,7 @@ function BrandsSection() {
     },
     {
       brand: "New Balance",
-      img: "https://www.nicepng.com/png/detail/251-2510586_new-balance-png-logo-ideas-new-balance-logo.png",
+      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/New_Balance_logo.svg/1200px-New_Balance_logo.svg.png",
     },
     {
       brand: "Supreme",
